@@ -3,69 +3,156 @@
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>GameDeals - PC Games $5</title>
+    <title>GameVault — Premium PC Games $5</title>
     <link rel="stylesheet" href="style.css" />
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Rajdhani:wght@300;400;600;700&display=swap" rel="stylesheet" />
 </head>
 <body>
-    <!-- Header -->
-    <header>
-        <div class="container">
-            <div class="logo">🎮 Game<span>Deals</span></div>
-            <nav>
-                <a href="#games">Games</a>
-                <a href="#about">About</a>
-                <a href="#contact">Contact</a>
-            </nav>
-        </div>
-    </header>
 
-    <!-- Hero Section -->
-    <section class="hero">
-        <div class="container">
-            <h1>Premium PC Games<br />Just <span>$5</span> Each!</h1>
-            <p>Top-rated titles at unbeatable prices. Grab your deal now!</p>
-            <a href="#games" class="btn-primary">Browse Games →</a>
-        </div>
-    </section>
+    <!-- ===== PRELOADER ===== -->
+    <div id="preloader">
+        <div class="loader"></div>
+    </div>
 
-    <!-- Games Section -->
-    <section class="games" id="games">
+    <!-- ===== NAVIGATION ===== -->
+    <nav>
         <div class="container">
-            <h2>🔥 Featured Games – $5</h2>
-            <div class="game-grid" id="gameGrid">
-                <!-- Games injected by JavaScript -->
+            <div class="logo">🎮 Game<span>Vault</span></div>
+            <ul class="nav-links">
+                <li><a href="#hero">Home</a></li>
+                <li><a href="#games">Games</a></li>
+                <li><a href="#features">Features</a></li>
+                <li><a href="#testimonials">Reviews</a></li>
+                <li><a href="#contact" class="nav-cta">Contact</a></li>
+            </ul>
+            <div class="hamburger" id="hamburger">☰</div>
+        </div>
+    </nav>
+
+    <!-- ===== HERO ===== -->
+    <section class="hero" id="hero">
+        <div class="hero-overlay"></div>
+        <div class="container hero-content">
+            <div class="hero-badge">🔥 LIMITED OFFER</div>
+            <h1>Elite Gaming <br /><span>Just $5</span></h1>
+            <p>Experience premium PC games at an unbelievably low price. <br />Curated collection. Instant delivery. 24/7 support.</p>
+            <div class="hero-buttons">
+                <a href="#games" class="btn-primary">Explore Games ↓</a>
+                <a href="https://wa.me/2349133750885" class="btn-secondary" target="_blank">💬 WhatsApp</a>
+            </div>
+            <div class="hero-stats">
+                <div><span>12K+</span><br />Happy Gamers</div>
+                <div><span>500+</span><br />Games Sold</div>
+                <div><span>4.9★</span><br />Rating</div>
             </div>
         </div>
     </section>
 
-    <!-- About Section -->
-    <section class="about" id="about">
+    <!-- ===== GAMES SECTION ===== -->
+    <section class="games" id="games">
         <div class="container">
-            <h2>Why GameDeals?</h2>
-            <p>
-                We bring you handpicked PC games at just <strong>$5</strong> — no hidden fees,
-                instant digital delivery, and 24/7 support. Level up your library without
-                breaking the bank!
-            </p>
+            <div class="section-header">
+                <span class="section-tag">🎯 COLLECTION</span>
+                <h2>Premium Games — <span>$5 Each</span></h2>
+                <p>Handpicked titles that deliver exceptional value</p>
+            </div>
+            <div class="game-grid" id="gameGrid"></div>
         </div>
     </section>
 
-    <!-- Contact / WhatsApp Section -->
-    <section class="contact" id="contact">
+    <!-- ===== FEATURES ===== -->
+    <section class="features" id="features">
         <div class="container">
-            <h2>📞 Chat With Us</h2>
-            <p>Questions? Need a specific game? Reach out anytime!</p>
-            <a href="https://wa.me/2349133750885?text=Hi%20GameDeals!%20I%20want%20to%20buy%20a%20%245%20game" 
-               class="btn-whatsapp" target="_blank">
-                💬 Contact on WhatsApp
+            <div class="section-header">
+                <span class="section-tag">⚡ WHY US</span>
+                <h2>Built for <span>Gamers</span></h2>
+            </div>
+            <div class="features-grid">
+                <div class="feature-card">
+                    <div class="feature-icon">💎</div>
+                    <h3>Premium Quality</h3>
+                    <p>Every game is tested and guaranteed to deliver the best experience.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">⚡</div>
+                    <h3>Instant Delivery</h3>
+                    <p>Get your game key immediately after purchase — no delays.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">🛡️</div>
+                    <h3>Secure & Safe</h3>
+                    <p>100% secure transactions with buyer protection guaranteed.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">🎧</div>
+                    <h3>24/7 Support</h3>
+                    <p>Our team is always ready to help you with any issues.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ===== TESTIMONIALS ===== -->
+    <section class="testimonials" id="testimonials">
+        <div class="container">
+            <div class="section-header">
+                <span class="section-tag">💬 REVIEWS</span>
+                <h2>What Gamers <span>Say</span></h2>
+            </div>
+            <div class="testimonial-grid">
+                <div class="testimonial-card">
+                    <div class="stars">★★★★★</div>
+                    <p>"Incredible value! I've bought 6 games already. Best $5 I've ever spent."</p>
+                    <div class="testimonial-author">— Mike R.</div>
+                </div>
+                <div class="testimonial-card">
+                    <div class="stars">★★★★★</div>
+                    <p>"Fast delivery and great selection. This site is a hidden gem!"</p>
+                    <div class="testimonial-author">— Sarah K.</div>
+                </div>
+                <div class="testimonial-card">
+                    <div class="stars">★★★★★</div>
+                    <p>"I thought it was too good to be true. It's legit. Highly recommend!"</p>
+                    <div class="testimonial-author">— James T.</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ===== CALL TO ACTION ===== -->
+    <section class="cta" id="contact">
+        <div class="container">
+            <h2>Ready to <span>Level Up</span>?</h2>
+            <p>Contact us now and get your game in minutes!</p>
+            <a href="https://wa.me/2349133750885?text=Hi%20GameVault!%20I%20want%20to%20buy%20a%20game" class="btn-whatsapp" target="_blank">
+                💬 Chat on WhatsApp
             </a>
         </div>
     </section>
 
-    <!-- Footer -->
+    <!-- ===== FOOTER ===== -->
     <footer>
         <div class="container">
-            <p>&copy; 2026 GameDeals. All rights reserved.</p>
+            <div class="footer-grid">
+                <div>
+                    <h3>🎮 GameVault</h3>
+                    <p>Premium PC games at unbeatable prices.</p>
+                </div>
+                <div>
+                    <h4>Quick Links</h4>
+                    <a href="#games">Games</a>
+                    <a href="#features">Features</a>
+                    <a href="#testimonials">Reviews</a>
+                </div>
+                <div>
+                    <h4>Contact</h4>
+                    <a href="https://wa.me/2349133750885" target="_blank">WhatsApp</a>
+                    <p style="color:#7a8fa5;font-size:14px;">+234 913 375 0885</p>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2026 GameVault. All rights reserved. ✦ Premium Gaming</p>
+            </div>
         </div>
     </footer>
 
