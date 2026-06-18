@@ -1,42 +1,29 @@
-// Show welcome message
-function showMessage() {
-    alert('Welcome! Thanks for visiting my website!');
-    console.log('Button clicked!');
-}
+// Game data – all $5
+const games = [
+    { title: "CyberStrike 2077", icon: "🚀", genre: "Sci-Fi RPG" },
+    { title: "Shadow Ops", icon: "🔫", genre: "Tactical Shooter" },
+    { title: "Pixel Racer", icon: "🏎️", genre: "Arcade Racing" },
+    { title: "Dragon Forge", icon: "🐉", genre: "Fantasy Adventure" },
+    { title: "Star Drift", icon: "🌌", genre: "Space Exploration" },
+    { title: "Urban Brawl", icon: "🥊", genre: "Fighting / Action" }
+];
 
-// Handle contact form submission
-function handleSubmit(event) {
-    event.preventDefault();
-    
-    const form = event.target;
-    const name = form.elements[0].value;
-    const email = form.elements[1].value;
-    const message = form.elements[2].value;
-    
-    console.log('Form submitted!');
-    console.log('Name:', name);
-    console.log('Email:', email);
-    console.log('Message:', message);
-    
-    alert(`Thank you ${name}! Your message has been received. We'll contact you at ${email} soon.`);
-    
-    // Reset form
-    form.reset();
-}
+const grid = document.getElementById("gameGrid");
 
-// Smooth scroll for navigation links
-document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-    anchor.addEventListener('click', function (e) {
-        e.preventDefault();
-        const target = document.querySelector(this.getAttribute('href'));
-        if (target) {
-            target.scrollIntoView({
-                behavior: 'smooth'
-            });
-        }
-    });
+games.forEach(game => {
+    const card = document.createElement("div");
+    card.className = "game-card";
+
+    card.innerHTML = `
+        <div class="icon">${game.icon}</div>
+        <h3>${game.title}</h3>
+        <p style="color:#7a8fa5; font-size:14px;">${game.genre}</p>
+        <div class="price">$5.00</div>
+        <a href="https://wa.me/2349133750885?text=Hi%20GameDeals!%20I%20want%20to%20buy%20%22${encodeURIComponent(game.title)}%22" 
+           class="btn-buy" target="_blank">Buy Now</a>
+    `;
+
+    grid.appendChild(card);
 });
 
-// Welcome message in console
-console.log('Welcome to My Website!');
-console.log('Made with HTML, CSS, and JavaScript');
+console.log("🎮 GameDeals loaded — all games $5!");
