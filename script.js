@@ -8,7 +8,6 @@ document.getElementById('hamburger').addEventListener('click', function() {
     document.querySelector('.nav-links').classList.toggle('open');
 });
 
-// Close menu on link click
 document.querySelectorAll('.nav-links a').forEach(link => {
     link.addEventListener('click', () => {
         document.querySelector('.nav-links').classList.remove('open');
@@ -36,8 +35,8 @@ games.forEach(game => {
         <span class="game-img">${game.icon}</span>
         <h3>${game.title}</h3>
         <p class="genre">${game.genre}</p>
-        <div class="price">$5.00</div>
-        <a href="https://wa.me/2349133750885?text=Hi%20GameVault!%20I%20want%20to%20buy%20${encodeURIComponent(game.title)}" class="btn-buy" target="_blank">Buy Now →</a>
+        <div class="price"><span class="old-price">$10</span> $3.00</div>
+        <a href="https://wa.me/2349133750885?text=Hi%20GameStore!%20I%20want%20to%20buy%20${encodeURIComponent(game.title)}%20for%20%243" class="btn-buy" target="_blank">Buy Now →</a>
     `;
     grid.appendChild(card);
 });
@@ -63,7 +62,7 @@ const observer = new IntersectionObserver((entries) => {
     });
 }, { threshold: 0.1 });
 
-document.querySelectorAll('.game-card, .feature-card, .testimonial-card').forEach(el => {
+document.querySelectorAll('.game-card, .feature-card, .testimonial-card, .step-card').forEach(el => {
     el.style.opacity = '0';
     el.style.transform = 'translateY(30px)';
     el.style.transition = 'opacity 0.6s, transform 0.6s';
