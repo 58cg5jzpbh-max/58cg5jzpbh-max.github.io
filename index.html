@@ -1,106 +1,74 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Welcome</title>
-    <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
-        body {
-            font-family: 'Arial', sans-serif;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            min-height: 100vh;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-        }
-
-        .container {
-            text-align: center;
-            background: white;
-            padding: 40px;
-            border-radius: 10px;
-            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
-            max-width: 500px;
-            width: 90%;
-        }
-
-        h1 {
-            color: #333;
-            margin-bottom: 20px;
-            font-size: 2.5em;
-        }
-
-        p {
-            color: #666;
-            font-size: 1.1em;
-            margin-bottom: 30px;
-            line-height: 1.6;
-        }
-
-        button {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            color: white;
-            border: none;
-            padding: 12px 30px;
-            font-size: 1em;
-            border-radius: 5px;
-            cursor: pointer;
-            transition: transform 0.2s, box-shadow 0.2s;
-        }
-
-        button:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 5px 15px rgba(102, 126, 234, 0.4);
-        }
-
-        button:active {
-            transform: translateY(0);
-        }
-
-        .message {
-            margin-top: 20px;
-            padding: 15px;
-            background: #f0f0f0;
-            border-radius: 5px;
-            color: #333;
-            min-height: 20px;
-        }
-    </style>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>GameDeals - PC Games $5</title>
+    <link rel="stylesheet" href="style.css" />
 </head>
 <body>
-    <div class="container">
-        <h1>Hello!</h1>
-        <p>Welcome to your GitHub Pages site. Click the button below to interact with this page.</p>
-        <button onclick="handleClick()">Click Me</button>
-        <div class="message" id="message"></div>
-    </div>
+    <!-- Header -->
+    <header>
+        <div class="container">
+            <div class="logo">🎮 Game<span>Deals</span></div>
+            <nav>
+                <a href="#games">Games</a>
+                <a href="#about">About</a>
+                <a href="#contact">Contact</a>
+            </nav>
+        </div>
+    </header>
 
-    <script>
-        let clickCount = 0;
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="container">
+            <h1>Premium PC Games<br />Just <span>$5</span> Each!</h1>
+            <p>Top-rated titles at unbeatable prices. Grab your deal now!</p>
+            <a href="#games" class="btn-primary">Browse Games →</a>
+        </div>
+    </section>
 
-        function handleClick() {
-            clickCount++;
-            const message = document.getElementById('message');
-            
-            if (clickCount === 1) {
-                message.textContent = 'You clicked once!';
-            } else if (clickCount === 5) {
-                message.textContent = 'You\'re on a roll! 5 clicks!';
-            } else if (clickCount === 10) {
-                message.textContent = 'Wow! 10 clicks! Keep going!';
-            } else {
-                message.textContent = `You've clicked ${clickCount} times!`;
-            }
-        }
+    <!-- Games Section -->
+    <section class="games" id="games">
+        <div class="container">
+            <h2>🔥 Featured Games – $5</h2>
+            <div class="game-grid" id="gameGrid">
+                <!-- Games injected by JavaScript -->
+            </div>
+        </div>
+    </section>
 
-        // Welcome message in console
-        console.log('Welcome to your GitHub Pages site!');
-    </script>
+    <!-- About Section -->
+    <section class="about" id="about">
+        <div class="container">
+            <h2>Why GameDeals?</h2>
+            <p>
+                We bring you handpicked PC games at just <strong>$5</strong> — no hidden fees,
+                instant digital delivery, and 24/7 support. Level up your library without
+                breaking the bank!
+            </p>
+        </div>
+    </section>
+
+    <!-- Contact / WhatsApp Section -->
+    <section class="contact" id="contact">
+        <div class="container">
+            <h2>📞 Chat With Us</h2>
+            <p>Questions? Need a specific game? Reach out anytime!</p>
+            <a href="https://wa.me/2349133750885?text=Hi%20GameDeals!%20I%20want%20to%20buy%20a%20%245%20game" 
+               class="btn-whatsapp" target="_blank">
+                💬 Contact on WhatsApp
+            </a>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <p>&copy; 2026 GameDeals. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script src="script.js"></script>
 </body>
 </html>
