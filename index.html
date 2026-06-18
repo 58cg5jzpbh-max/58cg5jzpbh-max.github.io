@@ -1,72 +1,52 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>GameDeals - PC Games $5</title>
-    <link rel="stylesheet" href="style.css" />
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Website</title>
+    <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-    <!-- Header -->
-    <header>
+    <nav class="navbar">
         <div class="container">
-            <div class="logo">🎮 Game<span>Deals</span></div>
-            <nav>
-                <a href="#games">Games</a>
-                <a href="#about">About</a>
-                <a href="#contact">Contact</a>
-            </nav>
+            <h1 class="logo">MyWebsite</h1>
+            <ul class="nav-links">
+                <li><a href="#home">Home</a></li>
+                <li><a href="#about">About</a></li>
+                <li><a href="#contact">Contact</a></li>
+            </ul>
         </div>
-    </header>
+    </nav>
 
-    <!-- Hero Section -->
-    <section class="hero">
+    <section id="home" class="hero">
         <div class="container">
-            <h1>Premium PC Games<br />Just <span>$5</span> Each!</h1>
-            <p>Top-rated titles at unbeatable prices. Grab your deal now!</p>
-            <a href="#games" class="btn-primary">Browse Games →</a>
+            <h2>Welcome to My Website</h2>
+            <p>This is your awesome website built with HTML, CSS, and JavaScript</p>
+            <button class="btn" onclick="showMessage()">Get Started</button>
         </div>
     </section>
 
-    <!-- Games Section -->
-    <section class="games" id="games">
+    <section id="about" class="about">
         <div class="container">
-            <h2>🔥 Featured Games – $5</h2>
-            <div class="game-grid" id="gameGrid">
-                <!-- Games injected by JavaScript -->
-            </div>
+            <h2>About Me</h2>
+            <p>This is a simple website template to get you started. You can customize it with your own content.</p>
         </div>
     </section>
 
-    <!-- About Section -->
-    <section class="about" id="about">
+    <section id="contact" class="contact">
         <div class="container">
-            <h2>Why GameDeals?</h2>
-            <p>
-                We bring you handpicked PC games at just <strong>$5</strong> — no hidden fees,
-                instant digital delivery, and 24/7 support. Level up your library without
-                breaking the bank!
-            </p>
+            <h2>Contact</h2>
+            <form id="contactForm" onsubmit="handleSubmit(event)">
+                <input type="text" placeholder="Your Name" required>
+                <input type="email" placeholder="Your Email" required>
+                <textarea placeholder="Your Message" rows="5" required></textarea>
+                <button type="submit" class="btn">Send Message</button>
+            </form>
         </div>
     </section>
 
-    <!-- Contact / WhatsApp Section -->
-    <section class="contact" id="contact">
-        <div class="container">
-            <h2>📞 Chat With Us</h2>
-            <p>Questions? Need a specific game? Reach out anytime!</p>
-            <a href="https://wa.me/2349133750885?text=Hi%20GameDeals!%20I%20want%20to%20buy%20a%20%245%20game" 
-               class="btn-whatsapp" target="_blank">
-                💬 Contact on WhatsApp
-            </a>
-        </div>
-    </section>
-
-    <!-- Footer -->
     <footer>
-        <div class="container">
-            <p>&copy; 2026 GameDeals. All rights reserved.</p>
-        </div>
+        <p>&copy; 2026 My Website. All rights reserved.</p>
     </footer>
 
     <script src="script.js"></script>
