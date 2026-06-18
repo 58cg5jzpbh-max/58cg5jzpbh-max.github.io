@@ -1,5 +1,5 @@
 /* ===== IMPORTS ===== */
-@import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Rajdhani:wght@300;400;600;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Inter:wght@300;400;600;700;800;900&display=swap');
 
 /* ===== RESET ===== */
 * {
@@ -13,7 +13,7 @@ html {
 }
 
 body {
-    font-family: 'Rajdhani', sans-serif;
+    font-family: 'Inter', sans-serif;
     background: #0a0d14;
     color: #eaeef2;
     line-height: 1.6;
@@ -79,7 +79,7 @@ nav .container {
 
 .logo {
     font-family: 'Orbitron', sans-serif;
-    font-size: 26px;
+    font-size: 24px;
     font-weight: 900;
     letter-spacing: 1px;
 }
@@ -99,7 +99,7 @@ nav .container {
     color: #b0c4d9;
     text-decoration: none;
     font-weight: 600;
-    font-size: 16px;
+    font-size: 15px;
     transition: color 0.3s;
     position: relative;
 }
@@ -124,11 +124,13 @@ nav .container {
 }
 
 .nav-cta {
-    background: #f5a623;
+    background: linear-gradient(135deg, #f5a623, #e0961a);
     color: #0a0d14 !important;
-    padding: 8px 24px;
+    padding: 10px 28px;
     border-radius: 50px;
     font-weight: 700;
+    font-size: 14px !important;
+    box-shadow: 0 4px 20px rgba(245, 166, 35, 0.25);
 }
 
 .nav-cta::after {
@@ -136,7 +138,8 @@ nav .container {
 }
 
 .nav-cta:hover {
-    background: #ffb840 !important;
+    transform: scale(1.05);
+    box-shadow: 0 6px 30px rgba(245, 166, 35, 0.35);
     color: #0a0d14 !important;
 }
 
@@ -213,7 +216,7 @@ nav .container {
 
 .hero h1 {
     font-family: 'Orbitron', sans-serif;
-    font-size: 68px;
+    font-size: 64px;
     font-weight: 900;
     line-height: 1.1;
     margin-bottom: 20px;
@@ -297,6 +300,40 @@ nav .container {
     color: #8a9db0;
 }
 
+/* ===== DATA BANNER ===== */
+.data-banner {
+    background: linear-gradient(135deg, #1a1a2e, #16213e);
+    padding: 18px 0;
+    border-top: 2px solid #f5a623;
+    border-bottom: 2px solid #f5a623;
+}
+
+.data-banner-content {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 20px;
+    flex-wrap: wrap;
+}
+
+.data-banner-content span {
+    font-size: 36px;
+}
+
+.data-banner-content h3 {
+    font-size: 18px;
+    color: #f5a623;
+}
+
+.data-banner-content p {
+    color: #b0c4d9;
+    font-size: 15px;
+}
+
+.data-banner-content strong {
+    color: #fff;
+}
+
 /* ===== SECTION HEADERS ===== */
 .section-header {
     text-align: center;
@@ -315,7 +352,7 @@ nav .container {
 
 .section-header h2 {
     font-family: 'Orbitron', sans-serif;
-    font-size: 40px;
+    font-size: 38px;
     font-weight: 700;
 }
 
@@ -331,20 +368,20 @@ nav .container {
 
 /* ===== GAMES ===== */
 .games {
-    padding: 90px 0;
+    padding: 80px 0;
     background: #0a0d14;
 }
 
 .game-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(270px, 1fr));
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
     gap: 30px;
 }
 
 .game-card {
     background: linear-gradient(145deg, #121922, #0d121b);
     border-radius: 20px;
-    padding: 30px 24px 28px;
+    padding: 20px 20px 24px;
     text-align: center;
     border: 1px solid #1f2b36;
     transition: transform 0.4s, box-shadow 0.4s, border-color 0.4s;
@@ -376,29 +413,44 @@ nav .container {
 }
 
 .game-card .game-img {
-    font-size: 72px;
+    font-size: 64px;
     display: block;
-    margin-bottom: 12px;
+    margin-bottom: 10px;
+}
+
+.game-card .game-img img {
+    width: 100%;
+    height: 200px;
+    object-fit: cover;
+    border-radius: 12px;
 }
 
 .game-card h3 {
-    font-size: 20px;
+    font-size: 18px;
     font-weight: 700;
     margin-bottom: 4px;
 }
 
 .game-card .genre {
     color: #8a9db0;
-    font-size: 14px;
-    margin-bottom: 12px;
+    font-size: 13px;
+    margin-bottom: 10px;
 }
 
 .game-card .price {
     font-family: 'Orbitron', sans-serif;
-    font-size: 28px;
+    font-size: 26px;
     font-weight: 900;
     color: #f5a623;
-    margin: 12px 0 18px;
+    margin: 10px 0 16px;
+}
+
+.game-card .price .old-price {
+    font-size: 16px;
+    color: #5a6f82;
+    text-decoration: line-through;
+    font-weight: 400;
+    margin-right: 10px;
 }
 
 .btn-buy {
@@ -408,7 +460,7 @@ nav .container {
     border-radius: 50px;
     text-decoration: none;
     font-weight: 700;
-    font-size: 15px;
+    font-size: 14px;
     transition: transform 0.3s, box-shadow 0.3s;
     display: inline-block;
     border: none;
@@ -423,7 +475,7 @@ nav .container {
 
 /* ===== FEATURES ===== */
 .features {
-    padding: 90px 0;
+    padding: 80px 0;
     background: linear-gradient(145deg, #0f1620, #0a0d14);
     border-top: 1px solid #1f2b36;
     border-bottom: 1px solid #1f2b36;
@@ -437,7 +489,7 @@ nav .container {
 
 .feature-card {
     background: rgba(18, 25, 34, 0.6);
-    padding: 36px 24px;
+    padding: 32px 20px;
     border-radius: 16px;
     text-align: center;
     border: 1px solid #1f2b36;
@@ -450,23 +502,23 @@ nav .container {
 }
 
 .feature-icon {
-    font-size: 48px;
-    margin-bottom: 12px;
+    font-size: 44px;
+    margin-bottom: 10px;
 }
 
 .feature-card h3 {
-    font-size: 20px;
-    margin-bottom: 8px;
+    font-size: 18px;
+    margin-bottom: 6px;
 }
 
 .feature-card p {
     color: #8a9db0;
-    font-size: 15px;
+    font-size: 14px;
 }
 
 /* ===== TESTIMONIALS ===== */
 .testimonials {
-    padding: 90px 0;
+    padding: 80px 0;
     background: #0a0d14;
 }
 
@@ -478,7 +530,7 @@ nav .container {
 
 .testimonial-card {
     background: linear-gradient(145deg, #121922, #0d121b);
-    padding: 30px;
+    padding: 28px;
     border-radius: 16px;
     border: 1px solid #1f2b36;
     transition: border-color 0.3s;
@@ -490,26 +542,65 @@ nav .container {
 
 .testimonial-card .stars {
     color: #f5a623;
-    font-size: 20px;
+    font-size: 18px;
     letter-spacing: 2px;
     margin-bottom: 10px;
 }
 
 .testimonial-card p {
     color: #b0c4d9;
-    font-size: 17px;
+    font-size: 16px;
     font-style: italic;
-    margin-bottom: 12px;
+    margin-bottom: 10px;
 }
 
 .testimonial-author {
     color: #8a9db0;
     font-weight: 600;
+    font-size: 14px;
+}
+
+/* ===== HOW IT WORKS ===== */
+.how-it-works {
+    padding: 80px 0;
+    background: #0f1620;
+    border-top: 1px solid #1f2b36;
+    border-bottom: 1px solid #1f2b36;
+}
+
+.steps-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 40px;
+    text-align: center;
+}
+
+.step-card {
+    padding: 20px;
+}
+
+.step-number {
+    font-family: 'Orbitron', sans-serif;
+    font-size: 48px;
+    font-weight: 900;
+    color: #f5a623;
+    opacity: 0.3;
+    margin-bottom: 10px;
+}
+
+.step-card h3 {
+    font-size: 20px;
+    margin-bottom: 6px;
+}
+
+.step-card p {
+    color: #8a9db0;
+    font-size: 15px;
 }
 
 /* ===== CTA ===== */
 .cta {
-    padding: 90px 0;
+    padding: 80px 0;
     background: linear-gradient(145deg, #0f1620, #0a0d14);
     text-align: center;
     border-top: 1px solid #1f2b36;
@@ -517,7 +608,7 @@ nav .container {
 
 .cta h2 {
     font-family: 'Orbitron', sans-serif;
-    font-size: 44px;
+    font-size: 42px;
     margin-bottom: 12px;
 }
 
@@ -527,7 +618,7 @@ nav .container {
 
 .cta p {
     color: #8a9db0;
-    font-size: 20px;
+    font-size: 18px;
     margin-bottom: 30px;
 }
 
@@ -538,7 +629,7 @@ nav .container {
     border-radius: 50px;
     text-decoration: none;
     font-weight: 700;
-    font-size: 22px;
+    font-size: 20px;
     transition: transform 0.3s, box-shadow 0.3s;
     display: inline-block;
     box-shadow: 0 4px 40px rgba(37, 211, 102, 0.25);
@@ -624,7 +715,7 @@ footer {
     }
 
     .hero h1 {
-        font-size: 40px;
+        font-size: 36px;
     }
 
     .hero-stats {
@@ -636,15 +727,20 @@ footer {
     }
 
     .section-header h2 {
-        font-size: 30px;
+        font-size: 28px;
     }
 
     .cta h2 {
-        font-size: 30px;
+        font-size: 28px;
     }
 
     .game-grid {
         grid-template-columns: 1fr 1fr;
+    }
+
+    .data-banner-content {
+        flex-direction: column;
+        text-align: center;
     }
 }
 
@@ -654,7 +750,7 @@ footer {
     }
 
     .hero h1 {
-        font-size: 32px;
+        font-size: 28px;
     }
 
     .hero-buttons {
@@ -666,11 +762,17 @@ footer {
     .btn-secondary {
         width: 100%;
         text-align: center;
+        padding: 14px 20px;
     }
 
     .hero-stats {
         flex-wrap: wrap;
         justify-content: center;
+        gap: 16px;
+    }
+
+    .steps-grid {
+        grid-template-columns: 1fr;
         gap: 20px;
     }
 }
