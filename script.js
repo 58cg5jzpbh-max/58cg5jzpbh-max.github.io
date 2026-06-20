@@ -1,6 +1,6 @@
 // ================================================================
 //  NAIJASTOCK – COMPLETE TRADING PLATFORM
-//  "Backend" using localStorage
+//  With LocalStorage "Backend"
 // ================================================================
 
 // ================================================================
@@ -49,10 +49,8 @@ function saveState() {
 // ================================================================
 
 function init() {
-    // Load saved state or use defaults
     const loaded = loadState();
     
-    // If no saved state, initialize with default values
     if (!loaded) {
         state = {
             cash: 10000,
@@ -76,8 +74,12 @@ function init() {
     
     updateUI();
     renderLearnCards();
-    renderLeaderboard();
     renderPriceHistory();
+    renderLeaderboard();
+    
+    // Start price simulation
+    setInterval(simulatePrice, 5000);
+    
     console.log('🇳🇬 NaijaStock Loaded!');
     console.log(`💰 Cash: ₦${state.cash.toFixed(2)}`);
     console.log(`📈 Shares: ${state.shares}`);
@@ -90,7 +92,7 @@ function init() {
 
 function simulatePrice() {
     // Random walk – price goes up or down
-    const change = (Math.random() - 0.48) * 25; // -12 to +13
+    const change = (Math.random() - 0.48) * 25;
     state.price = Math.max(100, state.price + change);
     state.price = Math.round(state.price * 100) / 100;
     
@@ -105,7 +107,6 @@ function simulatePrice() {
         state.priceHistory = state.priceHistory.slice(-50);
     }
     
-    // Save state
     saveState();
     updateUI();
     renderPriceHistory();
@@ -124,7 +125,6 @@ function buyShares() {
     
     // Determine which input was used
     if (quantity && quantity > 0) {
-        // Using quantity
         const totalCost = quantity * state.price;
         if (totalCost > state.cash) {
             alert(`❌ Insufficient funds! You need ₦${totalCost.toFixed(2)} but have ₦${state.cash.toFixed(2)}`);
@@ -142,7 +142,6 @@ function buyShares() {
         amountInput.value = '';
         quantityInput.value = '';
     } else if (amount && amount > 0) {
-        // Using amount
         if (amount > state.cash) {
             alert(`❌ Insufficient funds! You have ₦${state.cash.toFixed(2)}`);
             return;
@@ -171,6 +170,7 @@ function buyShares() {
     saveState();
     updateUI();
     renderPriceHistory();
+    renderLeaderboard();
 }
 
 // ================================================================
@@ -189,9 +189,7 @@ function sellShares() {
         return;
     }
     
-    // Determine which input was used
     if (quantity && quantity > 0) {
-        // Using quantity
         if (quantity > state.shares) {
             alert(`❌ You only have ${state.shares.toFixed(2)} shares.`);
             return;
@@ -209,7 +207,6 @@ function sellShares() {
         amountInput.value = '';
         quantityInput.value = '';
     } else if (amount && amount > 0) {
-        // Using amount
         const sharesToSell = amount / state.price;
         if (sharesToSell > state.shares) {
             alert(`❌ You only have ${state.shares.toFixed(2)} shares.`);
@@ -238,6 +235,7 @@ function sellShares() {
     saveState();
     updateUI();
     renderPriceHistory();
+    renderLeaderboard();
 }
 
 // ================================================================
@@ -258,7 +256,6 @@ function resetAccount() {
         userName: 'Beginner'
     };
     
-    // Add initial price history
     for (let i = 0; i < 10; i++) {
         state.priceHistory.push({
             price: 1200 + Math.random() * 100,
@@ -306,9 +303,6 @@ function updateUI() {
     document.getElementById('tradeCash').textContent = `₦${state.cash.toFixed(2)}`;
     document.getElementById('tradeShares').textContent = state.shares.toFixed(2);
     document.getElementById('tradeTotal').textContent = `₦${total.toFixed(2)}`;
-    
-    // Update leaderboard periodically
-    updateLeaderboard();
 }
 
 // ================================================================
@@ -349,7 +343,6 @@ function renderPriceHistory() {
     const list = document.getElementById('priceHistoryList');
     list.innerHTML = '';
     
-    // Show trades first, then price history
     if (state.trades.length > 0) {
         const recentTrades = state.trades.slice(-10).reverse();
         recentTrades.forEach(trade => {
@@ -364,7 +357,6 @@ function renderPriceHistory() {
             list.appendChild(div);
         });
     } else {
-        // Show price history if no trades
         const recent = state.priceHistory.slice(-10).reverse();
         recent.forEach(entry => {
             const div = document.createElement('div');
@@ -380,43 +372,107 @@ function renderPriceHistory() {
 }
 
 // ================================================================
-//  LEADERBOARD (Simulated with localStorage)
+//  LEADERBOARD
 // ================================================================
 
-let leaderboardData = [];
-
-function getLeaderboardData() {
-    // Load from localStorage
-    const saved = localStorage.getItem('naijastock_leaderboard');
-    if (saved) {
-        try {
-            leaderboardData = JSON.parse(saved);
-            return leaderboardData;
-        } catch (e) {
-            console.error('Error loading leaderboard:', e);
-        }
+function renderLeaderboard() {
+    const list = document.getElementById('leaderboardList');
+    list.innerHTML = '';
+    
+    // Get current user's profit
+    const total = state.cash + state.shares * state.price;
+    const userProfit = total - state.initialCash;
+    
+    // Get existing leaderboard or create
+    let leaderboard = JSON.parse(localStorage.getItem('naijastock_leaderboard')) || [];
+    
+    // Update current user in leaderboard if they have trades
+    if (state.trades.length > 0) {
+        // Remove existing entry for this user
+        leaderboard = leaderboard.filter(item => item.name !== 'You');
+        // Add current user
+        leaderboard.push({
+            name: 'You',
+            profit: userProfit,
+            trades: state.trades.length
+        });
+        // Sort by profit
+        leaderboard.sort((a, b) => b.profit - a.profit);
+        // Keep top 10
+        leaderboard = leaderboard.slice(0, 10);
+        localStorage.setItem('naijastock_leaderboard', JSON.stringify(leaderboard));
     }
     
-    // Generate dummy data if empty
-    if (leaderboardData.length === 0) {
-        const names = ['Chidi', 'Amara', 'Femi', 'Ngozi', 'Tunde', 'Zainab', 'Emeka', 'Sade', 'Kofi', 'Olu'];
-        for (let i = 0; i < 10; i++) {
-            leaderboardData.push({
+    // If no leaderboard data, create dummy
+    if (leaderboard.length === 0) {
+        const names = ['Chidi', 'Amara', 'Femi', 'Ngozi', 'Tunde', 'Zainab', 'Emeka', 'Sade', 'Kofi'];
+        for (let i = 0; i < 8; i++) {
+            leaderboard.push({
                 name: names[i],
-                profit: (Math.random() * 5000) - 1000,
-                trades: Math.floor(Math.random() * 20) + 1
+                profit: (Math.random() * 3000) - 500,
+                trades: Math.floor(Math.random() * 15) + 1
             });
         }
-        // Sort by profit
-        leaderboardData.sort((a, b) => b.profit - a.profit);
-        localStorage.setItem('naijastock_leaderboard', JSON.stringify(leaderboardData));
+        leaderboard.sort((a, b) => b.profit - a.profit);
+        localStorage.setItem('naijastock_leaderboard', JSON.stringify(leaderboard));
     }
     
-    return leaderboardData;
+    // Display leaderboard
+    leaderboard.forEach((item, index) => {
+        const div = document.createElement('div');
+        div.className = 'leaderboard-item';
+        const isYou = item.name === 'You';
+        div.innerHTML = `
+            <span class="rank">${index + 1}</span>
+            <span class="name">${isYou ? '⭐ ' : ''}${item.name}</span>
+            <span>${item.trades} trades</span>
+            <span class="profit ${item.profit >= 0 ? 'positive' : 'negative'}">
+                ${item.profit >= 0 ? '+' : ''}₦${item.profit.toFixed(2)}
+            </span>
+        `;
+        list.appendChild(div);
+    });
 }
 
-function updateLeaderboard() {
-    // Add current user to leaderboard if they have trades
-    if (state.trades.length > 0) {
-        const total = state.cash + state.shares * state.price;
-        const profit = total - state
+// ================================================================
+//  MENU TOGGLE (Mobile)
+// ================================================================
+
+function toggleMenu() {
+    document.getElementById('navMenu').classList.toggle('open');
+}
+
+// ================================================================
+//  KEYBOARD SHORTCUTS
+// ================================================================
+
+document.addEventListener('keydown', function(e) {
+    if (e.key === 'Enter') {
+        const active = document.activeElement;
+        if (active.id === 'tradeAmount' || active.id === 'shareQuantity') {
+            buyShares();
+        }
+    }
+});
+
+// ================================================================
+//  START!
+// ================================================================
+
+// Close mobile menu when clicking a link
+document.querySelectorAll('nav a').forEach(link => {
+    link.addEventListener('click', function(e) {
+        document.getElementById('navMenu').classList.remove('open');
+        // Update active link
+        document.querySelectorAll('nav a').forEach(a => a.classList.remove('active'));
+        this.classList.add('active');
+    });
+});
+
+// Initialize
+init();
+
+console.log('🇳🇬 NaijaStock Trading Platform Ready!');
+console.log('📈 BUY = Price goes UP');
+console.log('📉 SELL = Price goes DOWN');
+console.log('💾 All data saved in your browser (LocalStorage)');
