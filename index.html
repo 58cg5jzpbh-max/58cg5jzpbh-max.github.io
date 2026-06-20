@@ -2,470 +2,148 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
-    <title>Divinelove Ezeh - Videos</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>FinAcademy – Business & Investing</title>
     
-    <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Arial, sans-serif;
-        }
-
-        body {
-            background: #000;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            height: 100vh;
-            overflow: hidden;
-        }
-
-        .header {
-            position: fixed;
-            top: 0;
-            left: 0;
-            right: 0;
-            z-index: 100;
-            padding: 14px 20px 30px;
-            background: linear-gradient(to bottom, rgba(0, 0, 0, 0.8), transparent);
-            color: white;
-            font-size: 20px;
-            font-weight: 700;
-            text-align: center;
-            pointer-events: none;
-            max-width: 450px;
-            margin: 0 auto;
-        }
-
-        .header span {
-            color: #ff0050;
-        }
-
-        .feed-container {
-            width: 100%;
-            max-width: 450px;
-            height: 100vh;
-            overflow-y: scroll;
-            scroll-snap-type: y mandatory;
-            scroll-behavior: smooth;
-            background: #000;
-            -webkit-overflow-scrolling: touch;
-        }
-
-        .feed-container::-webkit-scrollbar {
-            display: none;
-        }
-
-        .video-wrapper, .ad-wrapper {
-            height: 100vh;
-            width: 100%;
-            scroll-snap-align: start;
-            position: relative;
-            background: #000;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            overflow: hidden;
-        }
-
-        .video-wrapper iframe {
-            width: 100%;
-            height: 100%;
-            border: none;
-            pointer-events: none;
-            position: absolute;
-            top: 0;
-            left: 0;
-            object-fit: cover;
-        }
-
-        .video-info {
-            position: absolute;
-            bottom: 100px;
-            left: 20px;
-            right: 80px;
-            color: white;
-            text-shadow: 0 2px 20px rgba(0, 0, 0, 0.9);
-            z-index: 10;
-            pointer-events: none;
-        }
-
-        .video-info h3 {
-            font-size: 17px;
-            font-weight: 600;
-            margin-bottom: 4px;
-        }
-
-        .video-info p {
-            font-size: 14px;
-            opacity: 0.8;
-        }
-
-        .side-actions {
-            position: absolute;
-            bottom: 120px;
-            right: 16px;
-            color: white;
-            text-align: center;
-            z-index: 10;
-            pointer-events: none;
-        }
-
-        .side-actions div {
-            margin-bottom: 22px;
-            font-size: 12px;
-            font-weight: 500;
-        }
-
-        .side-actions .icon {
-            font-size: 34px;
-            display: block;
-            margin-bottom: 4px;
-        }
-
-        .sound-toggle {
-            position: absolute;
-            bottom: 150px;
-            right: 16px;
-            z-index: 15;
-            background: rgba(255, 255, 255, 0.2);
-            backdrop-filter: blur(10px);
-            border: none;
-            border-radius: 50%;
-            width: 44px;
-            height: 44px;
-            font-size: 22px;
-            color: white;
-            cursor: pointer;
-            pointer-events: auto;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
-
-        .progress-bar {
-            position: absolute;
-            bottom: 0;
-            left: 0;
-            height: 3px;
-            background: linear-gradient(to right, #ff0050, #ff6b00);
-            z-index: 10;
-            width: 0%;
-            transition: width 0.1s linear;
-            pointer-events: none;
-        }
-
-        /* ===== AD STYLES ===== */
-        .ad-wrapper {
-            background: linear-gradient(145deg, #1a1a2e, #16213e, #0f3460);
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            padding: 20px;
-            text-align: center;
-        }
-
-        .ad-wrapper h2 {
-            color: #ff0050;
-            font-size: 22px;
-            margin-bottom: 10px;
-        }
-
-        .ad-wrapper p {
-            color: #aaa;
-            font-size: 14px;
-            margin-bottom: 20px;
-        }
-
-        .ad-box {
-            background: rgba(255, 255, 255, 0.05);
-            border: 2px dashed rgba(255, 255, 255, 0.15);
-            border-radius: 16px;
-            padding: 40px 20px;
-            width: 90%;
-            max-width: 400px;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-        }
-
-        .ad-box .emoji {
-            font-size: 60px;
-            margin-bottom: 12px;
-        }
-
-        .ad-box .ad-label {
-            color: #ff6b00;
-            font-size: 12px;
-            text-transform: uppercase;
-            letter-spacing: 2px;
-            font-weight: bold;
-            margin-bottom: 8px;
-        }
-
-        .ad-box .ad-title {
-            color: white;
-            font-size: 18px;
-            font-weight: 600;
-            margin-bottom: 8px;
-        }
-
-        .ad-box .ad-sub {
-            color: #888;
-            font-size: 14px;
-        }
-
-        .ad-btn {
-            margin-top: 16px;
-            padding: 12px 32px;
-            background: #ff0050;
-            border: none;
-            border-radius: 50px;
-            color: white;
-            font-weight: bold;
-            font-size: 16px;
-            cursor: pointer;
-            transition: transform 0.2s;
-        }
-
-        .ad-btn:hover {
-            transform: scale(1.05);
-        }
-
-        /* ===== SPONSOR BANNER ===== */
-        .sponsor-banner {
-            background: linear-gradient(90deg, #ff0050, #ff6b00);
-            color: white;
-            padding: 8px 16px;
-            border-radius: 50px;
-            font-size: 12px;
-            font-weight: bold;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-            margin-bottom: 12px;
-        }
-
-        /* ===== RESPONSIVE ===== */
-        @media (max-width: 450px) {
-            .video-info {
-                bottom: 80px;
-                left: 16px;
-                right: 70px;
-            }
-            .video-info h3 {
-                font-size: 15px;
-            }
-            .side-actions {
-                bottom: 100px;
-                right: 12px;
-            }
-            .side-actions .icon {
-                font-size: 28px;
-            }
-            .side-actions div {
-                margin-bottom: 18px;
-                font-size: 11px;
-            }
-            .header {
-                font-size: 17px;
-                padding: 12px 16px 25px;
-            }
-            .sound-toggle {
-                bottom: 130px;
-                width: 38px;
-                height: 38px;
-                font-size: 18px;
-            }
-            .ad-box .emoji {
-                font-size: 40px;
-            }
-        }
-    </style>
+    <!-- Link to CSS -->
+    <link rel="stylesheet" href="style.css" />
 </head>
 <body>
 
-    <div class="header">📱 <span>Divinelove</span> Ezeh</div>
-
-    <div class="feed-container" id="feedContainer">
-
-        <!-- ===== VIDEO 1 ===== -->
-        <div class="video-wrapper" data-index="0">
-            <iframe src="https://www.youtube.com/embed/dQw4w9WgXcQ?autoplay=0&mute=1&controls=0&loop=1&playlist=dQw4w9WgXcQ&modestbranding=1&rel=0&showinfo=0&disablekb=1&fs=0" allow="autoplay; encrypted-media" loading="lazy" allowfullscreen></iframe>
-            <div class="video-info"><h3>Never Gonna Give You Up</h3><p>Rick Astley</p></div>
-            <div class="side-actions"><div><span class="icon">❤️</span>0</div><div><span class="icon">💬</span>0</div><div><span class="icon">↗️</span>0</div></div>
-            <button class="sound-toggle">🔇</button>
-            <div class="progress-bar"></div>
+    <!-- ===== SIDEBAR ===== -->
+    <aside class="sidebar" id="sidebar">
+        <div class="logo">📈 <span>Fin</span>Academy</div>
+        <nav>
+            <a href="#dashboard" class="active" onclick="navigateTo('#dashboard')">
+                <span class="icon">📊</span> Dashboard
+            </a>
+            <a href="#courses" onclick="navigateTo('#courses')">
+                <span class="icon">📚</span> Courses
+            </a>
+            <a href="#ideas" onclick="navigateTo('#ideas')">
+                <span class="icon">💡</span> Business Ideas
+            </a>
+            <a href="#simulator" onclick="navigateTo('#simulator')">
+                <span class="icon">📉</span> Practice Trading
+            </a>
+            <a href="#testimonials" onclick="navigateTo('#testimonials')">
+                <span class="icon">⭐</span> Testimonials
+            </a>
+        </nav>
+        <div class="user-card">
+            <div class="avatar">👤</div>
+            <div class="name">Divinelove Ezeh</div>
+            <div class="role">Student</div>
         </div>
+    </aside>
 
-        <!-- ===== AD 1 ===== -->
-        <div class="ad-wrapper">
-            <div class="sponsor-banner">⭐ Sponsored Content</div>
-            <div class="ad-box">
-                <div class="emoji">💎</div>
-                <div class="ad-label">Advertisement</div>
-                <div class="ad-title">Get 50% Off Today!</div>
-                <div class="ad-sub">Limited time offer – Don't miss out</div>
-                <button class="ad-btn" onclick="window.open('https://www.youtube.com/@DivineloveEzeh','_blank')">Learn More →</button>
+    <!-- ===== OVERLAY ===== -->
+    <div class="overlay" id="overlay" onclick="closeSidebar()"></div>
+
+    <!-- ===== MAIN CONTENT ===== -->
+    <main class="main">
+
+        <!-- TOP BAR -->
+        <div class="topbar">
+            <div>
+                <button class="menu-toggle" onclick="toggleSidebar()">☰</button>
+                <div class="greeting">
+                    <h1>👋 Welcome back, Divinelove!</h1>
+                    <p>Learn, invest, and grow your wealth</p>
+                </div>
             </div>
-            <p style="color:#555; font-size:11px; margin-top:16px;">Ads keep this content free ❤️</p>
-        </div>
-
-        <!-- ===== VIDEO 2 ===== -->
-        <div class="video-wrapper" data-index="1">
-            <iframe src="https://www.youtube.com/embed/9bZkp7q19f0?autoplay=0&mute=1&controls=0&loop=1&playlist=9bZkp7q19f0&modestbranding=1&rel=0&showinfo=0&disablekb=1&fs=0" allow="autoplay; encrypted-media" loading="lazy" allowfullscreen></iframe>
-            <div class="video-info"><h3>Gangnam Style</h3><p>PSY</p></div>
-            <div class="side-actions"><div><span class="icon">❤️</span>0</div><div><span class="icon">💬</span>0</div><div><span class="icon">↗️</span>0</div></div>
-            <button class="sound-toggle">🔇</button>
-            <div class="progress-bar"></div>
-        </div>
-
-        <!-- ===== AD 2 ===== -->
-        <div class="ad-wrapper">
-            <div class="sponsor-banner">📢 Partner Promotion</div>
-            <div class="ad-box">
-                <div class="emoji">🎵</div>
-                <div class="ad-label">Advertisement</div>
-                <div class="ad-title">Stream Music Free!</div>
-                <div class="ad-sub">Listen to your favorite songs</div>
-                <button class="ad-btn" onclick="window.open('https://www.youtube.com/@DivineloveEzeh','_blank')">Try Now →</button>
+            <div class="actions">
+                <span class="badge">🚀 5 New Lessons</span>
+                <button class="btn-notif" onclick="alert('📬 No new notifications')">🔔</button>
             </div>
-            <p style="color:#555; font-size:11px; margin-top:16px;">Support the channel ❤️</p>
         </div>
 
-        <!-- ===== VIDEO 3 ===== -->
-        <div class="video-wrapper" data-index="2">
-            <iframe src="https://www.youtube.com/embed/3JZ_D3ELwOQ?autoplay=0&mute=1&controls=0&loop=1&playlist=3JZ_D3ELwOQ&modestbranding=1&rel=0&showinfo=0&disablekb=1&fs=0" allow="autoplay; encrypted-media" loading="lazy" allowfullscreen></iframe>
-            <div class="video-info"><h3>Baby Shark Dance</h3><p>Pinkfong</p></div>
-            <div class="side-actions"><div><span class="icon">❤️</span>0</div><div><span class="icon">💬</span>0</div><div><span class="icon">↗️</span>0</div></div>
-            <button class="sound-toggle">🔇</button>
-            <div class="progress-bar"></div>
-        </div>
-
-        <!-- ===== AD 3 ===== -->
-        <div class="ad-wrapper">
-            <div class="sponsor-banner">🔥 Featured</div>
-            <div class="ad-box">
-                <div class="emoji">📱</div>
-                <div class="ad-label">Advertisement</div>
-                <div class="ad-title">Download Free App</div>
-                <div class="ad-sub">Join millions of users</div>
-                <button class="ad-btn" onclick="window.open('https://www.youtube.com/@DivineloveEzeh','_blank')">Download →</button>
+        <!-- DASHBOARD / STATS -->
+        <section id="dashboard">
+            <div class="stats-grid">
+                <div class="stat-card">
+                    <div class="label">📚 Courses Completed</div>
+                    <div class="value gold">4 / 12</div>
+                </div>
+                <div class="stat-card">
+                    <div class="label">💡 Business Ideas</div>
+                    <div class="value green">14+</div>
+                </div>
+                <div class="stat-card">
+                    <div class="label">💰 Virtual Portfolio</div>
+                    <div class="value purple" id="dashboardPortfolio">$10,000.00</div>
+                </div>
+                <div class="stat-card">
+                    <div class="label">📈 Daily Streak</div>
+                    <div class="value blue">7 Days 🔥</div>
+                </div>
             </div>
-            <p style="color:#555; font-size:11px; margin-top:16px;">Ads keep this content free ❤️</p>
-        </div>
+        </section>
 
-        <!-- ===== VIDEO 4 ===== -->
-        <div class="video-wrapper" data-index="3">
-            <iframe src="https://www.youtube.com/embed/kJQP7kiw5Fk?autoplay=0&mute=1&controls=0&loop=1&playlist=kJQP7kiw5Fk&modestbranding=1&rel=0&showinfo=0&disablekb=1&fs=0" allow="autoplay; encrypted-media" loading="lazy" allowfullscreen></iframe>
-            <div class="video-info"><h3>Despacito</h3><p>Luis Fonsi</p></div>
-            <div class="side-actions"><div><span class="icon">❤️</span>0</div><div><span class="icon">💬</span>0</div><div><span class="icon">↗️</span>0</div></div>
-            <button class="sound-toggle">🔇</button>
-            <div class="progress-bar"></div>
-        </div>
+        <!-- COURSES -->
+        <section id="courses">
+            <div class="section-title">📚 <span>Investment</span> Courses</div>
+            <div class="section-desc">From beginner to advanced – learn at your own pace</div>
+            <div class="course-grid" id="courseGrid"></div>
+        </section>
 
-        <!-- ===== AD 4 ===== -->
-        <div class="ad-wrapper">
-            <div class="sponsor-banner">💫 Sponsor</div>
-            <div class="ad-box">
-                <div class="emoji">🎮</div>
-                <div class="ad-label">Advertisement</div>
-                <div class="ad-title">Play Free Games</div>
-                <div class="ad-sub">No downloads required</div>
-                <button class="ad-btn" onclick="window.open('https://www.youtube.com/@DivineloveEzeh','_blank')">Play Now →</button>
+        <!-- BUSINESS IDEAS -->
+        <section id="ideas">
+            <div class="section-title">💡 <span>Business</span> Ideas</div>
+            <div class="section-desc">Profitable ideas you can start with low investment</div>
+            <div class="idea-grid" id="ideaGrid"></div>
+            <button class="btn btn-gold" id="loadMoreBtn" onclick="loadMoreIdeas()">Load More Ideas →</button>
+        </section>
+
+        <!-- TRADING SIMULATOR -->
+        <section id="simulator">
+            <div class="section-title">📉 <span>Practice</span> Trading</div>
+            <div class="section-desc">Learn without risking real money – trade with virtual cash</div>
+
+            <div class="simulator">
+                <div class="price-row">
+                    <div>
+                        <div style="color:#9ca3af;font-size:13px;">BTC/USD</div>
+                        <div class="price" id="simPrice">$45,200.00</div>
+                    </div>
+                    <div style="text-align:right;">
+                        <div style="color:#9ca3af;font-size:13px;">24h Change</div>
+                        <div class="change green" id="simChange">+2.4%</div>
+                    </div>
+                </div>
+
+                <div class="trade-row">
+                    <input type="number" id="tradeAmount" placeholder="Amount in $" min="1" step="1" />
+                    <button class="btn btn-buy" onclick="simBuy()">🟢 Buy</button>
+                    <button class="btn btn-sell" onclick="simSell()">🔴 Sell</button>
+                    <button class="btn btn-reset" onclick="simReset()">🔄 Reset</button>
+                </div>
+
+                <div class="balance">
+                    💰 Cash: <span id="simCash">$10,000.00</span> &nbsp;|&nbsp; 📈 Shares: <span id="simShares">0</span> &nbsp;|&nbsp; 💎 Total: <span id="simTotal">$10,000.00</span>
+                </div>
+                <div class="hint">
+                    ⚡ Price changes with every buy/sell – learn supply and demand!
+                </div>
             </div>
-            <p style="color:#555; font-size:11px; margin-top:16px;">Support the channel ❤️</p>
+        </section>
+
+        <!-- TESTIMONIALS -->
+        <section id="testimonials">
+            <div class="section-title">⭐ What <span>Students</span> Say</div>
+            <div class="section-desc">Real stories from people who transformed their financial future</div>
+            <div class="test-grid" id="testGrid"></div>
+        </section>
+
+        <!-- DISCLAIMER -->
+        <div class="disclaimer">
+            <strong>⚠️ Educational Purpose Only:</strong> This website is for learning and informational purposes. It does not constitute financial, investment, or legal advice. Always consult a licensed professional.
         </div>
 
-    </div>
+    </main>
 
-    <!-- ===== JAVASCRIPT FOR AUTO-PLAY & SOUND ===== -->
-    <script>
-        const container = document.getElementById('feedContainer');
-        let currentIndex = -1;
-        let isMuted = true;
-
-        function playVideo(wrapper) {
-            if (!wrapper) return;
-            const iframe = wrapper.querySelector('iframe');
-            if (!iframe) return;
-
-            // Stop all other videos
-            document.querySelectorAll('.video-wrapper iframe').forEach(other => {
-                if (other !== iframe) {
-                    let src = other.src;
-                    src = src.replace(/autoplay=[01]/, 'autoplay=0');
-                    other.src = src;
-                }
-            });
-
-            // Play this video
-            let src = iframe.src;
-            src = src.replace(/autoplay=[01]/, 'autoplay=1');
-            src = src.replace(/mute=[01]/, `mute=${isMuted ? 1 : 0}`);
-            iframe.src = src;
-
-            // Update sound button
-            const btn = wrapper.querySelector('.sound-toggle');
-            if (btn) {
-                btn.textContent = isMuted ? '🔇' : '🔊';
-                btn.dataset.muted = isMuted;
-            }
-        }
-
-        // Sound toggle
-        document.addEventListener('click', function(e) {
-            const btn = e.target.closest('.sound-toggle');
-            if (!btn) return;
-
-            const wrapper = btn.closest('.video-wrapper');
-            if (!wrapper) return;
-
-            const iframe = wrapper.querySelector('iframe');
-            if (!iframe) return;
-
-            isMuted = !isMuted;
-            btn.textContent = isMuted ? '🔇' : '🔊';
-            btn.dataset.muted = isMuted;
-
-            let src = iframe.src;
-            src = src.replace(/mute=[01]/, `mute=${isMuted ? 1 : 0}`);
-            iframe.src = src;
-        });
-
-        // Scroll detection
-        container.addEventListener('scroll', function() {
-            const wrappers = document.querySelectorAll('.video-wrapper');
-            let newIndex = -1;
-
-            wrappers.forEach((wrapper, index) => {
-                const rect = wrapper.getBoundingClientRect();
-                const containerRect = container.getBoundingClientRect();
-                if (rect.top <= containerRect.top + containerRect.height / 2 &&
-                    rect.bottom >= containerRect.top + containerRect.height / 2) {
-                    newIndex = index;
-                }
-            });
-
-            if (newIndex !== currentIndex) {
-                currentIndex = newIndex;
-                if (newIndex >= 0 && newIndex < wrappers.length) {
-                    playVideo(wrappers[newIndex]);
-                }
-            }
-        });
-
-        // Start first video
-        setTimeout(() => {
-            const first = document.querySelector('.video-wrapper');
-            if (first) {
-                currentIndex = 0;
-                playVideo(first);
-            }
-        }, 500);
-    </script>
+    <!-- Link to JavaScript -->
+    <script src="script.js"></script>
 
 </body>
 </html>
