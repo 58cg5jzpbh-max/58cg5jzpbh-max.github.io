@@ -1,236 +1,250 @@
 // ================================================================
-//  DIVINELOVE EZEH – YOUR YOUTUBE CHANNEL VIDEOS
+//  SIDEBAR TOGGLE
 // ================================================================
 
-// Your Channel ID
-const CHANNEL_ID = 'UC9sjVKNLqGWW1EjcEBny6xQ';
+function toggleSidebar() {
+    document.getElementById('sidebar').classList.toggle('open');
+    document.getElementById('overlay').classList.toggle('show');
+}
 
-// Your YouTube API Key
-const API_KEY = 'AIzaSyCyGfLFk_WgLWvbplqVJ1_oOtkaTDm2X5Q';
+function closeSidebar() {
+    document.getElementById('sidebar').classList.remove('open');
+    document.getElementById('overlay').classList.remove('show');
+}
 
-// ================================================================
-//  FETCH YOUR VIDEOS FROM YOUTUBE
-// ================================================================
+function navigateTo(sectionId) {
+    // Update active link
+    document.querySelectorAll('.sidebar nav a').forEach(a => a.classList.remove('active'));
+    const target = document.querySelector(`.sidebar nav a[href="${sectionId}"]`);
+    if (target) target.classList.add('active');
 
-const feed = document.getElementById('feed');
-const loading = document.getElementById('loading');
-const container = document.getElementById('feedContainer');
+    // Close sidebar on mobile
+    closeSidebar();
 
-let currentVideoIndex = -1;
-let isMuted = true;
-let allVideos = [];
-
-// ================================================================
-//  FETCH VIDEOS FROM YOUR CHANNEL
-// ================================================================
-
-async function fetchMyVideos() {
-    try {
-        loading.classList.remove('hidden');
-        loading.textContent = '📡 Loading your videos from YouTube...';
-        
-        const url = `https://www.googleapis.com/youtube/v3/search?key=${API_KEY}&channelId=${CHANNEL_ID}&part=snippet,id&order=date&maxResults=50&type=video`;
-        
-        const response = await fetch(url);
-        const data = await response.json();
-
-        console.log('YouTube Response:', data);
-
-        if (data.error) {
-            alert('❌ API Error: ' + data.error.message + '\n\nCheck your API key and Channel ID.');
-            loading.textContent = '⚠️ Error loading videos';
-            return;
-        }
-
-        allVideos = data.items
-            .filter(item => item.id.videoId)
-            .map(item => ({
-                id: item.id.videoId,
-                title: item.snippet.title,
-                channel: item.snippet.channelTitle
-            }));
-
-        if (allVideos.length === 0) {
-            loading.textContent = '📹 No videos found on your channel. Upload your first video!';
-            loading.style.opacity = '0.8';
-            return;
-        }
-
-        console.log(`✅ Found ${allVideos.length} videos from your channel!`);
-        renderVideos(allVideos);
-
-    } catch (error) {
-        console.error('Error:', error);
-        alert('⚠️ Network error. Please check your connection.');
+    // Scroll to section
+    const section = document.querySelector(sectionId);
+    if (section) {
+        section.scrollIntoView({ behavior: 'smooth' });
     }
 }
 
 // ================================================================
-//  RENDER VIDEOS
+//  COURSES DATA
 // ================================================================
 
-function renderVideos(videos) {
-    feed.innerHTML = '';
-    
-    videos.forEach((video, index) => {
-        const wrapper = document.createElement('div');
-        wrapper.className = 'video-wrapper';
-        wrapper.dataset.index = index;
-        
-        wrapper.innerHTML = `
-            <iframe 
-                id="player-${index}"
-                src="https://www.youtube.com/embed/${video.id}?autoplay=0&mute=1&controls=0&loop=1&playlist=${video.id}&modestbranding=1&rel=0&showinfo=0&disablekb=1&fs=0"
-                allow="autoplay; encrypted-media; accelerometer; gyroscope"
-                loading="lazy"
-                allowfullscreen
-            ></iframe>
-            
-            <div class="video-info">
-                <h3>${video.title}</h3>
-                <p>${video.channel}</p>
-            </div>
-            
-            <div class="side-actions">
-                <div class="like-btn" data-likes="0">
-                    <span class="icon">❤️</span>
-                    <span class="like-count">0</span>
-                </div>
-                <div><span class="icon">💬</span>0</div>
-                <div><span class="icon">↗️</span>0</div>
-            </div>
+const courses = [
+    { emoji: '📊', title: 'Stock Market Basics', desc: 'Learn how the stock market works, what drives prices, and how to start investing.', tag: 'Beginner' },
+    { emoji: '📈', title: 'Technical Analysis', desc: 'Read charts, identify trends, and use indicators to make better trades.', tag: 'Intermediate' },
+    { emoji: '🏦', title: 'Value Investing', desc: 'Find undervalued stocks, analyze financials, and build a long-term portfolio.', tag: 'Advanced' },
+    { emoji: '🛡️', title: 'Risk Management', desc: 'Protect your capital with proven risk management strategies.', tag: 'Essential' },
+    { emoji: '🌍', title: 'Global Markets', desc: 'Explore international markets, forex, and global economic impacts.', tag: 'Advanced' },
+    { emoji: '🤖', title: 'AI & Trading', desc: 'Understand how AI is transforming trading and how to leverage it.', tag: 'Cutting-Edge' },
+];
 
-            <button class="sound-toggle" data-muted="true" data-index="${index}">
-                🔇
-            </button>
-            <div class="progress-bar"></div>
+const courseGrid = document.getElementById('courseGrid');
+courses.forEach(c => {
+    const div = document.createElement('div');
+    div.className = 'course-card';
+    div.innerHTML = `
+        <div class="emoji">${c.emoji}</div>
+        <h3>${c.title}</h3>
+        <p>${c.desc}</p>
+        <span class="tag">${c.tag}</span>
+    `;
+    courseGrid.appendChild(div);
+});
+
+// ================================================================
+//  BUSINESS IDEAS DATA
+// ================================================================
+
+const allIdeas = [
+    { title: '📱 Digital Marketing Agency', desc: 'Help businesses grow with social media, SEO, and ads.', profit: 'High Profit' },
+    { title: '🛒 E-commerce Store', desc: 'Sell products online with Shopify or dropshipping.', profit: 'Scalable' },
+    { title: '📊 Financial Coaching', desc: 'Teach people to manage money and build wealth.', profit: 'Recurring Income' },
+    { title: '🍔 Food Delivery Service', desc: 'Partner with local restaurants to deliver meals.', profit: 'Growing Demand' },
+    { title: '📚 Online Course Creator', desc: 'Turn expertise into a course and sell it.', profit: 'Passive Income' },
+    { title: '💻 Web Development Agency', desc: 'Build websites and apps for small businesses.', profit: 'High Demand' },
+    { title: '🌱 Organic Farming', desc: 'Grow and sell organic vegetables to local markets.', profit: 'Sustainable' },
+    { title: '🎥 Video Production', desc: 'Create videos for businesses and social media.', profit: 'Creative + Profitable' },
+    { title: '🧠 AI Consulting', desc: 'Help businesses implement AI and automation.', profit: 'Future-Proof' },
+    { title: '🏠 Real Estate Investing', desc: 'Buy, renovate, and rent or sell properties.', profit: 'Long-Term Wealth' },
+    { title: '👕 Print-on-Demand', desc: 'Sell custom-designed merchandise online.', profit: 'Low Startup Cost' },
+    { title: '✍️ Content Writing', desc: 'Write blog posts, articles, and copy for businesses.', profit: 'Flexible' },
+    { title: '☕ Coffee Shop', desc: 'Open a specialty coffee shop with unique offerings.', profit: 'Steady Income' },
+    { title: '🧘 Wellness Coaching', desc: 'Offer yoga, meditation, or holistic health coaching.', profit: 'Growing Demand' },
+];
+
+let displayedIdeas = 0;
+const IDEAS_PER_PAGE = 6;
+
+function loadMoreIdeas() {
+    const grid = document.getElementById('ideaGrid');
+    const start = displayedIdeas;
+    const end = Math.min(start + IDEAS_PER_PAGE, allIdeas.length);
+
+    for (let i = start; i < end; i++) {
+        const idea = allIdeas[i];
+        const div = document.createElement('div');
+        div.className = 'idea-item';
+        div.innerHTML = `
+            <h4>${idea.title}</h4>
+            <p>${idea.desc}</p>
+            <div class="profit">💰 ${idea.profit}</div>
         `;
-
-        feed.appendChild(wrapper);
-
-        // --- SOUND TOGGLE ---
-        const soundBtn = wrapper.querySelector('.sound-toggle');
-        const iframe = wrapper.querySelector('iframe');
-        
-        soundBtn.addEventListener('click', function(e) {
-            e.stopPropagation();
-            e.preventDefault();
-            
-            isMuted = !isMuted;
-            this.dataset.muted = isMuted;
-            this.textContent = isMuted ? '🔇' : '🔊';
-            
-            let src = iframe.src;
-            src = src.replace(/mute=[01]/, `mute=${isMuted ? 1 : 0}`);
-            iframe.src = src;
-        });
-
-        // --- DOUBLE TAP LIKE ---
-        wrapper.addEventListener('dblclick', function(e) {
-            e.preventDefault();
-            const likeBtn = this.querySelector('.like-btn');
-            let count = parseInt(likeBtn.dataset.likes) || 0;
-            count++;
-            likeBtn.dataset.likes = count;
-            likeBtn.querySelector('.like-count').textContent = count;
-        });
-    });
-
-    loading.classList.add('hidden');
-}
-
-// ================================================================
-//  STOP ALL OTHER VIDEOS
-// ================================================================
-
-function stopAllVideosExcept(currentWrapper) {
-    const allIframes = document.querySelectorAll('.video-wrapper iframe');
-    const currentIframe = currentWrapper ? currentWrapper.querySelector('iframe') : null;
-    
-    allIframes.forEach(iframe => {
-        if (iframe !== currentIframe) {
-            let src = iframe.src;
-            src = src.replace(/autoplay=[01]/, 'autoplay=0');
-            iframe.src = src;
-        }
-    });
-}
-
-// ================================================================
-//  PLAY CURRENT VIDEO
-// ================================================================
-
-function playVideo(wrapper) {
-    if (!wrapper) return;
-    
-    const iframe = wrapper.querySelector('iframe');
-    const soundBtn = wrapper.querySelector('.sound-toggle');
-    
-    stopAllVideosExcept(wrapper);
-    
-    let src = iframe.src;
-    src = src.replace(/autoplay=[01]/, 'autoplay=1');
-    src = src.replace(/mute=[01]/, `mute=${isMuted ? 1 : 0}`);
-    iframe.src = src;
-    
-    soundBtn.style.display = 'flex';
-    soundBtn.textContent = isMuted ? '🔇' : '🔊';
-}
-
-// ================================================================
-//  SCROLL HANDLER
-// ================================================================
-
-container.addEventListener('scroll', function() {
-    const wrappers = document.querySelectorAll('.video-wrapper');
-    let newIndex = -1;
-
-    wrappers.forEach((wrapper, index) => {
-        const rect = wrapper.getBoundingClientRect();
-        const containerRect = container.getBoundingClientRect();
-        
-        if (rect.top <= containerRect.top + containerRect.height / 2 &&
-            rect.bottom >= containerRect.top + containerRect.height / 2) {
-            newIndex = index;
-        }
-    });
-
-    if (newIndex !== currentVideoIndex) {
-        currentVideoIndex = newIndex;
-        if (newIndex >= 0 && newIndex < wrappers.length) {
-            playVideo(wrappers[newIndex]);
-        }
+        grid.appendChild(div);
     }
+
+    displayedIdeas = end;
+
+    // Hide button if all loaded
+    if (displayedIdeas >= allIdeas.length) {
+        document.getElementById('loadMoreBtn').style.display = 'none';
+    }
+}
+
+// Load initial ideas
+loadMoreIdeas();
+
+// ================================================================
+//  TESTIMONIALS DATA
+// ================================================================
+
+const testimonials = [
+    { name: 'Sarah Johnson', role: 'Entrepreneur', text: 'I went from knowing nothing about stocks to making my first profitable trade. This platform changed my life!', stars: 5 },
+    { name: 'Michael Okafor', role: 'Business Owner', text: 'The business ideas section gave me the confidence to start my own e-commerce store.', stars: 5 },
+    { name: 'Grace Adeyemi', role: 'Student', text: 'The practice trading simulator helped me understand the market without risking my savings.', stars: 4 },
+];
+
+const testGrid = document.getElementById('testGrid');
+testimonials.forEach(t => {
+    const div = document.createElement('div');
+    div.className = 'test-card';
+    div.innerHTML = `
+        <div class="stars">${'⭐'.repeat(t.stars)}</div>
+        <blockquote>"${t.text}"</blockquote>
+        <div class="name">— ${t.name}</div>
+        <div class="role">${t.role}</div>
+    `;
+    testGrid.appendChild(div);
 });
 
 // ================================================================
-//  KEYBOARD CONTROLS
+//  TRADING SIMULATOR
 // ================================================================
 
-document.addEventListener('keydown', function(e) {
-    if (e.key === 'ArrowDown' || e.key === 'ArrowUp') {
-        e.preventDefault();
-        const wrappers = document.querySelectorAll('.video-wrapper');
-        let targetIndex = currentVideoIndex + (e.key === 'ArrowDown' ? 1 : -1);
-        targetIndex = Math.max(0, Math.min(targetIndex, wrappers.length - 1));
-        if (wrappers[targetIndex]) {
-            wrappers[targetIndex].scrollIntoView({ behavior: 'smooth' });
-        }
+let simPrice = 45200;
+let simCash = 10000;
+let simShares = 0;
+let simTotal = 10000;
+
+const simPriceDisplay = document.getElementById('simPrice');
+const simChangeDisplay = document.getElementById('simChange');
+const simCashDisplay = document.getElementById('simCash');
+const simSharesDisplay = document.getElementById('simShares');
+const simTotalDisplay = document.getElementById('simTotal');
+const dashboardPortfolio = document.getElementById('dashboardPortfolio');
+const tradeInput = document.getElementById('tradeAmount');
+
+function updateSimUI() {
+    simTotal = simCash + (simShares * simPrice);
+    simPriceDisplay.textContent = `$${simPrice.toFixed(2)}`;
+    simPriceDisplay.className = simPrice >= 45200 ? 'price' : 'price down';
+    simCashDisplay.textContent = `$${simCash.toFixed(2)}`;
+    simSharesDisplay.textContent = simShares.toFixed(2);
+    simTotalDisplay.textContent = `$${simTotal.toFixed(2)}`;
+    if (dashboardPortfolio) {
+        dashboardPortfolio.textContent = `$${simTotal.toFixed(2)}`;
     }
-    
-    if (e.key === 'm' || e.key === 'M') {
-        const wrapper = document.querySelectorAll('.video-wrapper')[currentVideoIndex];
-        if (wrapper) {
-            const soundBtn = wrapper.querySelector('.sound-toggle');
-            soundBtn.click();
-        }
+}
+
+function simBuy() {
+    const amount = parseFloat(tradeInput.value);
+    if (!amount || amount <= 0) {
+        alert('Please enter a valid USD amount.');
+        return;
+    }
+    if (amount > simCash) {
+        alert(`You only have $${simCash.toFixed(2)} in cash.`);
+        return;
+    }
+
+    const sharesBought = amount / simPrice;
+    simCash -= amount;
+    simShares += sharesBought;
+    simPrice = simPrice * (1 + (sharesBought / 1000) * 0.012);
+
+    const change = ((simPrice - 45200) / 45200 * 100);
+    simChangeDisplay.textContent = `${change >= 0 ? '+' : ''}${change.toFixed(1)}%`;
+    simChangeDisplay.className = `change ${change >= 0 ? 'green' : 'red'}`;
+
+    updateSimUI();
+    tradeInput.value = '';
+}
+
+function simSell() {
+    const amount = parseFloat(tradeInput.value);
+    if (!amount || amount <= 0) {
+        alert('Please enter a valid USD amount.');
+        return;
+    }
+
+    const sharesToSell = amount / simPrice;
+    if (sharesToSell > simShares) {
+        alert(`You only have ${simShares.toFixed(2)} shares.`);
+        return;
+    }
+
+    simCash += amount;
+    simShares -= sharesToSell;
+    simPrice = simPrice * (1 - (sharesToSell / 1000) * 0.01);
+
+    const change = ((simPrice - 45200) / 45200 * 100);
+    simChangeDisplay.textContent = `${change >= 0 ? '+' : ''}${change.toFixed(1)}%`;
+    simChangeDisplay.className = `change ${change >= 0 ? 'green' : 'red'}`;
+
+    updateSimUI();
+    tradeInput.value = '';
+}
+
+function simReset() {
+    if (!confirm('Reset your practice account?')) return;
+    simPrice = 45200;
+    simCash = 10000;
+    simShares = 0;
+    simTotal = 10000;
+    simChangeDisplay.textContent = '+2.4%';
+    simChangeDisplay.className = 'change green';
+    updateSimUI();
+    tradeInput.value = '';
+}
+
+// Enter key to buy
+document.addEventListener('keydown', (e) => {
+    if (e.key === 'Enter' && document.activeElement === tradeInput) {
+        simBuy();
     }
 });
 
+// Initial UI
+updateSimUI();
+
 // ================================================================
-//  START! – FETCH YOUR REAL YOUTUBE VIDEOS
+//  SMOOTH SCROLL FOR NAV LINKS
 // ================================================================
 
-fetchMyVideos();
-console.log('📹 Divinelove Ezeh – Your YouTube Videos');
-console.log(`🎯 Channel ID: ${CHANNEL_ID}`);
+document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+    anchor.addEventListener('click', function(e) {
+        const target = document.querySelector(this.getAttribute('href'));
+        if (target) {
+            e.preventDefault();
+            target.scrollIntoView({ behavior: 'smooth' });
+        }
+    });
+});
+
+console.log('📈 FinAcademy Loaded!');
+console.log('📚 Courses:', courses.length);
+console.log('💼 Business Ideas:', allIdeas.length);
+console.log('📊 Practice Trading Simulator Ready!');
+console.log('⚠️ Educational purposes only – Not financial advice.');
