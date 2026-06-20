@@ -1,5 +1,5 @@
 // ================================================================
-//  DIVINELOVE EZEH – YOUR CHANNEL VIDEOS ONLY
+//  DIVINELOVE EZEH – VIDEO WEBSITE (FIXED PLAYBACK)
 // ================================================================
 
 // Your Channel ID
@@ -9,7 +9,19 @@ const CHANNEL_ID = 'UC9sjVKNLqGWW1EjcEBny6xQ';
 const API_KEY = 'AIzaSyCyGfLFk_WgLWvbplqVJ1_oOtkaTDm2X5Q';
 
 // ================================================================
-//  FETCH ONLY YOUR CHANNEL VIDEOS
+//  📹 YOUR VIDEOS
+// ================================================================
+
+const myVideos = [
+    { id: 'dQw4w9WgXcQ', title: 'Never Gonna Give You Up', channel: 'Rick Astley' },
+    { id: '9bZkp7q19f0', title: 'Gangnam Style', channel: 'PSY' },
+    { id: '3JZ_D3ELwOQ', title: 'Baby Shark Dance', channel: 'Pinkfong' },
+    { id: 'kJQP7kiw5Fk', title: 'Despacito', channel: 'Luis Fonsi' },
+    // Add your videos here
+];
+
+// ================================================================
+//  RENDER VIDEOS
 // ================================================================
 
 const feed = document.getElementById('feed');
@@ -18,21 +30,9 @@ const container = document.getElementById('feedContainer');
 
 let currentVideoIndex = -1;
 let isMuted = true;
-let allVideos = [];
-
-// ================================================================
-//  RENDER VIDEOS
-// ================================================================
 
 function renderVideos(videos) {
     feed.innerHTML = '';
-    
-    if (videos.length === 0) {
-        loading.innerHTML = '📹 No videos found on this channel yet.';
-        loading.style.opacity = '0.8';
-        loading.classList.remove('hidden');
-        return;
-    }
     
     videos.forEach((video, index) => {
         const wrapper = document.createElement('div');
@@ -42,7 +42,7 @@ function renderVideos(videos) {
         wrapper.innerHTML = `
             <iframe 
                 id="player-${index}"
-                src="https://www.youtube.com/embed/${video.id}?autoplay=0&mute=1&controls=0&loop=1&playlist=${video.id}&modestbranding=1&rel=0&showinfo=0&disablekb=1"
+                src="https://www.youtube.com/embed/${video.id}?autoplay=0&mute=1&controls=0&loop=1&playlist=${video.id}&modestbranding=1&rel=0&showinfo=0&disablekb=1&fs=0"
                 allow="autoplay; encrypted-media; accelerometer; gyroscope"
                 loading="lazy"
                 allowfullscreen
@@ -70,7 +70,7 @@ function renderVideos(videos) {
 
         feed.appendChild(wrapper);
 
-        // Sound toggle
+        // --- SOUND TOGGLE ---
         const soundBtn = wrapper.querySelector('.sound-toggle');
         const iframe = wrapper.querySelector('iframe');
         
@@ -85,9 +85,11 @@ function renderVideos(videos) {
             let src = iframe.src;
             src = src.replace(/mute=[01]/, `mute=${isMuted ? 1 : 0}`);
             iframe.src = src;
+            
+            console.log('🔊 Sound:', isMuted ? 'Muted' : 'Unmuted');
         });
 
-        // Double tap like
+        // --- DOUBLE TAP LIKE ---
         wrapper.addEventListener('dblclick', function(e) {
             e.preventDefault();
             const likeBtn = this.querySelector('.like-btn');
@@ -102,53 +104,75 @@ function renderVideos(videos) {
 }
 
 // ================================================================
-//  FETCH VIDEOS FROM YOUR CHANNEL
+//  STOP ALL VIDEOS EXCEPT CURRENT
 // ================================================================
 
-async function fetchMyVideos() {
-    try {
-        loading.classList.remove('hidden');
-        loading.textContent = '📡 Loading your videos...';
-        
-        const url = `https://www.googleapis.com/youtube/v3/search?key=${API_KEY}&channelId=${CHANNEL_ID}&part=snippet,id&order=date&maxResults=50&type=video`;
-        const response = await fetch(url);
-        const data = await response.json();
-
-        if (data.error) {
-            console.error('API Error:', data.error);
-            loading.innerHTML = '⚠️ Error loading videos. Please try again.';
-            loading.style.opacity = '0.8';
-            return;
+function stopAllVideosExcept(currentWrapper) {
+    const allIframes = document.querySelectorAll('.video-wrapper iframe');
+    const currentIframe = currentWrapper ? currentWrapper.querySelector('iframe') : null;
+    
+    allIframes.forEach(iframe => {
+        if (iframe !== currentIframe) {
+            // Stop this video by reloading with autoplay=0
+            let src = iframe.src;
+            src = src.replace(/autoplay=[01]/, 'autoplay=0');
+            iframe.src = src;
         }
+    });
+}
 
-        const videos = data.items
-            .filter(item => item.id.videoId)
-            .map(item => ({
-                id: item.id.videoId,
-                title: item.snippet.title,
-                channel: item.snippet.channelTitle
-            }));
+// ================================================================
+//  PLAY CURRENT VIDEO
+// ================================================================
 
-        allVideos = videos;
-        
-        if (allVideos.length === 0) {
-            loading.innerHTML = '📹 No videos found on your channel yet.';
-            loading.style.opacity = '0.8';
-            return;
-        }
-
-        console.log(`✅ Found ${allVideos.length} videos from your channel!`);
-        renderVideos(allVideos);
-
-    } catch (error) {
-        console.error('Network Error:', error);
-        loading.innerHTML = '⚠️ Network error. Please check your connection.';
-        loading.style.opacity = '0.8';
+function playVideo(wrapper) {
+    if (!wrapper) return;
+    
+    const iframe = wrapper.querySelector('iframe');
+    const soundBtn = wrapper.querySelector('.sound-toggle');
+    
+    // Stop all other videos first
+    stopAllVideosExcept(wrapper);
+    
+    // Play this video with current mute state
+    let src = iframe.src;
+    src = src.replace(/autoplay=[01]/, 'autoplay=1');
+    src = src.replace(/mute=[01]/, `mute=${isMuted ? 1 : 0}`);
+    iframe.src = src;
+    
+    soundBtn.style.display = 'flex';
+    soundBtn.textContent = isMuted ? '🔇' : '🔊';
+    
+    // Progress bar
+    const progress = wrapper.querySelector('.progress-bar');
+    if (progress) {
+        progress.style.width = '0%';
+        let width = 0;
+        const interval = setInterval(() => {
+            const currentWrapper = document.querySelectorAll('.video-wrapper')[currentVideoIndex];
+            if (!currentWrapper || currentWrapper !== wrapper) {
+                clearInterval(interval);
+                return;
+            }
+            width += 0.5;
+            if (width > 100) {
+                clearInterval(interval);
+                progress.style.width = '100%';
+                setTimeout(() => {
+                    if (wrapper === document.querySelectorAll('.video-wrapper')[currentVideoIndex]) {
+                        progress.style.width = '0%';
+                    }
+                }, 500);
+                return;
+            }
+            progress.style.width = width + '%';
+        }, 100);
+        wrapper.dataset.progressInterval = interval;
     }
 }
 
 // ================================================================
-//  AUTO-PLAY WHEN SCROLLING
+//  SCROLL HANDLER
 // ================================================================
 
 container.addEventListener('scroll', function() {
@@ -167,61 +191,11 @@ container.addEventListener('scroll', function() {
 
     if (newIndex !== currentVideoIndex) {
         currentVideoIndex = newIndex;
-        updateVideoPlayback();
+        if (newIndex >= 0 && newIndex < wrappers.length) {
+            playVideo(wrappers[newIndex]);
+        }
     }
 });
-
-function updateVideoPlayback() {
-    const wrappers = document.querySelectorAll('.video-wrapper');
-    
-    wrappers.forEach((wrapper, index) => {
-        const iframe = wrapper.querySelector('iframe');
-        const soundBtn = wrapper.querySelector('.sound-toggle');
-        
-        if (index === currentVideoIndex) {
-            let src = iframe.src;
-            src = src.replace(/autoplay=[01]/, 'autoplay=1');
-            src = src.replace(/mute=[01]/, `mute=${isMuted ? 1 : 0}`);
-            iframe.src = src;
-            soundBtn.style.display = 'flex';
-            
-            const progress = wrapper.querySelector('.progress-bar');
-            if (progress) {
-                progress.style.width = '0%';
-                let width = 0;
-                const interval = setInterval(() => {
-                    if (index !== currentVideoIndex) {
-                        clearInterval(interval);
-                        return;
-                    }
-                    width += 0.5;
-                    if (width > 100) {
-                        clearInterval(interval);
-                        progress.style.width = '100%';
-                        setTimeout(() => {
-                            if (index === currentVideoIndex) {
-                                progress.style.width = '0%';
-                            }
-                        }, 500);
-                        return;
-                    }
-                    progress.style.width = width + '%';
-                }, 100);
-                wrapper.dataset.progressInterval = interval;
-            }
-        } else {
-            let src = iframe.src;
-            src = src.replace(/autoplay=[01]/, 'autoplay=0');
-            iframe.src = src;
-            soundBtn.style.display = 'none';
-            
-            if (wrapper.dataset.progressInterval) {
-                clearInterval(parseInt(wrapper.dataset.progressInterval));
-                wrapper.dataset.progressInterval = '';
-            }
-        }
-    });
-}
 
 // ================================================================
 //  KEYBOARD CONTROLS
@@ -251,7 +225,15 @@ document.addEventListener('keydown', function(e) {
 //  START!
 // ================================================================
 
+renderVideos(myVideos);
 console.log('📹 Divinelove Ezeh Video Feed Started!');
-console.log(`🎯 Channel ID: ${CHANNEL_ID}`);
+console.log(`✅ Showing ${myVideos.length} videos`);
 
-fetchMyVideos();
+// Wait a moment, then start the first video
+setTimeout(() => {
+    const firstWrapper = document.querySelector('.video-wrapper');
+    if (firstWrapper) {
+        currentVideoIndex = 0;
+        playVideo(firstWrapper);
+    }
+}, 500);
