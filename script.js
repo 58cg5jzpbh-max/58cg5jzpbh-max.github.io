@@ -1,5 +1,5 @@
 // ================================================================
-//  DIVINELOVE EZEH – VIDEO WEBSITE (FIXED PLAYBACK)
+//  DIVINELOVE EZEH – YOUR YOUTUBE CHANNEL VIDEOS
 // ================================================================
 
 // Your Channel ID
@@ -9,19 +9,7 @@ const CHANNEL_ID = 'UC9sjVKNLqGWW1EjcEBny6xQ';
 const API_KEY = 'AIzaSyCyGfLFk_WgLWvbplqVJ1_oOtkaTDm2X5Q';
 
 // ================================================================
-//  📹 YOUR VIDEOS
-// ================================================================
-
-const myVideos = [
-    { id: 'dQw4w9WgXcQ', title: 'Never Gonna Give You Up', channel: 'Rick Astley' },
-    { id: '9bZkp7q19f0', title: 'Gangnam Style', channel: 'PSY' },
-    { id: '3JZ_D3ELwOQ', title: 'Baby Shark Dance', channel: 'Pinkfong' },
-    { id: 'kJQP7kiw5Fk', title: 'Despacito', channel: 'Luis Fonsi' },
-    // Add your videos here
-];
-
-// ================================================================
-//  RENDER VIDEOS
+//  FETCH YOUR VIDEOS FROM YOUTUBE
 // ================================================================
 
 const feed = document.getElementById('feed');
@@ -30,6 +18,56 @@ const container = document.getElementById('feedContainer');
 
 let currentVideoIndex = -1;
 let isMuted = true;
+let allVideos = [];
+
+// ================================================================
+//  FETCH VIDEOS FROM YOUR CHANNEL
+// ================================================================
+
+async function fetchMyVideos() {
+    try {
+        loading.classList.remove('hidden');
+        loading.textContent = '📡 Loading your videos from YouTube...';
+        
+        const url = `https://www.googleapis.com/youtube/v3/search?key=${API_KEY}&channelId=${CHANNEL_ID}&part=snippet,id&order=date&maxResults=50&type=video`;
+        
+        const response = await fetch(url);
+        const data = await response.json();
+
+        console.log('YouTube Response:', data);
+
+        if (data.error) {
+            alert('❌ API Error: ' + data.error.message + '\n\nCheck your API key and Channel ID.');
+            loading.textContent = '⚠️ Error loading videos';
+            return;
+        }
+
+        allVideos = data.items
+            .filter(item => item.id.videoId)
+            .map(item => ({
+                id: item.id.videoId,
+                title: item.snippet.title,
+                channel: item.snippet.channelTitle
+            }));
+
+        if (allVideos.length === 0) {
+            loading.textContent = '📹 No videos found on your channel. Upload your first video!';
+            loading.style.opacity = '0.8';
+            return;
+        }
+
+        console.log(`✅ Found ${allVideos.length} videos from your channel!`);
+        renderVideos(allVideos);
+
+    } catch (error) {
+        console.error('Error:', error);
+        alert('⚠️ Network error. Please check your connection.');
+    }
+}
+
+// ================================================================
+//  RENDER VIDEOS
+// ================================================================
 
 function renderVideos(videos) {
     feed.innerHTML = '';
@@ -85,8 +123,6 @@ function renderVideos(videos) {
             let src = iframe.src;
             src = src.replace(/mute=[01]/, `mute=${isMuted ? 1 : 0}`);
             iframe.src = src;
-            
-            console.log('🔊 Sound:', isMuted ? 'Muted' : 'Unmuted');
         });
 
         // --- DOUBLE TAP LIKE ---
@@ -104,7 +140,7 @@ function renderVideos(videos) {
 }
 
 // ================================================================
-//  STOP ALL VIDEOS EXCEPT CURRENT
+//  STOP ALL OTHER VIDEOS
 // ================================================================
 
 function stopAllVideosExcept(currentWrapper) {
@@ -113,7 +149,6 @@ function stopAllVideosExcept(currentWrapper) {
     
     allIframes.forEach(iframe => {
         if (iframe !== currentIframe) {
-            // Stop this video by reloading with autoplay=0
             let src = iframe.src;
             src = src.replace(/autoplay=[01]/, 'autoplay=0');
             iframe.src = src;
@@ -131,10 +166,8 @@ function playVideo(wrapper) {
     const iframe = wrapper.querySelector('iframe');
     const soundBtn = wrapper.querySelector('.sound-toggle');
     
-    // Stop all other videos first
     stopAllVideosExcept(wrapper);
     
-    // Play this video with current mute state
     let src = iframe.src;
     src = src.replace(/autoplay=[01]/, 'autoplay=1');
     src = src.replace(/mute=[01]/, `mute=${isMuted ? 1 : 0}`);
@@ -142,33 +175,6 @@ function playVideo(wrapper) {
     
     soundBtn.style.display = 'flex';
     soundBtn.textContent = isMuted ? '🔇' : '🔊';
-    
-    // Progress bar
-    const progress = wrapper.querySelector('.progress-bar');
-    if (progress) {
-        progress.style.width = '0%';
-        let width = 0;
-        const interval = setInterval(() => {
-            const currentWrapper = document.querySelectorAll('.video-wrapper')[currentVideoIndex];
-            if (!currentWrapper || currentWrapper !== wrapper) {
-                clearInterval(interval);
-                return;
-            }
-            width += 0.5;
-            if (width > 100) {
-                clearInterval(interval);
-                progress.style.width = '100%';
-                setTimeout(() => {
-                    if (wrapper === document.querySelectorAll('.video-wrapper')[currentVideoIndex]) {
-                        progress.style.width = '0%';
-                    }
-                }, 500);
-                return;
-            }
-            progress.style.width = width + '%';
-        }, 100);
-        wrapper.dataset.progressInterval = interval;
-    }
 }
 
 // ================================================================
@@ -222,18 +228,9 @@ document.addEventListener('keydown', function(e) {
 });
 
 // ================================================================
-//  START!
+//  START! – FETCH YOUR REAL YOUTUBE VIDEOS
 // ================================================================
 
-renderVideos(myVideos);
-console.log('📹 Divinelove Ezeh Video Feed Started!');
-console.log(`✅ Showing ${myVideos.length} videos`);
-
-// Wait a moment, then start the first video
-setTimeout(() => {
-    const firstWrapper = document.querySelector('.video-wrapper');
-    if (firstWrapper) {
-        currentVideoIndex = 0;
-        playVideo(firstWrapper);
-    }
-}, 500);
+fetchMyVideos();
+console.log('📹 Divinelove Ezeh – Your YouTube Videos');
+console.log(`🎯 Channel ID: ${CHANNEL_ID}`);
