@@ -1,9 +1,9 @@
 // ================================================================
-//  🎯 YOUR CHANNEL CONFIGURATION – CORRECTED!
+//  🎯 YOUR CHANNEL CONFIGURATION – FINAL VERSION!
 // ================================================================
 
 // Your Channel ID (UC9sjVKNLqGWW1EjcEBny6xQ)
-const CHANNEL_ID = 'UC9sjVKNLqGWW1EjcEBny6xQ';  // ✅ YOUR ID IS HERE!
+const CHANNEL_ID = 'UC9sjVKNLqGWW1EjcEBny6xQ';
 
 // Your YouTube API Key
 const API_KEY = 'AIzaSyCyGfLFk_WgLWvbplqVJ1_oOtkaTDm2X5Q';
@@ -307,7 +307,11 @@ document.addEventListener('keydown', (e) => {
 console.log(`📹 Divinelove Ezeh Video Feed Started!`);
 console.log(`🔗 Channel: ${CHANNEL_URL}`);
 console.log(`🔑 API Key: ✅ Set`);
-console.log(`✅ Channel ID: ${CHANNEL_ID}`);  // This will show UC9sjVKNLqGWW1EjcEBny6xQ
+console.log(`✅ Channel ID: ${CHANNEL_ID}`);
 
-// Start fetching videos
-fetchVideos()
+// Start fetching videos – NO ALERT CHECK!
+fetchVideos();
+
+// ================================================================
+//  END OF FILE
+// ================================================================
