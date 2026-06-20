@@ -1,14 +1,18 @@
 // ================================================================
-//  🎯 CONFIGURE YOUR CHANNEL
+//  🎯 YOUR CHANNEL CONFIGURATION
 // ================================================================
 
-// REPLACE with your Channel ID
-// How to find: https://www.streamweasels.com/tools/youtube-channel-id/
-const CHANNEL_ID = 'UC...'; // <-- PASTE YOUR CHANNEL ID HERE!
+// Your channel handle and link (already set for you)
+const CHANNEL_HANDLE = '@DivineloveEzeh';
+const CHANNEL_URL = 'https://www.youtube.com/@DivineloveEzeh';
 
-// REPLACE with your YouTube API Key
+// !!! IMPORTANT: You MUST replace this with your actual Channel ID !!!
+// How to find it: https://www.streamweasels.com/tools/youtube-channel-id/
+const CHANNEL_ID = 'UC...'; // <-- PASTE YOUR REAL CHANNEL ID HERE (starts with UC)
+
+// !!! IMPORTANT: You MUST replace this with your actual YouTube API Key !!!
 // Get it from: https://console.cloud.google.com/
-const API_KEY = 'YOUR_API_KEY'; // <-- PASTE YOUR API KEY HERE!
+const API_KEY = 'YOUR_API_KEY'; // <-- PASTE YOUR REAL API KEY HERE
 
 // ================================================================
 //  🎯 THE CODE (Don't change below unless you know what you're doing)
@@ -42,7 +46,13 @@ async function fetchVideos(pageToken = '') {
         const data = await response.json();
 
         if (data.error) {
-            alert('❌ API Error: ' + data.error.message + '\n\nMake sure your Channel ID and API Key are correct!');
+            let errorMsg = '❌ API Error: ' + data.error.message;
+            if (data.error.code === 403) {
+                errorMsg += '\n\n🔑 This usually means your API key is invalid, expired, or the YouTube API is not enabled.\nPlease check your Google Cloud Console.';
+            } else if (data.error.code === 404) {
+                errorMsg += '\n\n🔍 Channel not found. Please double-check your CHANNEL_ID.';
+            }
+            alert(errorMsg);
             loading.classList.add('hidden');
             isLoading = false;
             return;
@@ -55,6 +65,11 @@ async function fetchVideos(pageToken = '') {
             publishedAt: item.snippet.publishedAt
         }));
 
+        if (newVideos.length === 0 && !pageToken) {
+            loading.innerHTML = '📹 No videos found on this channel yet.';
+            loading.style.opacity = '0.8';
+        }
+
         allVideos = allVideos.concat(newVideos);
         nextPageToken = data.nextPageToken || '';
         hasMore = !!nextPageToken;
@@ -63,6 +78,7 @@ async function fetchVideos(pageToken = '') {
 
     } catch (error) {
         console.error('Error fetching videos:', error);
+        alert('⚠️ Network error. Please check your connection.');
     } finally {
         isLoading = false;
         loading.classList.add('hidden');
@@ -290,12 +306,14 @@ document.addEventListener('keydown', (e) => {
 //  START!
 // ================================================================
 
-// Check if Channel ID and API Key are set
+console.log(`📹 Divinelove Ezeh Video Feed Started!`);
+console.log(`🔗 Channel: ${CHANNEL_URL}`);
+
+// Check configuration
 if (CHANNEL_ID === 'UC...' || API_KEY === 'YOUR_API_KEY') {
-    alert('⚠️ Please configure your Channel ID and API Key in the script.js file!');
+    alert('⚠️ Please configure your Channel ID and API Key in the script.js file!\n\nChannel URL: ' + CHANNEL_URL);
 } else {
     fetchVideos();
-    console.log('📹 Divinelove Ezeh Video Feed Started!');
-    console.log('🎯 Channel ID:', CHANNEL_ID);
+    console.log('✅ Channel ID:', CHANNEL_ID);
     console.log('🔑 API Key:', API_KEY ? '✅ Set' : '❌ Missing!');
 }
