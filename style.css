@@ -16,7 +16,6 @@ body {
     touch-action: pan-y;
 }
 
-/* ===== FEED CONTAINER ===== */
 .feed-container {
     width: 100%;
     max-width: 450px;
@@ -32,7 +31,6 @@ body {
     display: none;
 }
 
-/* ===== VIDEO WRAPPER ===== */
 .video-wrapper {
     height: 100vh;
     width: 100%;
@@ -56,7 +54,6 @@ body {
     object-fit: cover;
 }
 
-/* ===== VIDEO INFO OVERLAY ===== */
 .video-info {
     position: absolute;
     bottom: 100px;
@@ -83,7 +80,6 @@ body {
     opacity: 0.8;
 }
 
-/* ===== SIDE ACTION BUTTONS ===== */
 .side-actions {
     position: absolute;
     bottom: 120px;
@@ -108,7 +104,6 @@ body {
     filter: drop-shadow(0 2px 8px rgba(0, 0, 0, 0.5));
 }
 
-/* ===== HEADER ===== */
 .header {
     position: fixed;
     top: 0;
@@ -131,7 +126,6 @@ body {
     color: #ff0050;
 }
 
-/* ===== LOADING INDICATOR ===== */
 .loading {
     color: white;
     text-align: center;
@@ -145,7 +139,6 @@ body {
     display: none;
 }
 
-/* ===== DOUBLE-TAP HEART ANIMATION ===== */
 .heart-popup {
     position: fixed;
     font-size: 80px;
@@ -170,7 +163,6 @@ body {
     }
 }
 
-/* ===== MUTE/UNMUTE BUTTON ===== */
 .sound-toggle {
     position: absolute;
     bottom: 150px;
@@ -200,7 +192,6 @@ body {
     display: flex;
 }
 
-/* ===== PROGRESS BAR ===== */
 .progress-bar {
     position: absolute;
     bottom: 0;
@@ -213,7 +204,6 @@ body {
     pointer-events: none;
 }
 
-/* ===== RESPONSIVE ===== */
 @media (max-width: 450px) {
     .video-info {
         bottom: 80px;
@@ -266,3 +256,4 @@ body {
         margin-bottom: 14px;
         font-size: 10px;
     }
+}
