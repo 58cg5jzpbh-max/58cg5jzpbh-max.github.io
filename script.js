@@ -1,5 +1,5 @@
 // ================================================================
-//  DIVINELOVE EZEH – VIDEO WEBSITE (FIXED SOUND)
+//  DIVINELOVE EZEH – YOUR CHANNEL VIDEOS ONLY
 // ================================================================
 
 // Your Channel ID
@@ -9,19 +9,7 @@ const CHANNEL_ID = 'UC9sjVKNLqGWW1EjcEBny6xQ';
 const API_KEY = 'AIzaSyCyGfLFk_WgLWvbplqVJ1_oOtkaTDm2X5Q';
 
 // ================================================================
-//  📹 YOUR VIDEOS – Edit this section!
-// ================================================================
-
-const myVideos = [
-    { id: 'dQw4w9WgXcQ', title: 'Never Gonna Give You Up', channel: 'Rick Astley' },
-    { id: '9bZkp7q19f0', title: 'Gangnam Style', channel: 'PSY' },
-    { id: '3JZ_D3ELwOQ', title: 'Baby Shark Dance', channel: 'Pinkfong' },
-    { id: 'kJQP7kiw5Fk', title: 'Despacito', channel: 'Luis Fonsi' },
-    // Add your videos here when you upload them
-];
-
-// ================================================================
-//  RENDER VIDEOS (FIXED SOUND)
+//  FETCH ONLY YOUR CHANNEL VIDEOS
 // ================================================================
 
 const feed = document.getElementById('feed');
@@ -30,9 +18,21 @@ const container = document.getElementById('feedContainer');
 
 let currentVideoIndex = -1;
 let isMuted = true;
+let allVideos = [];
+
+// ================================================================
+//  RENDER VIDEOS
+// ================================================================
 
 function renderVideos(videos) {
     feed.innerHTML = '';
+    
+    if (videos.length === 0) {
+        loading.innerHTML = '📹 No videos found on this channel yet.';
+        loading.style.opacity = '0.8';
+        loading.classList.remove('hidden');
+        return;
+    }
     
     videos.forEach((video, index) => {
         const wrapper = document.createElement('div');
@@ -70,7 +70,7 @@ function renderVideos(videos) {
 
         feed.appendChild(wrapper);
 
-        // --- SOUND TOGGLE BUTTON (FIXED) ---
+        // Sound toggle
         const soundBtn = wrapper.querySelector('.sound-toggle');
         const iframe = wrapper.querySelector('iframe');
         
@@ -78,30 +78,16 @@ function renderVideos(videos) {
             e.stopPropagation();
             e.preventDefault();
             
-            // Toggle mute state
             isMuted = !isMuted;
             this.dataset.muted = isMuted;
             this.textContent = isMuted ? '🔇' : '🔊';
             
-            // Update iframe mute parameter
             let src = iframe.src;
-            if (isMuted) {
-                src = src.replace(/mute=[01]/, 'mute=1');
-            } else {
-                src = src.replace(/mute=[01]/, 'mute=0');
-            }
+            src = src.replace(/mute=[01]/, `mute=${isMuted ? 1 : 0}`);
             iframe.src = src;
-            
-            // Force reload with sound
-            if (!isMuted) {
-                // Add autoplay with sound
-                iframe.src = iframe.src.replace(/autoplay=[01]/, 'autoplay=1');
-            }
-            
-            console.log('🔊 Sound:', isMuted ? 'Muted' : 'Unmuted');
         });
 
-        // --- DOUBLE TAP LIKE ---
+        // Double tap like
         wrapper.addEventListener('dblclick', function(e) {
             e.preventDefault();
             const likeBtn = this.querySelector('.like-btn');
@@ -113,6 +99,52 @@ function renderVideos(videos) {
     });
 
     loading.classList.add('hidden');
+}
+
+// ================================================================
+//  FETCH VIDEOS FROM YOUR CHANNEL
+// ================================================================
+
+async function fetchMyVideos() {
+    try {
+        loading.classList.remove('hidden');
+        loading.textContent = '📡 Loading your videos...';
+        
+        const url = `https://www.googleapis.com/youtube/v3/search?key=${API_KEY}&channelId=${CHANNEL_ID}&part=snippet,id&order=date&maxResults=50&type=video`;
+        const response = await fetch(url);
+        const data = await response.json();
+
+        if (data.error) {
+            console.error('API Error:', data.error);
+            loading.innerHTML = '⚠️ Error loading videos. Please try again.';
+            loading.style.opacity = '0.8';
+            return;
+        }
+
+        const videos = data.items
+            .filter(item => item.id.videoId)
+            .map(item => ({
+                id: item.id.videoId,
+                title: item.snippet.title,
+                channel: item.snippet.channelTitle
+            }));
+
+        allVideos = videos;
+        
+        if (allVideos.length === 0) {
+            loading.innerHTML = '📹 No videos found on your channel yet.';
+            loading.style.opacity = '0.8';
+            return;
+        }
+
+        console.log(`✅ Found ${allVideos.length} videos from your channel!`);
+        renderVideos(allVideos);
+
+    } catch (error) {
+        console.error('Network Error:', error);
+        loading.innerHTML = '⚠️ Network error. Please check your connection.';
+        loading.style.opacity = '0.8';
+    }
 }
 
 // ================================================================
@@ -147,14 +179,12 @@ function updateVideoPlayback() {
         const soundBtn = wrapper.querySelector('.sound-toggle');
         
         if (index === currentVideoIndex) {
-            // PLAY this video (with current mute state)
             let src = iframe.src;
             src = src.replace(/autoplay=[01]/, 'autoplay=1');
             src = src.replace(/mute=[01]/, `mute=${isMuted ? 1 : 0}`);
             iframe.src = src;
             soundBtn.style.display = 'flex';
             
-            // Progress bar
             const progress = wrapper.querySelector('.progress-bar');
             if (progress) {
                 progress.style.width = '0%';
@@ -180,7 +210,6 @@ function updateVideoPlayback() {
                 wrapper.dataset.progressInterval = interval;
             }
         } else {
-            // PAUSE this video
             let src = iframe.src;
             src = src.replace(/autoplay=[01]/, 'autoplay=0');
             iframe.src = src;
@@ -222,7 +251,7 @@ document.addEventListener('keydown', function(e) {
 //  START!
 // ================================================================
 
-renderVideos(myVideos);
 console.log('📹 Divinelove Ezeh Video Feed Started!');
-console.log(`✅ Showing ${myVideos.length} videos`);
-console.log('🔊 Tap the speaker button to toggle sound!');
+console.log(`🎯 Channel ID: ${CHANNEL_ID}`);
+
+fetchMyVideos();
