@@ -1,10 +1,9 @@
 // ================================================================
-//  🎯 YOUR CHANNEL CONFIGURATION - UPDATED!
+//  🎯 YOUR CHANNEL CONFIGURATION – UPDATED!
 // ================================================================
 
-// Your Channel ID (find it here: https://www.streamweasels.com/tools/youtube-channel-id/)
-// For channel: https://www.youtube.com/@DivineloveEzeh
-const CHANNEL_ID = 'UC...'; // <-- YOU NEED TO FIND THIS!
+// Your Channel ID (UC9sjVKNLqGWW1EjcEBny6xQ)
+const CHANNEL_ID = 'UC9sjVKNLqGWW1EjcEBny6xQ';
 
 // Your YouTube API Key
 const API_KEY = 'AIzaSyCyGfLFk_WgLWvbplqVJ1_oOtkaTDm2X5Q';
@@ -39,14 +38,6 @@ async function fetchVideos(pageToken = '') {
     loading.classList.remove('hidden');
 
     try {
-        // Check if CHANNEL_ID is set
-        if (CHANNEL_ID === 'UC...') {
-            alert('⚠️ Please replace CHANNEL_ID with your actual YouTube Channel ID!\n\nFind it at: https://www.streamweasels.com/tools/youtube-channel-id/');
-            loading.classList.add('hidden');
-            isLoading = false;
-            return;
-        }
-
         const url = `https://www.googleapis.com/youtube/v3/search?key=${API_KEY}&channelId=${CHANNEL_ID}&part=snippet,id&order=date&maxResults=20&type=video&pageToken=${pageToken}`;
         
         const response = await fetch(url);
@@ -316,11 +307,7 @@ document.addEventListener('keydown', (e) => {
 console.log(`📹 Divinelove Ezeh Video Feed Started!`);
 console.log(`🔗 Channel: ${CHANNEL_URL}`);
 console.log(`🔑 API Key: ✅ Set`);
+console.log(`✅ Channel ID: ${CHANNEL_ID}`);
 
-// Check if Channel ID is set
-if (CHANNEL_ID === 'UC...') {
-    alert('⚠️ Please replace CHANNEL_ID with your actual YouTube Channel ID!\n\nFind it at: https://www.streamweasels.com/tools/youtube-channel-id/');
-} else {
-    fetchVideos();
-    console.log('✅ Channel ID:', CHANNEL_ID);
-}
+// Start fetching videos
+fetchVideos();
