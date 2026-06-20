@@ -310,4 +310,4 @@ console.log(`🔑 API Key: ✅ Set`);
 console.log(`✅ Channel ID: ${CHANNEL_ID}`);  // This will show UC9sjVKNLqGWW1EjcEBny6xQ
 
 // Start fetching videos
-fetchVideos();
+fetchVideos()
