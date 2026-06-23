@@ -1,87 +1,73 @@
 (function () {
     "use strict";
 
-    // ---------- CONFIG ----------
-    // Withdrawal opens 30 days from now — July 23, 2026
-    const TARGET_DATE = new Date("2026-07-23T00:00:00Z").getTime();
-    const START_DATE = new Date("2026-06-23T00:00:00Z").getTime();
+    // ---- CONFIG ----
+    const TARGET_DATE  = new Date("2026-07-23T00:00:00Z").getTime();
+    const START_DATE   = new Date("2026-06-23T00:00:00Z").getTime();
+    const MINING_RATE  = 0.0031; // dollars per hour
 
-    // ---------- DOM REFS ----------
-    const daysEl = document.getElementById("days");
-    const hoursEl = document.getElementById("hours");
-    const minutesEl = document.getElementById("minutes");
-    const secondsEl = document.getElementById("seconds");
-    const progressFill = document.getElementById("progressFill");
-    const progressPercent = document.getElementById("progressPercent");
-    const notifyBtn = document.getElementById("notifyBtn");
-    const toast = document.getElementById("toast");
+    // ---- DOM ----
+    const daysEl       = document.getElementById("days");
+    const hoursEl      = document.getElementById("hours");
+    const minutesEl    = document.getElementById("minutes");
+    const secondsEl    = document.getElementById("seconds");
+    const progressFill = document.getElementById("miningFill");
+    const progressPct  = document.getElementById("progressPercent");
+    const liveBalance  = document.getElementById("liveBalance");
+    const toast        = document.getElementById("toast");
 
-    // ---------- HELPERS ----------
-    function padZero(num) {
-      return String(num).padStart(2, "0");
-    }
+    // ---- HELPERS ----
+    function pad(n) { return String(n).padStart(2, "0"); }
 
-    // ---------- UPDATE TIMER ----------
-    function updateTimer() {
-      const now = Date.now();
-      let diff = TARGET_DATE - now;
+    // ---- COUNTDOWN + PROGRESS ----
+    function tick() {
+      const now  = Date.now();
+      const diff = TARGET_DATE - now;
 
-      // Countdown finished
       if (diff <= 0) {
-        daysEl.textContent = "00";
-        hoursEl.textContent = "00";
-        minutesEl.textContent = "00";
-        secondsEl.textContent = "00";
+        daysEl.textContent = hoursEl.textContent = minutesEl.textContent = secondsEl.textContent = "00";
         progressFill.style.width = "100%";
-        progressPercent.textContent = "100%";
-        return;
+        progressPct.textContent  = "100%";
+      } else {
+        daysEl.textContent    = pad(Math.floor(diff / 86400000));
+        hoursEl.textContent   = pad(Math.floor(diff / 3600000) % 24);
+        minutesEl.textContent = pad(Math.floor(diff / 60000) % 60);
+        secondsEl.textContent = pad(Math.floor(diff / 1000) % 60);
+
+        const total   = TARGET_DATE - START_DATE;
+        const elapsed = Math.max(0, now - START_DATE);
+        const pct     = Math.min(99.5, (elapsed / total) * 100);
+        progressFill.style.width = pct + "%";
+        progressPct.textContent  = Math.floor(pct) + "%";
       }
 
-      // Calculate time
-      const seconds = Math.floor(diff / 1000) % 60;
-      const minutes = Math.floor(diff / (1000 * 60)) % 60;
-      const hours = Math.floor(diff / (1000 * 60 * 60)) % 24;
-      const days = Math.floor(diff / (1000 * 60 * 60 * 24));
-
-      // Update DOM
-      daysEl.textContent = padZero(days);
-      hoursEl.textContent = padZero(hours);
-      minutesEl.textContent = padZero(minutes);
-      secondsEl.textContent = padZero(seconds);
-
-      // Calculate progress
-      const totalDuration = TARGET_DATE - START_DATE;
-      let elapsed = now - START_DATE;
-      if (elapsed < 0) elapsed = 0;
-
-      let progress = Math.min(100, (elapsed / totalDuration) * 100);
-
-      if (progress >= 99.9 && diff > 0) {
-        progress = 99.5;
-      }
-
-      progressFill.style.width = progress + "%";
-      progressPercent.textContent = Math.floor(progress) + "%";
+      // Live balance — grows each second based on mining rate
+      const elapsed  = Math.max(0, now - START_DATE) / 1000; // seconds
+      const earned   = (elapsed / 3600) * MINING_RATE;
+      liveBalance.textContent = earned.toFixed(4);
     }
 
-    // ---------- NOTIFY BUTTON ----------
-    notifyBtn.addEventListener("click", function () {
-      toast.classList.add("show");
+    tick();
+    setInterval(tick, 1000);
 
-      clearTimeout(window.toastTimeout);
-      window.toastTimeout = setTimeout(function () {
-        toast.classList.remove("show");
-      }, 4000);
+    // ---- NOTIFY BUTTON ----
+    function showToast() {
+      toast.classList.add("show");
+      clearTimeout(window._toastTimer);
+      window._toastTimer = setTimeout(() => toast.classList.remove("show"), 4000);
+    }
+
+    ["notifyBtn", "notifyBtn2", "notifyBtn3"].forEach(id => {
+      const el = document.getElementById(id);
+      if (el) el.addEventListener("click", showToast);
     });
 
-    // ---------- CLICK OUTSIDE TOAST ----------
-    document.addEventListener("click", function (e) {
-      if (!toast.contains(e.target) && e.target !== notifyBtn) {
+    document.addEventListener("click", (e) => {
+      if (!toast.contains(e.target) &&
+          e.target.id !== "notifyBtn" &&
+          e.target.id !== "notifyBtn2" &&
+          e.target.id !== "notifyBtn3") {
         toast.classList.remove("show");
       }
     });
-
-    // ---------- INIT ----------
-    updateTimer();
-    setInterval(updateTimer, 1000);
   })();
