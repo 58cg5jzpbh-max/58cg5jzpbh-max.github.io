@@ -1,88 +1,130 @@
 <!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Miner Coins · Withdrawal Soon</title>
-  <link rel="stylesheet" href="style.css" />
-  <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap" rel="stylesheet" />
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
-</head>
-<body>
-  <div class="container">
-    <!-- Top decoration -->
-    <div class="glow-orb glow-orb--1"></div>
-    <div class="glow-orb glow-orb--2"></div>
-
-    <div class="card">
-      <!-- Badge -->
-      <div class="badge">
-        <i class="fas fa-hard-hat"></i>
-        <span>MINER COINS</span>
-      </div>
-
-      <!-- Main icon -->
-      <div class="icon-stack">
-        <i class="fas fa-coins coin-icon"></i>
-        <i class="fas fa-arrow-right arrow-icon"></i>
-        <i class="fas fa-wallet wallet-icon"></i>
-      </div>
-
-      <!-- Heading -->
-      <h1>Withdrawal<br /><span class="highlight">Coming Soon</span></h1>
-
-      <!-- Subtext -->
-      <p class="description">
-        We're preparing the withdrawal system for Miner Coins.
-        <br />Stay tuned — it's almost ready!
-      </p>
-
-      <!-- Countdown -->
-      <div class="countdown" id="countdown">
-        <div class="time-box">
-          <span class="time-number" id="days">00</span>
-          <span class="time-label">Days</span>
-        </div>
-        <div class="time-box">
-          <span class="time-number" id="hours">00</span>
-          <span class="time-label">Hours</span>
-        </div>
-        <div class="time-box">
-          <span class="time-number" id="minutes">00</span>
-          <span class="time-label">Mins</span>
-        </div>
-        <div class="time-box">
-          <span class="time-number" id="seconds">00</span>
-          <span class="time-label">Secs</span>
-        </div>
-      </div>
-
-      <!-- Progress Bar -->
-      <div class="progress-wrapper">
-        <div class="progress-bar" id="progressBar"></div>
-        <div class="progress-label">
-          <span>Preparation</span>
-          <span id="progressText">0%</span>
-        </div>
-      </div>
-
-      <!-- Status -->
-      <div class="status">
-        <i class="fas fa-circle status-dot"></i>
-        <span>Withdrawal will be available soon</span>
-      </div>
-
-      <!-- Footer -->
-      <div class="footer">
-        <span><i class="fas fa-lock"></i> Secured</span>
-        <span><i class="fas fa-database"></i> 2FA Enabled</span>
-        <span><i class="fas fa-check-circle"></i> Mining Active</span>
-      </div>
+  <html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Miner Coins · Withdrawal Soon</title>
+    <link rel="stylesheet" href="style.css" />
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;600;700;900&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+  </head>
+  <body>
+    <!-- Background Animation -->
+    <div class="bg-animation">
+      <div class="grid-line"></div>
+      <div class="grid-line"></div>
+      <div class="grid-line"></div>
+      <div class="grid-line"></div>
+      <div class="grid-line"></div>
+      <div class="grid-line"></div>
     </div>
-  </div>
 
-  <script src="script.js"></script>
-</body>
-</html>
+    <main class="container">
+      <div class="card">
+        <!-- Logo / Brand -->
+        <div class="brand">
+          <div class="brand-icon">
+            <i class="fas fa-hard-hat"></i>
+            <div class="coin-sparkle"></div>
+          </div>
+          <span class="brand-name">MINER COINS</span>
+          <span class="brand-status">● LIVE</span>
+        </div>
+
+        <!-- Main Content -->
+        <div class="content">
+          <div class="tag">
+            <i class="fas fa-clock"></i>
+            <span>Withdrawal Phase</span>
+          </div>
+
+          <h1>
+            <span class="gradient-text">Coming</span>
+            <span class="gradient-text">Soon</span>
+          </h1>
+
+          <p class="description">
+            We're building the most secure withdrawal system for Miner Coins.
+            <br />Stay connected — your funds will be ready.
+          </p>
+
+          <!-- Countdown -->
+          <div class="countdown-wrapper">
+            <div class="countdown-grid" id="countdownGrid">
+              <div class="time-card">
+                <div class="time-value" id="days">00</div>
+                <div class="time-label">Days</div>
+              </div>
+              <div class="time-card">
+                <div class="time-value" id="hours">00</div>
+                <div class="time-label">Hours</div>
+              </div>
+              <div class="time-card">
+                <div class="time-value" id="minutes">00</div>
+                <div class="time-label">Mins</div>
+              </div>
+              <div class="time-card">
+                <div class="time-value" id="seconds">00</div>
+                <div class="time-label">Secs</div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Progress -->
+          <div class="progress-section">
+            <div class="progress-track">
+              <div class="progress-fill" id="progressFill"></div>
+            </div>
+            <div class="progress-meta">
+              <span><i class="fas fa-cog fa-spin"></i> Preparation</span>
+              <span id="progressPercent">0%</span>
+            </div>
+          </div>
+
+          <!-- Features -->
+          <div class="features">
+            <div class="feature-item">
+              <i class="fas fa-shield-alt"></i>
+              <span>Secure</span>
+            </div>
+            <div class="feature-item">
+              <i class="fas fa-bolt"></i>
+              <span>Fast</span>
+            </div>
+            <div class="feature-item">
+              <i class="fas fa-check-circle"></i>
+              <span>Verified</span>
+            </div>
+          </div>
+
+          <!-- CTA -->
+          <button class="cta-button" id="notifyBtn">
+            <i class="fas fa-bell"></i>
+            <span>Notify Me</span>
+          </button>
+
+          <!-- Status Badge -->
+          <div class="status-badge">
+            <span class="status-dot"></span>
+            <span>Withdrawal will be available soon</span>
+          </div>
+        </div>
+
+        <!-- Footer -->
+        <footer class="footer">
+          <span><i class="fas fa-lock"></i> 2FA Secured</span>
+          <span><i class="fas fa-database"></i> Cold Storage</span>
+          <span><i class="fas fa-coins"></i> Mining Active</span>
+        </footer>
+      </div>
+
+      <!-- Notification Toast -->
+      <div class="toast" id="toast">
+        <i class="fas fa-check-circle"></i>
+        <span>You'll be notified when withdrawals are live!</span>
+      </div>
+    </main>
+
+    <script src="script.js"></script>
+  </body>
+  </html>
