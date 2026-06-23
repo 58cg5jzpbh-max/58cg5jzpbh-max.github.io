@@ -2,8 +2,9 @@
     "use strict";
 
     // ---------- CONFIG ----------
-    const TARGET_DATE = new Date("2026-06-23T14:30:00Z").getTime();
-    const START_DATE = new Date("2025-01-01T00:00:00Z").getTime();
+    // Withdrawal opens 30 days from now — July 23, 2026
+    const TARGET_DATE = new Date("2026-07-23T00:00:00Z").getTime();
+    const START_DATE = new Date("2026-06-23T00:00:00Z").getTime();
 
     // ---------- DOM REFS ----------
     const daysEl = document.getElementById("days");
@@ -55,12 +56,10 @@
 
       let progress = Math.min(100, (elapsed / totalDuration) * 100);
 
-      // Keep under 100% until target
       if (progress >= 99.9 && diff > 0) {
         progress = 99.5;
       }
 
-      // Update progress
       progressFill.style.width = progress + "%";
       progressPercent.textContent = Math.floor(progress) + "%";
     }
@@ -69,7 +68,6 @@
     notifyBtn.addEventListener("click", function () {
       toast.classList.add("show");
 
-      // Auto-hide after 4 seconds
       clearTimeout(window.toastTimeout);
       window.toastTimeout = setTimeout(function () {
         toast.classList.remove("show");
