@@ -1,167 +1,25 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
+  <head>
     <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>NaijaStock – Learn & Trade</title>
-    
-    <!-- Link to CSS -->
-    <link rel="stylesheet" href="style.css" />
-</head>
-<body>
-
-    <!-- ============================================================
-    HEADER
-    ============================================================ -->
-    <header>
-        <div class="container">
-            <div class="logo">🇳🇬 <span>Naija</span>Stock</div>
-            <nav id="navMenu">
-                <a href="#dashboard" class="active">Dashboard</a>
-                <a href="#trade">Trade</a>
-                <a href="#learn">Learn</a>
-                <a href="#leaderboard">Leaderboard</a>
-            </nav>
-            <div class="user-info">
-                <span id="userName">👤 Beginner</span>
-                <button class="btn-reset-small" onclick="resetAccount()">🔄 Reset</button>
-            </div>
-            <div class="menu-toggle" onclick="toggleMenu()">☰</div>
-        </div>
-    </header>
-
-    <!-- ============================================================
-    DASHBOARD
-    ============================================================ -->
-    <section id="dashboard" class="section">
-        <div class="container">
-            <div class="dashboard-grid">
-
-                <!-- Balance Card -->
-                <div class="card balance-card">
-                    <div class="card-label">💰 Total Portfolio</div>
-                    <div class="card-value" id="totalPortfolio">$10,000.00</div>
-                    <div class="card-change" id="portfolioChange">+0.00%</div>
-                </div>
-
-                <!-- Cash Card -->
-                <div class="card cash-card">
-                    <div class="card-label">💵 Available Cash</div>
-                    <div class="card-value" id="availableCash">$10,000.00</div>
-                </div>
-
-                <!-- Shares Card -->
-                <div class="card shares-card">
-                    <div class="card-label">📈 Shares Owned</div>
-                    <div class="card-value" id="sharesOwned">0</div>
-                </div>
-
-                <!-- Profit Card -->
-                <div class="card profit-card">
-                    <div class="card-label">📊 Total Profit/Loss</div>
-                    <div class="card-value" id="totalProfit">$0.00</div>
-                </div>
-
-            </div>
-        </div>
-    </section>
-
-    <!-- ============================================================
-    TRADING SECTION
-    ============================================================ -->
-    <section id="trade" class="section section-alt">
-        <div class="container">
-            <h2 class="section-title">📊 <span>Stock</span> Trading</h2>
-            <p class="section-desc">Buy and sell shares – watch prices move in real-time!</p>
-
-            <!-- Stock Price Display -->
-            <div class="stock-price-box">
-                <div class="stock-info">
-                    <div class="stock-name">🇳🇬 NIGERIA PLC</div>
-                    <div class="stock-symbol">NGX: NIGERIA</div>
-                </div>
-                <div class="stock-price">
-                    <div class="price" id="stockPrice">₦1,250.00</div>
-                    <div class="change" id="priceChange">+0.00%</div>
-                </div>
-            </div>
-
-            <!-- Trading Controls -->
-            <div class="trade-box">
-                <div class="trade-row">
-                    <input type="number" id="tradeAmount" placeholder="Enter amount (₦)" min="1" step="1" />
-                    <input type="number" id="shareQuantity" placeholder="Or quantity" min="1" step="1" />
-                </div>
-                <div class="trade-buttons">
-                    <button class="btn btn-buy" onclick="buyShares()">🟢 BUY</button>
-                    <button class="btn btn-sell" onclick="sellShares()">🔴 SELL</button>
-                </div>
-                <div class="trade-info">
-                    <span>💰 Cash: <strong id="tradeCash">₦10,000.00</strong></span>
-                    <span>📈 Shares: <strong id="tradeShares">0</strong></span>
-                    <span>💎 Total: <strong id="tradeTotal">₦10,000.00</strong></span>
-                </div>
-            </div>
-
-            <!-- Price History -->
-            <div class="price-history">
-                <h3>📉 Price History</h3>
-                <div id="priceHistoryList">
-                    <div class="history-item">No transactions yet</div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- ============================================================
-    LEARN SECTION
-    ============================================================ -->
-    <section id="learn" class="section">
-        <div class="container">
-            <h2 class="section-title">📚 <span>Learn</span> Stock Market</h2>
-            <p class="section-desc">Beginner-friendly lessons to get you started</p>
-
-            <div class="learn-grid" id="learnGrid">
-                <!-- Generated by JavaScript -->
-            </div>
-        </div>
-    </section>
-
-    <!-- ============================================================
-    LEADERBOARD
-    ============================================================ -->
-    <section id="leaderboard" class="section section-alt">
-        <div class="container">
-            <h2 class="section-title">🏆 <span>Top</span> Traders</h2>
-            <p class="section-desc">See who's making the most profit</p>
-
-            <div class="leaderboard" id="leaderboardList">
-                <!-- Generated by JavaScript -->
-            </div>
-        </div>
-    </section>
-
-    <!-- ============================================================
-    DISCLAIMER
-    ============================================================ -->
-    <div class="container">
-        <div class="disclaimer">
-            <strong>⚠️ Educational Purpose Only:</strong> This is a stock market simulator for learning. No real money is involved. Prices are simulated and do not reflect real market data.
-        </div>
-    </div>
-
-    <!-- ============================================================
-    FOOTER
-    ============================================================ -->
-    <footer>
-        <div class="container">
-            <p>🇳🇬 NaijaStock – Empowering Nigerian Investors</p>
-            <p style="font-size:13px;color:#4a7c59;">© 2026 All rights reserved</p>
-        </div>
-    </footer>
-
-    <!-- Link to JavaScript -->
-    <script src="script.js"></script>
-
-</body>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1" />
+    <title>D K9 Kennel</title>
+    <meta name="description" content="D K9 Kennel — built on Replit. Update this description to reflect the app." />
+    <meta name="robots" content="index, follow" />
+    <meta property="og:title" content="D K9 Kennel" />
+    <meta property="og:description" content="D K9 Kennel — built on Replit. Update this description to reflect the app." />
+    <meta property="og:type" content="website" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="D K9 Kennel" />
+    <meta name="twitter:description" content="D K9 Kennel — built on Replit. Update this description to reflect the app." />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <script type="module" crossorigin src="/assets/index-BBHQ0niE.js"></script>
+    <link rel="stylesheet" crossorigin href="/assets/index-3R0OimUf.css">
+  </head>
+  <body>
+    <div id="root"></div>
+  </body>
 </html>
