@@ -3,306 +3,376 @@
   <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>StartMiner - Mine Real Dollars Daily</title>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap" rel="stylesheet">
+  <title>StartMiner - Mine Real Dollars</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
   <style>
   *{margin:0;padding:0;box-sizing:border-box}
-  body{font-family:'Inter',sans-serif;background:#0a0a0f;color:#f1f5f9;min-height:100vh}
+  :root{--gold:#f7a600;--gold2:#d48f00;--bg:#09090f;--bg2:#0f0f18;--card:#10101a;--border:#1e1e2e;--text:#f1f5f9;--muted:#64748b;--green:#22c55e;--red:#ef4444}
+  body{font-family:'Inter',sans-serif;background:var(--bg);color:var(--text);min-height:100vh}
+  .page{display:none;min-height:100vh}
+  .page.active{display:flex;flex-direction:column}
 
-  /* NAV */
-  nav{background:#10101a;border-bottom:1px solid #1e1e2e;padding:0 24px;position:sticky;top:0;z-index:100}
-  .nav-inner{max-width:1100px;margin:0 auto;height:64px;display:flex;align-items:center;gap:16px}
+  /* ===== LOGO ===== */
   .logo{display:flex;align-items:center;gap:10px}
-  .logo-icon{width:36px;height:36px;background:linear-gradient(135deg,#f7a600,#d48f00);border-radius:10px;display:flex;align-items:center;justify-content:center;color:#000;font-size:16px}
-  .logo-name{font-size:18px;font-weight:800;color:#fff}
-  .logo-name span{color:#f7a600}
-  .nav-btn{margin-left:auto;background:#f7a600;color:#000;border:none;padding:8px 20px;border-radius:100px;font-weight:700;font-size:14px;cursor:pointer}
+  .logo-icon{width:38px;height:38px;background:linear-gradient(135deg,var(--gold),var(--gold2));border-radius:11px;display:flex;align-items:center;justify-content:center;color:#000;font-size:17px;flex-shrink:0}
+  .logo-name{font-size:20px;font-weight:800;color:#fff}
+  .logo-name span{color:var(--gold)}
 
-  /* HERO */
-  .hero{text-align:center;padding:80px 24px 60px;background:radial-gradient(ellipse at 50% 0%, rgba(247,166,0,0.08) 0%, transparent 60%)}
-  .live-badge{display:inline-flex;align-items:center;gap:8px;background:rgba(34,197,94,0.1);border:1px solid rgba(34,197,94,0.25);color:#22c55e;padding:6px 18px;border-radius:100px;font-size:13px;font-weight:600;margin-bottom:28px}
-  .dot{width:8px;height:8px;background:#22c55e;border-radius:50%;animation:blink 1.5s ease-in-out infinite}
+  /* ===== LOGIN PAGE ===== */
+  #loginPage{background:radial-gradient(ellipse at 50% 0%,rgba(247,166,0,0.1) 0%,transparent 55%),var(--bg);align-items:center;justify-content:center;padding:24px}
+  .login-card{width:100%;max-width:420px;background:var(--card);border:1px solid var(--border);border-radius:24px;padding:40px 32px}
+  .login-card .logo{justify-content:center;margin-bottom:32px}
+  .login-title{text-align:center;font-size:22px;font-weight:800;color:#fff;margin-bottom:6px}
+  .login-sub{text-align:center;font-size:14px;color:var(--muted);margin-bottom:28px;line-height:1.6}
+  .input-wrap{position:relative;margin-bottom:16px}
+  .input-wrap i{position:absolute;left:16px;top:50%;transform:translateY(-50%);color:var(--muted);font-size:15px}
+  .input-wrap input{width:100%;background:#0a0a14;border:1px solid var(--border);border-radius:12px;padding:14px 16px 14px 44px;font-size:15px;color:#fff;font-family:'Inter',sans-serif;outline:none;transition:border-color 0.2s}
+  .input-wrap input:focus{border-color:var(--gold)}
+  .input-wrap input::placeholder{color:var(--muted)}
+  .err-msg{color:var(--red);font-size:13px;margin-bottom:12px;display:none;text-align:center}
+  .btn-gold{width:100%;background:linear-gradient(135deg,var(--gold),var(--gold2));color:#000;border:none;padding:14px;border-radius:12px;font-size:16px;font-weight:700;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:8px;transition:all 0.2s;font-family:'Inter',sans-serif}
+  .btn-gold:hover{transform:translateY(-1px);box-shadow:0 8px 28px rgba(247,166,0,0.3)}
+  .login-note{text-align:center;font-size:12px;color:var(--muted);margin-top:20px}
+  .login-note i{color:var(--green);margin-right:4px}
+  .divider{display:flex;align-items:center;gap:12px;margin:20px 0;color:var(--muted);font-size:12px}
+  .divider::before,.divider::after{content:'';flex:1;height:1px;background:var(--border)}
+
+  /* ===== NAVBAR ===== */
+  .navbar{background:rgba(10,10,15,0.95);border-bottom:1px solid var(--border);padding:0 20px;position:sticky;top:0;z-index:100;backdrop-filter:blur(12px)}
+  .nav-inner{max-width:1100px;margin:0 auto;height:60px;display:flex;align-items:center;gap:16px}
+  .nav-right{margin-left:auto;display:flex;align-items:center;gap:12px}
+  .user-pill{display:flex;align-items:center;gap:8px;background:rgba(247,166,0,0.08);border:1px solid rgba(247,166,0,0.2);padding:6px 14px;border-radius:100px;font-size:13px;font-weight:600;color:var(--gold)}
+  .nav-link{color:var(--muted);font-size:14px;font-weight:500;background:none;border:none;cursor:pointer;padding:6px 12px;border-radius:8px;transition:all 0.2s;font-family:'Inter',sans-serif}
+  .nav-link:hover{color:#fff;background:rgba(255,255,255,0.05)}
+  .nav-link.active-nav{color:var(--gold)}
+  .logout-btn{color:var(--muted);font-size:13px;background:none;border:none;cursor:pointer;font-family:'Inter',sans-serif;display:flex;align-items:center;gap:6px}
+  .logout-btn:hover{color:var(--red)}
+
+  /* ===== DASHBOARD ===== */
+  #dashPage .inner{max-width:900px;margin:0 auto;padding:32px 20px;flex:1}
+  .welcome-bar{background:linear-gradient(135deg,rgba(247,166,0,0.08),rgba(247,166,0,0.03));border:1px solid rgba(247,166,0,0.15);border-radius:16px;padding:20px 24px;margin-bottom:24px;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:12px}
+  .welcome-text h3{font-size:17px;font-weight:700;color:#fff;margin-bottom:2px}
+  .welcome-text p{font-size:13px;color:var(--muted)}
+  .live-badge{display:inline-flex;align-items:center;gap:7px;background:rgba(34,197,94,0.1);border:1px solid rgba(34,197,94,0.2);color:var(--green);padding:6px 14px;border-radius:100px;font-size:12px;font-weight:600}
+  .dot{width:7px;height:7px;background:var(--green);border-radius:50%;animation:blink 1.5s ease-in-out infinite}
   @keyframes blink{0%,100%{opacity:0.4;transform:scale(0.8)}50%{opacity:1;transform:scale(1.2)}}
-  h1{font-size:clamp(32px,7vw,60px);font-weight:800;line-height:1.15;color:#fff;margin-bottom:20px}
-  h1 span{color:#f7a600}
-  .hero-sub{font-size:18px;color:#94a3b8;line-height:1.7;margin-bottom:36px;max-width:600px;margin-left:auto;margin-right:auto}
-  .hero-sub strong{color:#f1f5f9}
-  .hero-btns{display:flex;gap:14px;justify-content:center;flex-wrap:wrap;margin-bottom:40px}
-  .btn-main{background:linear-gradient(135deg,#f7a600,#d48f00);color:#000;border:none;padding:14px 32px;border-radius:100px;font-size:16px;font-weight:700;cursor:pointer;display:inline-flex;align-items:center;gap:8px;box-shadow:0 8px 32px rgba(247,166,0,0.25)}
-  .btn-outline{background:transparent;border:1px solid #2a2a3e;color:#f1f5f9;padding:14px 32px;border-radius:100px;font-size:16px;font-weight:600;cursor:pointer;display:inline-flex;align-items:center;gap:8px;text-decoration:none}
-  .trust{display:flex;justify-content:center;flex-wrap:wrap;gap:24px}
-  .trust-item{display:flex;align-items:center;gap:8px;font-size:13px;color:#64748b;font-weight:500}
-  .trust-item i{color:#f7a600;font-size:12px}
 
-  /* MINING CARD */
-  .card-section{padding:0 24px 60px}
-  .mining-card{max-width:560px;margin:0 auto;background:#10101a;border:1px solid rgba(247,166,0,0.2);border-radius:24px;padding:28px;box-shadow:0 0 60px rgba(247,166,0,0.05),0 20px 60px rgba(0,0,0,0.4)}
-  .card-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:20px}
-  .card-live{display:flex;align-items:center;gap:8px;font-size:14px;font-weight:600;color:#94a3b8}
-  .pulse{width:10px;height:10px;background:#22c55e;border-radius:50%;animation:blink 1.5s ease-in-out infinite}
-  .rate{font-size:14px;font-weight:700;color:#22c55e}
-  .balance{text-align:center;padding:24px 0}
-  .bal-label{font-size:12px;color:#64748b;text-transform:uppercase;letter-spacing:1px;margin-bottom:8px}
-  .bal-amount{font-size:48px;font-weight:800;color:#fff}
-  .bal-note{font-size:13px;color:#64748b;margin-top:6px}
-  .prog-bar{width:100%;height:6px;background:rgba(255,255,255,0.05);border-radius:100px;overflow:hidden;margin-top:16px}
-  .prog-fill{height:100%;width:0%;background:linear-gradient(90deg,#f7a600,#ffd166);border-radius:100px;transition:width 1s ease}
-  .prog-meta{display:flex;justify-content:space-between;margin-top:8px;font-size:12px;color:#64748b}
-  .prog-meta span:last-child{color:#f7a600;font-weight:700}
+  .balance-card{background:var(--card);border:1px solid rgba(247,166,0,0.2);border-radius:20px;padding:28px;margin-bottom:20px;text-align:center;box-shadow:0 0 50px rgba(247,166,0,0.04)}
+  .bal-label{font-size:12px;color:var(--muted);text-transform:uppercase;letter-spacing:1px;margin-bottom:10px}
+  .bal-num{font-size:52px;font-weight:800;color:#fff;font-variant-numeric:tabular-nums}
+  .bal-note{font-size:13px;color:var(--muted);margin-top:8px;margin-bottom:20px}
+  .rate-row{display:flex;align-items:center;justify-content:center;gap:6px;font-size:14px;color:var(--green);font-weight:600}
+  .prog-wrap{margin-top:20px}
+  .prog-bar{width:100%;height:6px;background:rgba(255,255,255,0.05);border-radius:100px;overflow:hidden}
+  .prog-fill{height:100%;width:0%;background:linear-gradient(90deg,var(--gold),#ffd166);border-radius:100px;transition:width 1s ease}
+  .prog-meta{display:flex;justify-content:space-between;margin-top:8px;font-size:12px;color:var(--muted)}
+  .prog-meta .pct{color:var(--gold);font-weight:700}
 
-  /* COUNTDOWN */
-  .countdown-section{background:#0f0f18;border-top:1px solid #1e1e2e;border-bottom:1px solid #1e1e2e;padding:64px 24px;text-align:center}
-  .section-tag{font-size:12px;font-weight:700;color:#f7a600;text-transform:uppercase;letter-spacing:2px;margin-bottom:14px}
-  h2{font-size:clamp(24px,4vw,36px);font-weight:800;color:#fff;margin-bottom:36px}
-  .timer{display:flex;align-items:center;justify-content:center;gap:12px;flex-wrap:wrap;margin-bottom:20px}
-  .time-box{background:#10101a;border:1px solid #1e1e2e;border-radius:16px;padding:20px 24px;min-width:90px;text-align:center}
-  .time-num{font-size:40px;font-weight:800;color:#fff;font-variant-numeric:tabular-nums}
-  .time-lbl{font-size:11px;color:#64748b;text-transform:uppercase;letter-spacing:1px;margin-top:4px}
-  .sep{font-size:32px;color:#f7a600;font-weight:800;margin-bottom:16px}
-  .timer-note{font-size:15px;color:#64748b}
+  .cards-grid{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:20px}
+  .info-card{background:var(--card);border:1px solid var(--border);border-radius:16px;padding:20px}
+  .info-card .ic-label{font-size:12px;color:var(--muted);text-transform:uppercase;letter-spacing:0.8px;margin-bottom:10px;display:flex;align-items:center;gap:7px}
+  .info-card .ic-label i{color:var(--gold)}
+  .info-card .ic-val{font-size:24px;font-weight:800;color:#fff}
+  .info-card .ic-sub{font-size:12px;color:var(--muted);margin-top:4px}
 
-  /* STATS */
-  .stats-section{padding:64px 24px;text-align:center}
-  .stats-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:16px;max-width:900px;margin:32px auto 0}
-  .stat-box{background:#10101a;border:1px solid #1e1e2e;border-radius:16px;padding:28px 20px}
-  .stat-icon{width:48px;height:48px;background:rgba(247,166,0,0.1);border-radius:14px;display:flex;align-items:center;justify-content:center;font-size:20px;color:#f7a600;margin:0 auto 14px}
-  .stat-num{font-size:32px;font-weight:800;color:#fff}
-  .stat-lbl{font-size:13px;color:#64748b;margin-top:4px}
+  .timer-card{background:var(--card);border:1px solid var(--border);border-radius:16px;padding:20px;margin-bottom:20px}
+  .timer-label{font-size:12px;color:var(--muted);text-transform:uppercase;letter-spacing:0.8px;margin-bottom:14px;display:flex;align-items:center;gap:7px}
+  .timer-label i{color:var(--gold)}
+  .timer-row{display:flex;gap:10px;flex-wrap:wrap}
+  .t-box{flex:1;min-width:60px;background:rgba(255,255,255,0.03);border:1px solid var(--border);border-radius:12px;padding:12px 8px;text-align:center}
+  .t-num{font-size:28px;font-weight:800;color:#fff;font-variant-numeric:tabular-nums}
+  .t-lbl{font-size:10px;color:var(--muted);text-transform:uppercase;letter-spacing:1px;margin-top:2px}
 
-  /* HOW IT WORKS */
-  .how-section{background:#0f0f18;border-top:1px solid #1e1e2e;padding:64px 24px;text-align:center}
-  .steps{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:20px;max-width:900px;margin:32px auto 0}
-  .step{background:#10101a;border:1px solid #1e1e2e;border-radius:16px;padding:28px;text-align:left;position:relative}
-  .step-num{font-size:48px;font-weight:800;color:rgba(247,166,0,0.08);position:absolute;top:16px;right:20px}
-  .step-icon{font-size:24px;color:#f7a600;margin-bottom:14px}
-  .step h3{font-size:16px;font-weight:700;color:#fff;margin-bottom:8px}
-  .step p{font-size:14px;color:#64748b;line-height:1.6}
+  .withdraw-btn-wrap{text-align:center;margin-bottom:20px}
+  .btn-withdraw-lock{background:rgba(239,68,68,0.08);border:1px solid rgba(239,68,68,0.2);color:#ef4444;padding:14px 36px;border-radius:12px;font-size:15px;font-weight:700;cursor:pointer;display:inline-flex;align-items:center;gap:10px;font-family:'Inter',sans-serif;transition:all 0.2s}
+  .btn-withdraw-lock:hover{background:rgba(239,68,68,0.14)}
 
-  /* SECURITY */
-  .security-section{padding:64px 24px}
-  .sec-inner{max-width:900px;margin:0 auto;display:grid;grid-template-columns:1fr 1fr;gap:48px;align-items:center}
-  .sec-text h2{text-align:left;margin-bottom:14px}
-  .sec-text p{color:#64748b;line-height:1.7;font-size:15px;margin-bottom:20px}
-  .sec-list{list-style:none;display:flex;flex-direction:column;gap:10px}
-  .sec-list li{display:flex;align-items:center;gap:10px;font-size:14px;color:#94a3b8}
-  .sec-list i{color:#22c55e;font-size:13px}
-  .badges{display:grid;grid-template-columns:1fr 1fr;gap:14px}
-  .badge{background:#10101a;border:1px solid #1e1e2e;border-radius:16px;padding:24px;display:flex;flex-direction:column;align-items:center;gap:10px;text-align:center}
-  .badge i{font-size:24px;color:#f7a600}
-  .badge span{font-size:13px;font-weight:600;color:#94a3b8}
-
-  /* FOOTER CTA */
-  .footer-cta{background:linear-gradient(135deg,rgba(247,166,0,0.06),rgba(120,60,240,0.06));border-top:1px solid #1e1e2e;border-bottom:1px solid #1e1e2e;padding:64px 24px;text-align:center}
-  .footer-cta h2{margin-bottom:12px}
-  .footer-cta p{color:#64748b;margin-bottom:28px;font-size:15px}
-
-  /* FOOTER */
-  footer{padding:32px 24px;border-top:1px solid #1e1e2e;text-align:center}
-  footer .logo{justify-content:center;margin-bottom:12px}
-  footer p{color:#64748b;font-size:13px;margin-bottom:14px}
-  .foot-links{display:flex;justify-content:center;gap:24px}
-  .foot-links a{color:#64748b;font-size:13px;text-decoration:none}
+  /* ===== WITHDRAW PAGE ===== */
+  #withdrawPage .inner{max-width:560px;margin:0 auto;padding:32px 20px;flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center}
+  .lock-card{background:var(--card);border:1px solid var(--border);border-radius:24px;padding:40px 32px;text-align:center;width:100%}
+  .lock-icon-wrap{width:90px;height:90px;background:rgba(239,68,68,0.08);border:2px solid rgba(239,68,68,0.2);border-radius:50%;display:flex;align-items:center;justify-content:center;margin:0 auto 24px;font-size:36px;color:#ef4444;animation:pulse-lock 2s ease-in-out infinite}
+  @keyframes pulse-lock{0%,100%{box-shadow:0 0 0 0 rgba(239,68,68,0.2)}50%{box-shadow:0 0 0 12px rgba(239,68,68,0)}}
+  .lock-title{font-size:24px;font-weight:800;color:#fff;margin-bottom:8px}
+  .lock-sub{font-size:14px;color:var(--muted);line-height:1.7;margin-bottom:24px}
+  .your-balance-box{background:rgba(247,166,0,0.05);border:1px solid rgba(247,166,0,0.15);border-radius:14px;padding:20px;margin-bottom:24px}
+  .yb-label{font-size:12px;color:var(--muted);text-transform:uppercase;letter-spacing:1px;margin-bottom:6px}
+  .yb-amount{font-size:36px;font-weight:800;color:#fff}
+  .yb-note{font-size:12px;color:var(--muted);margin-top:4px}
+  .lock-countdown{margin-bottom:24px}
+  .lc-label{font-size:13px;color:var(--muted);margin-bottom:12px}
+  .lc-timer{display:flex;gap:10px;justify-content:center;flex-wrap:wrap}
+  .lc-box{background:rgba(255,255,255,0.03);border:1px solid var(--border);border-radius:10px;padding:12px 16px;text-align:center;min-width:68px}
+  .lc-num{font-size:26px;font-weight:800;color:#fff;font-variant-numeric:tabular-nums}
+  .lc-lbl{font-size:10px;color:var(--muted);text-transform:uppercase;letter-spacing:1px;margin-top:2px}
+  .lock-features{display:flex;flex-direction:column;gap:10px;margin-bottom:24px;text-align:left}
+  .lock-feat{display:flex;align-items:center;gap:10px;font-size:14px;color:#94a3b8}
+  .lock-feat i{color:var(--green);font-size:13px}
+  .btn-back{background:rgba(255,255,255,0.05);border:1px solid var(--border);color:#fff;padding:12px 28px;border-radius:12px;font-size:15px;font-weight:600;cursor:pointer;font-family:'Inter',sans-serif;width:100%;transition:all 0.2s}
+  .btn-back:hover{background:rgba(255,255,255,0.09)}
 
   /* TOAST */
-  .toast{position:fixed;bottom:28px;left:50%;transform:translateX(-50%) translateY(120px);background:#10101a;border:1px solid rgba(34,197,94,0.25);padding:12px 28px;border-radius:100px;display:flex;align-items:center;gap:10px;color:#e2e8f0;font-size:14px;font-weight:500;box-shadow:0 20px 60px rgba(0,0,0,0.5);opacity:0;transition:all 0.5s cubic-bezier(0.34,1.56,0.64,1);z-index:999;pointer-events:none}
+  .toast{position:fixed;bottom:24px;left:50%;transform:translateX(-50%) translateY(120px);background:#10101a;border:1px solid rgba(34,197,94,0.25);padding:12px 24px;border-radius:100px;display:flex;align-items:center;gap:10px;color:#e2e8f0;font-size:14px;font-weight:500;box-shadow:0 16px 50px rgba(0,0,0,0.5);opacity:0;transition:all 0.4s cubic-bezier(0.34,1.56,0.64,1);z-index:999;pointer-events:none;white-space:nowrap}
   .toast.show{opacity:1;transform:translateX(-50%) translateY(0);pointer-events:auto}
-  .toast i{color:#22c55e;font-size:16px}
+  .toast i{color:var(--green)}
 
-  @media(max-width:768px){
-    .sec-inner{grid-template-columns:1fr;gap:28px}
-    .sec-text h2{text-align:center}
-    nav .nav-btn{display:none}
-  }
-  @media(max-width:480px){
-    .sep{display:none}
-    .time-box{min-width:64px;padding:14px 12px}
-    .time-num{font-size:28px}
+  @media(max-width:600px){
+    .cards-grid{grid-template-columns:1fr}
+    .login-card{padding:28px 20px}
+    .bal-num{font-size:38px}
+    .lock-card{padding:28px 20px}
   }
   </style>
   </head>
   <body>
 
-  <nav>
-    <div class="nav-inner">
-      <div class="logo">
-        <div class="logo-icon"><i class="fas fa-coins"></i></div>
-        <div class="logo-name">Start<span>Miner</span></div>
+  <!-- ===== LOGIN PAGE ===== -->
+  <div class="page active" id="loginPage">
+    <div class="login-card">
+      <div class="logo"><div class="logo-icon"><i class="fas fa-coins"></i></div><div class="logo-name">Start<span>Miner</span></div></div>
+      <div class="login-title">Welcome to StartMiner</div>
+      <div class="login-sub">Enter your username to start mining<br>US dollars directly from your phone.</div>
+      <div class="input-wrap">
+        <i class="fas fa-user"></i>
+        <input type="text" id="usernameInput" placeholder="Enter your username" maxlength="30" autocomplete="off">
       </div>
-      <a href="#how" style="color:#64748b;font-size:14px;font-weight:500;text-decoration:none;margin-left:auto;margin-right:24px">How It Works</a>
-      <a href="#stats" style="color:#64748b;font-size:14px;font-weight:500;text-decoration:none;margin-right:24px">Stats</a>
-      <button class="nav-btn" onclick="showToast()"><i class="fas fa-bell"></i> Get Notified</button>
+      <div class="err-msg" id="errMsg"><i class="fas fa-exclamation-circle"></i> Please enter a valid username</div>
+      <button class="btn-gold" onclick="doLogin()"><i class="fas fa-bolt"></i> Start Mining Now</button>
+      <div class="divider">Secure Login</div>
+      <div class="login-note"><i class="fas fa-lock"></i> No password needed &nbsp;|&nbsp; <i class="fas fa-shield-alt" style="color:var(--gold)"></i> SSL Encrypted &nbsp;|&nbsp; <i class="fas fa-user-check" style="color:var(--gold)"></i> KYC Verified</div>
     </div>
-  </nav>
+  </div>
 
-  <section class="hero">
-    <div class="live-badge"><span class="dot"></span> Mining is Active &mdash; Withdrawal Opening Soon</div>
-    <h1>Mine Real <span>US Dollars</span><br>From Your Phone</h1>
-    <p class="hero-sub">No hardware. No investment. Just tap and earn.<br>Join over <strong>2.4 million miners</strong> already accumulating balance.</p>
-    <div class="hero-btns">
-      <button class="btn-main" onclick="showToast()"><i class="fas fa-bell"></i> Notify Me at Launch</button>
-      <a href="#how" class="btn-outline"><i class="fas fa-play-circle"></i> How It Works</a>
-    </div>
-    <div class="trust">
-      <div class="trust-item"><i class="fas fa-shield-alt"></i> SSL Secured</div>
-      <div class="trust-item"><i class="fas fa-user-check"></i> KYC Verified</div>
-      <div class="trust-item"><i class="fas fa-lock"></i> 2FA Protected</div>
-      <div class="trust-item"><i class="fas fa-globe"></i> 140+ Countries</div>
-    </div>
-  </section>
+  <!-- ===== DASHBOARD PAGE ===== -->
+  <div class="page" id="dashPage">
+    <nav class="navbar">
+      <div class="nav-inner">
+        <div class="logo"><div class="logo-icon"><i class="fas fa-coins"></i></div><div class="logo-name">Start<span>Miner</span></div></div>
+        <div class="nav-right">
+          <button class="nav-link active-nav" onclick="showPage('dash')"><i class="fas fa-tachometer-alt"></i> Dashboard</button>
+          <button class="nav-link" onclick="showPage('withdraw')"><i class="fas fa-wallet"></i> Withdraw</button>
+          <div class="user-pill"><i class="fas fa-user"></i> <span id="navUsername">User</span></div>
+          <button class="logout-btn" onclick="doLogout()"><i class="fas fa-sign-out-alt"></i></button>
+        </div>
+      </div>
+    </nav>
+    <div class="inner">
+      <div class="welcome-bar">
+        <div class="welcome-text">
+          <h3>Hello, <span id="welcomeName">Miner</span>! <span style="font-size:18px">&#128075;</span></h3>
+          <p>Your mining session is active and your balance is growing.</p>
+        </div>
+        <div class="live-badge"><span class="dot"></span> Mining Live</div>
+      </div>
 
-  <section class="card-section">
-    <div class="mining-card">
-      <div class="card-header">
-        <div class="card-live"><span class="pulse"></span> Live Mining Dashboard</div>
-        <div class="rate">+$0.0031 <small style="font-weight:400;color:#64748b">/ hr</small></div>
+      <div class="balance-card">
+        <div class="bal-label">Your Current Balance</div>
+        <div class="bal-num">$<span id="dashBal">0.0000</span></div>
+        <div class="bal-note">Balance grows automatically while you're logged in</div>
+        <div class="rate-row"><i class="fas fa-arrow-up"></i> +$0.0031 per hour &nbsp;·&nbsp; <i class="fas fa-cog fa-spin"></i> Mining active</div>
+        <div class="prog-wrap">
+          <div class="prog-bar"><div class="prog-fill" id="dashFill"></div></div>
+          <div class="prog-meta"><span><i class="fas fa-clock" style="color:var(--gold);margin-right:4px"></i>Withdrawal preparation</span><span class="pct" id="dashPct">0%</span></div>
+        </div>
       </div>
-      <div class="balance">
-        <div class="bal-label">Your Estimated Balance</div>
-        <div class="bal-amount">$<span id="bal">0.0000</span></div>
-        <div class="bal-note">Balance grows every second you mine</div>
-      </div>
-      <div class="prog-bar"><div class="prog-fill" id="progFill"></div></div>
-      <div class="prog-meta">
-        <span><i class="fas fa-cog fa-spin" style="color:#f7a600;margin-right:5px"></i>Withdrawal Preparation</span>
-        <span id="progPct">0%</span>
-      </div>
-    </div>
-  </section>
 
-  <section class="countdown-section">
-    <div class="section-tag"><i class="fas fa-clock"></i> Withdrawal Countdown</div>
-    <h2>Withdrawal Opens In</h2>
-    <div class="timer">
-      <div class="time-box"><div class="time-num" id="days">00</div><div class="time-lbl">Days</div></div>
-      <div class="sep">:</div>
-      <div class="time-box"><div class="time-num" id="hours">00</div><div class="time-lbl">Hours</div></div>
-      <div class="sep">:</div>
-      <div class="time-box"><div class="time-num" id="mins">00</div><div class="time-lbl">Mins</div></div>
-      <div class="sep">:</div>
-      <div class="time-box"><div class="time-num" id="secs">00</div><div class="time-lbl">Secs</div></div>
-    </div>
-    <p class="timer-note">Keep mining. Your balance keeps growing until withdrawal opens.</p>
-  </section>
-
-  <section class="stats-section" id="stats">
-    <div class="section-tag"><i class="fas fa-chart-line"></i> Platform Statistics</div>
-    <h2>Trusted by Millions</h2>
-    <div class="stats-grid">
-      <div class="stat-box"><div class="stat-icon"><i class="fas fa-users"></i></div><div class="stat-num">2.4M+</div><div class="stat-lbl">Active Miners</div></div>
-      <div class="stat-box"><div class="stat-icon"><i class="fas fa-dollar-sign"></i></div><div class="stat-num">$4.8M+</div><div class="stat-lbl">Total Mined</div></div>
-      <div class="stat-box"><div class="stat-icon"><i class="fas fa-globe"></i></div><div class="stat-num">140+</div><div class="stat-lbl">Countries</div></div>
-      <div class="stat-box"><div class="stat-icon"><i class="fas fa-star"></i></div><div class="stat-num">4.8&#9733;</div><div class="stat-lbl">User Rating</div></div>
-    </div>
-  </section>
-
-  <section class="how-section" id="how">
-    <div class="section-tag"><i class="fas fa-list-ol"></i> Simple Process</div>
-    <h2>How It Works</h2>
-    <div class="steps">
-      <div class="step">
-        <div class="step-num">01</div>
-        <div class="step-icon"><i class="fas fa-user-plus"></i></div>
-        <h3>Create Account</h3>
-        <p>Sign up for free in under 60 seconds. No hardware or investment required.</p>
+      <div class="cards-grid">
+        <div class="info-card">
+          <div class="ic-label"><i class="fas fa-users"></i> Total Miners</div>
+          <div class="ic-val">2.4M+</div>
+          <div class="ic-sub">Active worldwide</div>
+        </div>
+        <div class="info-card">
+          <div class="ic-label"><i class="fas fa-chart-line"></i> Mining Rate</div>
+          <div class="ic-val">$0.0031</div>
+          <div class="ic-sub">Per hour per user</div>
+        </div>
       </div>
-      <div class="step">
-        <div class="step-num">02</div>
-        <div class="step-icon"><i class="fas fa-hammer"></i></div>
-        <h3>Start Mining</h3>
-        <p>Tap to start mining. Your phone mines dollars passively in the background.</p>
+
+      <div class="timer-card">
+        <div class="timer-label"><i class="fas fa-hourglass-half"></i> Withdrawal Opens In</div>
+        <div class="timer-row">
+          <div class="t-box"><div class="t-num" id="dDays">00</div><div class="t-lbl">Days</div></div>
+          <div class="t-box"><div class="t-num" id="dHours">00</div><div class="t-lbl">Hours</div></div>
+          <div class="t-box"><div class="t-num" id="dMins">00</div><div class="t-lbl">Mins</div></div>
+          <div class="t-box"><div class="t-num" id="dSecs">00</div><div class="t-lbl">Secs</div></div>
+        </div>
       </div>
-      <div class="step">
-        <div class="step-num">03</div>
-        <div class="step-icon"><i class="fas fa-wallet"></i></div>
-        <h3>Withdraw USD</h3>
-        <p>When withdrawal opens, cash out your balance directly to your bank or wallet.</p>
+
+      <div class="withdraw-btn-wrap">
+        <button class="btn-withdraw-lock" onclick="showPage('withdraw')">
+          <i class="fas fa-lock"></i> Withdrawal Locked — Opens July 23
+        </button>
       </div>
     </div>
-  </section>
+  </div>
 
-  <section class="security-section" id="security">
-    <div class="sec-inner">
-      <div class="sec-text">
-        <div class="section-tag"><i class="fas fa-shield-alt"></i> Enterprise Security</div>
-        <h2>Your Earnings Are Safe</h2>
-        <p>StartMiner uses bank-grade encryption and multi-layer security to protect your account and earnings at all times.</p>
-        <ul class="sec-list">
-          <li><i class="fas fa-check-circle"></i> 256-bit SSL Encryption</li>
-          <li><i class="fas fa-check-circle"></i> Two-Factor Authentication (2FA)</li>
-          <li><i class="fas fa-check-circle"></i> Cold Storage for Funds</li>
-          <li><i class="fas fa-check-circle"></i> KYC Identity Verification</li>
-          <li><i class="fas fa-check-circle"></i> Real-time Fraud Detection</li>
-        </ul>
+  <!-- ===== WITHDRAW PAGE ===== -->
+  <div class="page" id="withdrawPage">
+    <nav class="navbar">
+      <div class="nav-inner">
+        <div class="logo"><div class="logo-icon"><i class="fas fa-coins"></i></div><div class="logo-name">Start<span>Miner</span></div></div>
+        <div class="nav-right">
+          <button class="nav-link" onclick="showPage('dash')"><i class="fas fa-tachometer-alt"></i> Dashboard</button>
+          <button class="nav-link active-nav" onclick="showPage('withdraw')"><i class="fas fa-wallet"></i> Withdraw</button>
+          <div class="user-pill"><i class="fas fa-user"></i> <span id="wNavUsername">User</span></div>
+          <button class="logout-btn" onclick="doLogout()"><i class="fas fa-sign-out-alt"></i></button>
+        </div>
       </div>
-      <div class="badges">
-        <div class="badge"><i class="fas fa-lock"></i><span>SSL Secured</span></div>
-        <div class="badge"><i class="fas fa-database"></i><span>Cold Storage</span></div>
-        <div class="badge"><i class="fas fa-user-shield"></i><span>KYC Verified</span></div>
-        <div class="badge"><i class="fas fa-shield-alt"></i><span>2FA Active</span></div>
+    </nav>
+    <div class="inner">
+      <div class="lock-card">
+        <div class="lock-icon-wrap"><i class="fas fa-lock"></i></div>
+        <div class="lock-title">Withdrawal Locked</div>
+        <div class="lock-sub">We're finalizing the secure withdrawal system.<br>Keep mining — your balance will be ready to cash out when we open.</div>
+
+        <div class="your-balance-box">
+          <div class="yb-label">Your Current Balance</div>
+          <div class="yb-amount">$<span id="wBal">0.0000</span></div>
+          <div class="yb-note">This balance will be available for withdrawal when the system opens</div>
+        </div>
+
+        <div class="lock-countdown">
+          <div class="lc-label"><i class="fas fa-clock" style="color:var(--gold);margin-right:6px"></i>Withdrawal opens in:</div>
+          <div class="lc-timer">
+            <div class="lc-box"><div class="lc-num" id="wDays">00</div><div class="lc-lbl">Days</div></div>
+            <div class="lc-box"><div class="lc-num" id="wHours">00</div><div class="lc-lbl">Hours</div></div>
+            <div class="lc-box"><div class="lc-num" id="wMins">00</div><div class="lc-lbl">Mins</div></div>
+            <div class="lc-box"><div class="lc-num" id="wSecs">00</div><div class="lc-lbl">Secs</div></div>
+          </div>
+        </div>
+
+        <div class="lock-features">
+          <div class="lock-feat"><i class="fas fa-check-circle"></i> Withdrawal to bank account & crypto wallet</div>
+          <div class="lock-feat"><i class="fas fa-check-circle"></i> Minimum withdrawal: $5.00</div>
+          <div class="lock-feat"><i class="fas fa-check-circle"></i> Instant processing after verification</div>
+          <div class="lock-feat"><i class="fas fa-check-circle"></i> Zero withdrawal fees</div>
+        </div>
+
+        <button class="btn-back" onclick="showPage('dash')"><i class="fas fa-arrow-left"></i> Back to Dashboard</button>
       </div>
     </div>
-  </section>
+  </div>
 
-  <section class="footer-cta">
-    <h2>Don't Miss the Withdrawal Launch</h2>
-    <p>Get notified the moment withdrawals open so you can cash out immediately.</p>
-    <button class="btn-main" style="font-size:17px;padding:16px 36px" onclick="showToast()"><i class="fas fa-bell"></i> Notify Me When Withdrawal Opens</button>
-  </section>
-
-  <footer>
-    <div class="logo"><div class="logo-icon"><i class="fas fa-coins"></i></div><div class="logo-name">Start<span>Miner</span></div></div>
-    <p>&copy; 2026 StartMiner. All rights reserved. Mining real dollars, secured globally.</p>
-    <div class="foot-links">
-      <a href="#">Privacy Policy</a>
-      <a href="#">Terms of Service</a>
-      <a href="#">Support</a>
-    </div>
-  </footer>
-
-  <div class="toast" id="toast"><i class="fas fa-check-circle"></i><span>You'll be notified when withdrawal opens!</span></div>
+  <div class="toast" id="toast"><i class="fas fa-check-circle"></i><span id="toastMsg">Done!</span></div>
 
   <script>
   (function(){
     var TARGET = new Date("2026-07-23T00:00:00Z").getTime();
     var START  = new Date("2026-06-23T00:00:00Z").getTime();
     var RATE   = 0.0031;
+    var currentPage = 'login';
 
     function pad(n){ return String(n).padStart(2,"0"); }
 
-    function tick(){
-      var now  = Date.now();
-      var diff = TARGET - now;
-      if(diff < 0) diff = 0;
-      document.getElementById("days").textContent  = pad(Math.floor(diff/86400000));
-      document.getElementById("hours").textContent = pad(Math.floor(diff/3600000)%24);
-      document.getElementById("mins").textContent  = pad(Math.floor(diff/60000)%60);
-      document.getElementById("secs").textContent  = pad(Math.floor(diff/1000)%60);
-      var total   = TARGET - START;
-      var elapsed = Math.max(0, now - START);
-      var pct     = Math.min(99.5, (elapsed/total)*100);
-      document.getElementById("progFill").style.width = pct+"%";
-      document.getElementById("progPct").textContent  = Math.floor(pct)+"%";
-      var earned = (Math.max(0,now-START)/3600000)*RATE;
-      document.getElementById("bal").textContent = earned.toFixed(4);
+    function getBalance(){
+      var elapsed = Math.max(0, Date.now() - START);
+      return (elapsed / 3600000) * RATE;
     }
 
-    tick();
-    setInterval(tick, 1000);
+    function tick(){
+      var now  = Date.now();
+      var diff = Math.max(0, TARGET - now);
+      var d = pad(Math.floor(diff/86400000));
+      var h = pad(Math.floor(diff/3600000)%24);
+      var m = pad(Math.floor(diff/60000)%60);
+      var s = pad(Math.floor(diff/1000)%60);
 
-    window.showToast = function(){
-      var t = document.getElementById("toast");
-      t.classList.add("show");
-      clearTimeout(window._tt);
-      window._tt = setTimeout(function(){ t.classList.remove("show"); }, 4000);
+      // Dashboard timer
+      var dd=document.getElementById("dDays"); if(dd) dd.textContent=d;
+      var dh=document.getElementById("dHours"); if(dh) dh.textContent=h;
+      var dm=document.getElementById("dMins"); if(dm) dm.textContent=m;
+      var ds=document.getElementById("dSecs"); if(ds) ds.textContent=s;
+
+      // Withdraw timer
+      var wd=document.getElementById("wDays"); if(wd) wd.textContent=d;
+      var wh=document.getElementById("wHours"); if(wh) wh.textContent=h;
+      var wm=document.getElementById("wMins"); if(wm) wm.textContent=m;
+      var ws=document.getElementById("wSecs"); if(ws) ws.textContent=s;
+
+      // Balance
+      var bal = getBalance().toFixed(4);
+      var db=document.getElementById("dashBal"); if(db) db.textContent=bal;
+      var wb=document.getElementById("wBal"); if(wb) wb.textContent=bal;
+
+      // Progress
+      var total = TARGET - START;
+      var elapsed = Math.max(0, now - START);
+      var pct = Math.min(99.5, (elapsed/total)*100);
+      var pf=document.getElementById("dashFill"); if(pf) pf.style.width=pct+"%";
+      var pp=document.getElementById("dashPct"); if(pp) pp.textContent=Math.floor(pct)+"%";
+    }
+
+    setInterval(tick, 1000);
+    tick();
+
+    // ---- AUTH ----
+    function setUser(name){
+      localStorage.setItem("sm_user", name);
+      var navU = document.getElementById("navUsername"); if(navU) navU.textContent=name;
+      var wNavU = document.getElementById("wNavUsername"); if(wNavU) wNavU.textContent=name;
+      var wn = document.getElementById("welcomeName"); if(wn) wn.textContent=name;
+    }
+
+    function checkAuth(){
+      var user = localStorage.getItem("sm_user");
+      if(user){
+        setUser(user);
+        showPage("dash");
+      }
+    }
+
+    window.doLogin = function(){
+      var val = document.getElementById("usernameInput").value.trim();
+      var err = document.getElementById("errMsg");
+      if(!val || val.length < 3){
+        err.style.display="block";
+        err.innerHTML='<i class="fas fa-exclamation-circle"></i> Username must be at least 3 characters';
+        return;
+      }
+      if(!/^[a-zA-Z0-9_]+$/.test(val)){
+        err.style.display="block";
+        err.innerHTML='<i class="fas fa-exclamation-circle"></i> Only letters, numbers and underscore allowed';
+        return;
+      }
+      err.style.display="none";
+      setUser(val);
+      showPage("dash");
+      showToast("Welcome, "+val+"! Mining started.");
     };
 
-    document.addEventListener("click", function(e){
+    window.doLogout = function(){
+      localStorage.removeItem("sm_user");
+      document.getElementById("usernameInput").value="";
+      showPage("login");
+    };
+
+    window.showPage = function(page){
+      document.getElementById("loginPage").classList.remove("active");
+      document.getElementById("dashPage").classList.remove("active");
+      document.getElementById("withdrawPage").classList.remove("active");
+      if(page==="dash") document.getElementById("dashPage").classList.add("active");
+      else if(page==="withdraw") document.getElementById("withdrawPage").classList.add("active");
+      else document.getElementById("loginPage").classList.add("active");
+      currentPage = page;
+      window.scrollTo(0,0);
+    };
+
+    window.showToast = function(msg){
       var t = document.getElementById("toast");
-      if(!t.contains(e.target) && !e.target.closest("button[onclick]")){
-        t.classList.remove("show");
-      }
+      var tm = document.getElementById("toastMsg");
+      if(tm) tm.textContent = msg || "Done!";
+      t.classList.add("show");
+      clearTimeout(window._tt);
+      window._tt = setTimeout(function(){ t.classList.remove("show"); }, 3500);
+    };
+
+    // Enter key on login
+    document.getElementById("usernameInput").addEventListener("keydown", function(e){
+      if(e.key==="Enter") window.doLogin();
     });
+
+    checkAuth();
   })();
   </script>
   </body>
