@@ -153,6 +153,9 @@
   /* Spinning gear */
   @keyframes spin{from{transform:rotate(0deg)}to{transform:rotate(360deg)}}
   .gear-spin{display:inline-block;animation:spin 3s linear infinite;transform-origin:center}
+  
+  .mtn-img-wrap{display:flex;justify-content:center;margin-bottom:14px}
+  .mtn-img{width:110px;height:auto;border-radius:12px;box-shadow:0 4px 20px rgba(247,166,0,0.25)}
   </style>
   </head>
   <body>
@@ -195,7 +198,7 @@
         <div class="lpill"><span class="dot"></span> Mining Active</div>
       </div>
       <div class="bcard">
-        <div class="blbl">&#128246; Your MTN Data Balance</div>
+        <div class="mtn-img-wrap"><img class="mtn-img" src="mtn.jpg" alt="MTN"></div><div class="blbl">&#128246; Your MTN Data Balance</div>
         <div><span class="bval" id="dBal">0</span><span class="bunt" id="dUnit">MB</span></div>
         <div class="bnote">Grows automatically every second you mine</div>
         <div class="rtag">&#8679; +5.95 MB per hour</div>
