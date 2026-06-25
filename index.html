@@ -3,7 +3,7 @@
   <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>StartMiner — Free MTN Data Daily</title>
+  <title>StartMiner — Free MTN Data Weekly</title>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
   <style>
@@ -12,41 +12,37 @@
     --gold:#f7a600;--gold2:#d48f00;
     --bg:#09090f;--card:#10101a;--border:#1e1e2e;
     --text:#f1f5f9;--muted:#64748b;
-    --green:#22c55e;--red:#ef4444;--blue:#3b82f6;
+    --green:#22c55e;--red:#ef4444;
   }
   body{font-family:'Inter',sans-serif;background:var(--bg);color:var(--text);min-height:100vh}
   .page{display:none;min-height:100vh;flex-direction:column}
   .page.active{display:flex}
 
-  /* LOGO */
   .logo{display:flex;align-items:center;gap:10px}
   .logo-icon{width:36px;height:36px;background:linear-gradient(135deg,#ffcc00,#f7a600);border-radius:10px;display:flex;align-items:center;justify-content:center;color:#000;font-size:16px;flex-shrink:0}
   .logo-name{font-size:19px;font-weight:800;color:#fff}
   .logo-name em{color:var(--gold);font-style:normal}
 
-  /* TOP BAR */
   .topbar{background:#0a0a14;border-bottom:1px solid var(--border);padding:0 18px;position:sticky;top:0;z-index:100}
   .topbar-inner{max-width:860px;margin:0 auto;height:56px;display:flex;align-items:center;justify-content:space-between}
   .user-chip{display:flex;align-items:center;gap:7px;background:rgba(247,166,0,0.08);border:1px solid rgba(247,166,0,0.2);padding:5px 13px;border-radius:100px;font-size:13px;font-weight:600;color:var(--gold)}
   .logout-btn{background:none;border:none;color:var(--muted);cursor:pointer;font-size:13px;display:flex;align-items:center;gap:5px;font-family:'Inter',sans-serif;padding:5px 8px;border-radius:8px;transition:color 0.2s}
   .logout-btn:hover{color:var(--red)}
 
-  /* BOTTOM TAB BAR */
   .tab-bar{position:fixed;bottom:0;left:0;right:0;background:#0a0a14;border-top:1px solid var(--border);display:grid;grid-template-columns:1fr 1fr;z-index:200;padding-bottom:env(safe-area-inset-bottom,0px)}
   .tab{display:flex;flex-direction:column;align-items:center;justify-content:center;padding:10px 8px;cursor:pointer;border:none;background:none;font-family:'Inter',sans-serif;gap:4px;transition:background 0.2s}
   .tab i{font-size:20px;color:var(--muted);transition:color 0.2s}
   .tab span{font-size:11px;color:var(--muted);font-weight:600;transition:color 0.2s}
   .tab.on i,.tab.on span{color:var(--gold)}
   .tab.on{background:rgba(247,166,0,0.04)}
-  .tab-wd i{color:#94a3b8 !important}
-  .tab-wd span{color:#94a3b8 !important}
+  .tab-wd i{color:#94a3b8}
+  .tab-wd span{color:#94a3b8}
   .tab-wd.open-tab i{color:var(--green) !important}
   .tab-wd.open-tab span{color:var(--green) !important}
 
-  /* BODY WRAPPER */
   .page-body{flex:1;max-width:860px;margin:0 auto;width:100%;padding:22px 16px 90px}
 
-  /* ===== LOGIN ===== */
+  /* LOGIN */
   #loginPage{background:radial-gradient(ellipse at 50% 0%,rgba(247,166,0,0.09) 0%,transparent 55%),var(--bg);align-items:center;justify-content:center;padding:24px}
   .login-box{width:100%;max-width:400px;background:var(--card);border:1px solid var(--border);border-radius:24px;padding:36px 26px}
   .login-box .logo{justify-content:center;margin-bottom:28px}
@@ -54,18 +50,17 @@
   .login-sub{text-align:center;font-size:14px;color:var(--muted);line-height:1.65;margin-bottom:24px}
   .field{position:relative;margin-bottom:14px}
   .field i.fi{position:absolute;left:14px;top:50%;transform:translateY(-50%);color:var(--muted);font-size:14px;pointer-events:none}
-  .field input,.field select{width:100%;background:#080810;border:1.5px solid var(--border);border-radius:12px;padding:13px 13px 13px 40px;font-size:15px;color:#fff;font-family:'Inter',sans-serif;outline:none;transition:border-color 0.2s;-webkit-appearance:none}
-  .field input:focus,.field select:focus{border-color:var(--gold)}
+  .field input{width:100%;background:#080810;border:1.5px solid var(--border);border-radius:12px;padding:13px 13px 13px 40px;font-size:15px;color:#fff;font-family:'Inter',sans-serif;outline:none;transition:border-color 0.2s}
+  .field input:focus{border-color:var(--gold)}
   .field input::placeholder{color:var(--muted)}
   .err{color:var(--red);font-size:13px;margin-bottom:12px;display:none;text-align:center;padding:8px;background:rgba(239,68,68,0.07);border-radius:8px}
   .btn-gold{width:100%;background:linear-gradient(135deg,var(--gold),var(--gold2));color:#000;border:none;padding:14px;border-radius:12px;font-size:16px;font-weight:700;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:8px;font-family:'Inter',sans-serif;transition:all 0.2s}
   .btn-gold:hover{box-shadow:0 8px 28px rgba(247,166,0,0.3);transform:translateY(-1px)}
-  .btn-gold:disabled{opacity:0.5;cursor:not-allowed;transform:none;box-shadow:none}
   .login-footer{display:flex;justify-content:center;gap:16px;margin-top:20px;flex-wrap:wrap}
   .login-footer span{font-size:12px;color:var(--muted);display:flex;align-items:center;gap:5px}
   .login-footer i{font-size:11px;color:var(--gold)}
 
-  /* ===== DASHBOARD ===== */
+  /* DASHBOARD */
   .welcome-bar{background:rgba(247,166,0,0.05);border:1px solid rgba(247,166,0,0.12);border-radius:14px;padding:15px 18px;margin-bottom:16px;display:flex;align-items:center;justify-content:space-between;gap:10px;flex-wrap:wrap}
   .welcome-bar h3{font-size:16px;font-weight:700;color:#fff}
   .welcome-bar p{font-size:13px;color:var(--muted);margin-top:2px}
@@ -73,7 +68,6 @@
   .dot{width:7px;height:7px;background:var(--green);border-radius:50%;animation:blink 1.5s ease-in-out infinite}
   @keyframes blink{0%,100%{opacity:0.4;transform:scale(0.8)}50%{opacity:1;transform:scale(1.2)}}
 
-  /* BALANCE CARD */
   .balance-card{background:var(--card);border:1px solid rgba(255,204,0,0.2);border-radius:20px;padding:24px;margin-bottom:16px;text-align:center}
   .bal-label{font-size:11px;color:var(--muted);text-transform:uppercase;letter-spacing:1px;margin-bottom:8px}
   .bal-data{font-size:48px;font-weight:800;color:#fff;font-variant-numeric:tabular-nums;line-height:1}
@@ -85,14 +79,12 @@
   .prog-row{display:flex;justify-content:space-between;margin-top:7px;font-size:12px;color:var(--muted)}
   .prog-row .pct{color:var(--gold);font-weight:700}
 
-  /* MINI CARDS */
   .grid2{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:16px}
   .mini-card{background:var(--card);border:1px solid var(--border);border-radius:16px;padding:18px}
   .mc-icon{width:38px;height:38px;background:rgba(247,166,0,0.08);border-radius:11px;display:flex;align-items:center;justify-content:center;color:var(--gold);font-size:16px;margin-bottom:10px}
   .mc-num{font-size:22px;font-weight:800;color:#fff}
   .mc-lbl{font-size:12px;color:var(--muted);margin-top:3px}
 
-  /* COUNTDOWN CARD */
   .timer-card{background:var(--card);border:1px solid var(--border);border-radius:16px;padding:20px;margin-bottom:16px}
   .card-lbl{font-size:12px;color:var(--muted);text-transform:uppercase;letter-spacing:0.8px;margin-bottom:14px;display:flex;align-items:center;gap:7px}
   .card-lbl i{color:var(--gold)}
@@ -101,15 +93,13 @@
   .t-num{font-size:26px;font-weight:800;color:#fff;font-variant-numeric:tabular-nums}
   .t-lbl{font-size:10px;color:var(--muted);text-transform:uppercase;letter-spacing:1px;margin-top:2px}
 
-  /* GO TO WITHDRAW BUTTON */
   .go-wd-btn{width:100%;padding:16px;border-radius:14px;font-size:15px;font-weight:700;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:10px;font-family:'Inter',sans-serif;transition:all 0.2s;border:1.5px solid;margin-bottom:16px}
   .go-wd-btn.locked{background:rgba(239,68,68,0.06);border-color:rgba(239,68,68,0.22);color:var(--red)}
-  .go-wd-btn.unlocked{background:rgba(34,197,94,0.08);border-color:rgba(34,197,94,0.3);color:var(--green);animation:glow-green 2s ease-in-out infinite}
-  @keyframes glow-green{0%,100%{box-shadow:0 0 0 0 rgba(34,197,94,0.15)}50%{box-shadow:0 0 16px 0 rgba(34,197,94,0.25)}}
+  .go-wd-btn.unlocked{background:rgba(34,197,94,0.08);border-color:rgba(34,197,94,0.3);color:var(--green);animation:glow-g 2s ease-in-out infinite}
+  @keyframes glow-g{0%,100%{box-shadow:0 0 0 0 rgba(34,197,94,0.15)}50%{box-shadow:0 0 16px 0 rgba(34,197,94,0.25)}}
   .go-wd-btn .arr{margin-left:auto}
 
-  /* ===== WITHDRAW PAGE ===== */
-  /* LOCKED STATE */
+  /* WITHDRAW LOCKED */
   .lock-card{background:var(--card);border:1px solid var(--border);border-radius:20px;padding:30px 22px;text-align:center;margin-bottom:16px}
   .lock-icon{width:84px;height:84px;background:rgba(239,68,68,0.07);border:2px solid rgba(239,68,68,0.2);border-radius:50%;display:flex;align-items:center;justify-content:center;margin:0 auto 18px;font-size:32px;color:var(--red);animation:pulse-r 2.5s ease-in-out infinite}
   @keyframes pulse-r{0%,100%{box-shadow:0 0 0 0 rgba(239,68,68,0.18)}50%{box-shadow:0 0 0 14px rgba(239,68,68,0)}}
@@ -128,16 +118,15 @@
   .feat-item{display:flex;align-items:center;gap:10px;font-size:14px;color:#94a3b8}
   .feat-item i{color:var(--green);font-size:13px;flex-shrink:0}
 
-  /* OPEN STATE */
+  /* WITHDRAW OPEN */
   .open-card{background:var(--card);border:1px solid rgba(34,197,94,0.25);border-radius:20px;padding:28px 22px;margin-bottom:16px}
-  .open-header{text-align:center;margin-bottom:24px}
-  .open-icon{width:80px;height:80px;background:rgba(34,197,94,0.08);border:2px solid rgba(34,197,94,0.25);border-radius:50%;display:flex;align-items:center;justify-content:center;margin:0 auto 16px;font-size:30px;color:var(--green);animation:pulse-g 2s ease-in-out infinite}
-  @keyframes pulse-g{0%,100%{box-shadow:0 0 0 0 rgba(34,197,94,0.18)}50%{box-shadow:0 0 0 14px rgba(34,197,94,0)}}
+  .open-header{text-align:center;margin-bottom:22px}
+  .open-icon{width:80px;height:80px;background:rgba(34,197,94,0.08);border:2px solid rgba(34,197,94,0.25);border-radius:50%;display:flex;align-items:center;justify-content:center;margin:0 auto 16px;font-size:30px;color:var(--green);animation:pulse-g2 2s ease-in-out infinite}
+  @keyframes pulse-g2{0%,100%{box-shadow:0 0 0 0 rgba(34,197,94,0.18)}50%{box-shadow:0 0 0 14px rgba(34,197,94,0)}}
   .open-title{font-size:22px;font-weight:800;color:#fff;margin-bottom:6px}
   .open-sub{font-size:14px;color:var(--muted);line-height:1.6}
-  .close-timer{background:rgba(239,68,68,0.06);border:1px solid rgba(239,68,68,0.15);border-radius:12px;padding:14px 16px;margin-bottom:22px;display:flex;align-items:center;gap:10px;font-size:14px;color:#f87171;font-weight:600}
-  .close-timer i{flex-shrink:0}
-  .balance-display{background:rgba(247,166,0,0.06);border:1px solid rgba(247,166,0,0.18);border-radius:14px;padding:16px;margin-bottom:22px;text-align:center}
+  .close-timer{background:rgba(239,68,68,0.06);border:1px solid rgba(239,68,68,0.15);border-radius:12px;padding:14px 16px;margin-bottom:20px;display:flex;align-items:center;gap:10px;font-size:14px;color:#f87171;font-weight:600}
+  .balance-display{background:rgba(247,166,0,0.06);border:1px solid rgba(247,166,0,0.18);border-radius:14px;padding:16px;margin-bottom:20px;text-align:center}
   .bd-lbl{font-size:11px;color:var(--muted);text-transform:uppercase;letter-spacing:1px;margin-bottom:6px}
   .bd-val{font-size:34px;font-weight:800;color:#fff}
   .bd-unit{font-size:16px;color:var(--gold);font-weight:700;margin-left:3px}
@@ -164,27 +153,21 @@
   .toast{position:fixed;bottom:78px;left:50%;transform:translateX(-50%) translateY(80px);background:#10101a;border:1px solid rgba(34,197,94,0.25);padding:11px 22px;border-radius:100px;display:flex;align-items:center;gap:9px;color:#e2e8f0;font-size:14px;font-weight:500;box-shadow:0 12px 40px rgba(0,0,0,0.5);opacity:0;transition:all 0.4s cubic-bezier(0.34,1.56,0.64,1);z-index:999;pointer-events:none;white-space:nowrap}
   .toast.show{opacity:1;transform:translateX(-50%) translateY(0);pointer-events:auto}
   .toast i{color:var(--green)}
-
-  /* MTN BADGE */
-  .mtn-badge{display:inline-flex;align-items:center;gap:7px;background:rgba(255,204,0,0.1);border:1px solid rgba(255,204,0,0.25);color:#ffcc00;padding:5px 14px;border-radius:100px;font-size:12px;font-weight:700;letter-spacing:0.5px}
-
-  @media(max-width:480px){
-    .bal-data{font-size:38px}
-    .grid2{grid-template-columns:1fr 1fr}
-  }
   </style>
   </head>
   <body>
 
-  <!-- ========== LOGIN PAGE ========== -->
+  <!-- LOGIN -->
   <div class="page active" id="loginPage">
     <div class="login-box">
       <div class="logo"><div class="logo-icon"><i class="fas fa-signal"></i></div><div class="logo-name">Start<em>Miner</em></div></div>
-      <div style="text-align:center;margin-bottom:20px">
-        <div class="mtn-badge"><i class="fas fa-wifi"></i> MTN Data Rewards</div>
+      <div style="text-align:center;margin-bottom:18px">
+        <span style="display:inline-flex;align-items:center;gap:7px;background:rgba(255,204,0,0.1);border:1px solid rgba(255,204,0,0.25);color:#ffcc00;padding:5px 14px;border-radius:100px;font-size:12px;font-weight:700">
+          <i class="fas fa-wifi"></i> MTN Data Rewards — Weekly
+        </span>
       </div>
       <div class="login-title">Welcome to StartMiner</div>
-      <div class="login-sub">Enter your username to start earning<br>free MTN Data every day.</div>
+      <div class="login-sub">Enter your username to start earning<br>free MTN Data every week.</div>
       <div class="field">
         <i class="fi fas fa-user"></i>
         <input id="uInput" type="text" placeholder="Enter your username" maxlength="30" autocomplete="off">
@@ -192,14 +175,14 @@
       <div class="err" id="loginErr"></div>
       <button class="btn-gold" onclick="doLogin()"><i class="fas fa-bolt"></i> Start Earning Now</button>
       <div class="login-footer">
-        <span><i class="fas fa-lock"></i> No password needed</span>
+        <span><i class="fas fa-lock"></i> No password</span>
         <span><i class="fas fa-shield-alt"></i> SSL Secured</span>
-        <span><i class="fas fa-wifi"></i> MTN Data Rewards</span>
+        <span><i class="fas fa-wifi"></i> Weekly Rewards</span>
       </div>
     </div>
   </div>
 
-  <!-- ========== DASHBOARD PAGE ========== -->
+  <!-- DASHBOARD -->
   <div class="page" id="dashPage">
     <div class="topbar">
       <div class="topbar-inner">
@@ -210,26 +193,23 @@
         </div>
       </div>
     </div>
-
     <div class="page-body">
       <div class="welcome-bar">
         <div>
-          <h3>Hello, <span id="wName">Miner</span>! 👋</h3>
-          <p>Your MTN Data is accumulating right now.</p>
+          <h3>Hello, <span id="wName">Miner</span>! <span style="font-size:18px">&#128075;</span></h3>
+          <p>Your MTN Data accumulates every week.</p>
         </div>
         <div class="live-pill"><span class="dot"></span> Mining Active</div>
       </div>
 
       <div class="balance-card">
         <div class="bal-label"><i class="fas fa-wifi" style="color:var(--gold);margin-right:5px"></i> Your MTN Data Balance</div>
-        <div>
-          <span class="bal-data" id="dBal">0.00</span><span class="bal-unit" id="dUnit">MB</span>
-        </div>
-        <div class="bal-note">Balance grows automatically every second</div>
-        <div class="rate-pill"><i class="fas fa-arrow-up"></i> +<span id="rateLabel">1.4 MB</span> per hour</div>
+        <div><span class="bal-data" id="dBal">0</span><span class="bal-unit" id="dUnit">MB</span></div>
+        <div class="bal-note">Grows automatically — withdrawn every week</div>
+        <div class="rate-pill"><i class="fas fa-arrow-up"></i> +5.95 MB per hour</div>
         <div class="prog-bar"><div class="prog-fill" id="dFill"></div></div>
         <div class="prog-row">
-          <span><i class="fas fa-cog fa-spin" style="color:var(--gold);margin-right:4px"></i>Withdrawal preparation</span>
+          <span><i class="fas fa-cog fa-spin" style="color:var(--gold);margin-right:4px"></i>Weekly cycle progress</span>
           <span class="pct" id="dPct">0%</span>
         </div>
       </div>
@@ -241,14 +221,14 @@
           <div class="mc-lbl">Active Miners</div>
         </div>
         <div class="mini-card">
-          <div class="mc-icon"><i class="fas fa-globe"></i></div>
-          <div class="mc-num">140+</div>
-          <div class="mc-lbl">Countries</div>
+          <div class="mc-icon"><i class="fas fa-calendar-week"></i></div>
+          <div class="mc-num">~1 GB</div>
+          <div class="mc-lbl">Per Week</div>
         </div>
       </div>
 
       <div class="timer-card">
-        <div class="card-lbl" id="dashTimerLabel"><i class="fas fa-hourglass-half"></i> Withdrawal Opens In</div>
+        <div class="card-lbl" id="dashTimerLbl"><i class="fas fa-hourglass-half"></i> Withdrawal Opens In</div>
         <div class="timer-row">
           <div class="t-box"><div class="t-num" id="dDay">00</div><div class="t-lbl">Days</div></div>
           <div class="t-box"><div class="t-num" id="dHr">00</div><div class="t-lbl">Hours</div></div>
@@ -258,19 +238,18 @@
       </div>
 
       <button class="go-wd-btn locked" id="goWdBtn" onclick="showPage('withdraw')">
-        <i class="fas fa-lock" id="goWdIcon"></i>
-        <span id="goWdText">Withdrawal Locked — Opens July 23</span>
+        <i id="goWdIcon" class="fas fa-lock"></i>
+        <span id="goWdText">Withdrawal Locked — Tap to see details</span>
         <span class="arr"><i class="fas fa-chevron-right"></i></span>
       </button>
     </div>
-
     <div class="tab-bar">
       <button class="tab on" onclick="showPage('dash')"><i class="fas fa-tachometer-alt"></i><span>Dashboard</span></button>
       <button class="tab tab-wd" id="tabWd1" onclick="showPage('withdraw')"><i class="fas fa-wallet"></i><span>Withdraw</span></button>
     </div>
   </div>
 
-  <!-- ========== WITHDRAW PAGE ========== -->
+  <!-- WITHDRAW -->
   <div class="page" id="withdrawPage">
     <div class="topbar">
       <div class="topbar-inner">
@@ -281,14 +260,10 @@
         </div>
       </div>
     </div>
-
-    <div class="page-body" id="withdrawBody">
-      <!-- filled by JS -->
-    </div>
-
+    <div class="page-body" id="wBody"></div>
     <div class="tab-bar">
       <button class="tab" onclick="showPage('dash')"><i class="fas fa-tachometer-alt"></i><span>Dashboard</span></button>
-      <button class="tab tab-wd on" id="tabWd2" onclick="showPage('withdraw')"><i class="fas fa-wallet"></i><span>Withdraw</span></button>
+      <button class="tab tab-wd on" onclick="showPage('withdraw')"><i class="fas fa-wallet"></i><span>Withdraw</span></button>
     </div>
   </div>
 
@@ -296,312 +271,253 @@
 
   <script>
   (function(){
-    // ===== CYCLE CONFIG =====
-    // Every 30 days = mining phase. Then 24hrs open. Then repeats.
-    var CYCLE_LOCK_MS =  7 * 24 * 3600 * 1000;  //  7 days locked
-    var CYCLE_OPEN_MS =  1 * 24 * 3600 * 1000;  // 24 hrs open
-    var CYCLE_TOTAL   = CYCLE_LOCK_MS + CYCLE_OPEN_MS;
-    var BASE          = new Date("2026-06-23T00:00:00Z").getTime();
+    // 7-day lock + 24-hr open window, repeating forever
+    var LOCK_MS  = 7 * 24 * 3600 * 1000;   // 7 days
+    var OPEN_MS  = 1 * 24 * 3600 * 1000;   // 24 hours
+    var TOTAL_MS = LOCK_MS + OPEN_MS;       // 8 days per cycle
+    var BASE     = new Date("2026-06-23T00:00:00Z").getTime();
+    var RATE     = 1000 / LOCK_MS;          // ~1000 MB per 7-day cycle (per ms)
+    var user     = "";
 
-    // MTN Data rate: ~1000 MB over 30 days = 1.389 MB/hr
-    var RATE_MB_PER_MS = 1000 / CYCLE_LOCK_MS; // MB per ms during 7-day lock phase
-
-    var currentUser = "";
-
-    // ===== HELPERS =====
     function pad(n){ return String(Math.floor(n)).padStart(2,"0"); }
-    function set(id,v){ var e=document.getElementById(id); if(e) e.textContent=v; }
+    function el(id){ return document.getElementById(id); }
+    function setText(id,v){ var e=el(id); if(e) e.textContent=v; }
 
     function getState(){
-      var now = Date.now();
-      var elapsed = now - BASE;
-      var cycleElapsed = elapsed % CYCLE_TOTAL;
-      var cycleStart = now - cycleElapsed;
-      if(cycleElapsed < CYCLE_LOCK_MS){
-        return {
-          phase: "locked",
-          timeLeft: CYCLE_LOCK_MS - cycleElapsed,
-          cycleStart: cycleStart
-        };
+      var now   = Date.now();
+      var cycle = (now - BASE) % TOTAL_MS;
+      var cStart = now - cycle;
+      if(cycle < LOCK_MS){
+        return { phase:"locked", left: LOCK_MS - cycle, cycleStart: cStart };
       } else {
-        return {
-          phase: "open",
-          timeLeft: CYCLE_TOTAL - cycleElapsed,
-          cycleStart: cycleStart
-        };
+        return { phase:"open",   left: TOTAL_MS - cycle, cycleStart: cStart };
       }
     }
 
-    function getBalanceMB(cycleStart){
-      var elapsed = Math.max(0, Date.now() - cycleStart);
-      var clampedMs = Math.min(elapsed, CYCLE_LOCK_MS);
-      return clampedMs * RATE_MB_PER_MS;
+    function balanceMB(cycleStart){
+      return Math.min(Date.now() - cycleStart, LOCK_MS) * RATE;
     }
 
-    function formatData(mb){
-      if(mb >= 1000){
-        return { val: (mb/1000).toFixed(2), unit: "GB" };
-      }
-      return { val: mb.toFixed(0), unit: "MB" };
+    function fmt(mb){
+      return mb >= 1000
+        ? { val:(mb/1000).toFixed(2), unit:"GB" }
+        : { val:Math.floor(mb).toString(), unit:"MB" };
     }
 
-    // ===== TICK =====
+    function fmtTime(ms){
+      return {
+        d: pad(ms/86400000),
+        h: pad((ms/3600000)%24),
+        m: pad((ms/60000)%60),
+        s: pad((ms/1000)%60)
+      };
+    }
+
     function tick(){
-      var state = getState();
-      var diff  = state.timeLeft;
-      var d=pad(diff/86400000), h=pad((diff/3600000)%24), m=pad((diff/60000)%60), s=pad((diff/1000)%60);
+      var st   = getState();
+      var t    = fmtTime(st.left);
+      var mb   = balanceMB(st.cycleStart);
+      var f    = fmt(mb);
+      var pct  = Math.min(99.5, ((Date.now()-st.cycleStart)/LOCK_MS)*100);
 
-      // Dashboard timer
-      set("dDay",d); set("dHr",h); set("dMin",m); set("dSec",s);
+      // Dashboard balance
+      setText("dBal", f.val); setText("dUnit", f.unit);
+      setText("dDay", t.d); setText("dHr", t.h); setText("dMin", t.m); setText("dSec", t.s);
+      setText("dPct", Math.floor(pct)+"%");
+      var fill = el("dFill"); if(fill) fill.style.width = Math.min(pct,100)+"%";
 
-      // Balance
-      var mb  = getBalanceMB(state.cycleStart);
-      var fmt = formatData(mb);
-      set("dBal", fmt.val); set("dUnit", fmt.unit);
-
-      // Progress
-      var pct = Math.min(99.5,(Math.min(Date.now()-state.cycleStart, CYCLE_LOCK_MS)/CYCLE_LOCK_MS)*100);
-      var f=document.getElementById("dFill"); if(f) f.style.width=pct+"%";
-      set("dPct", Math.floor(pct)+"%");
-
-      // Update button + timer label
-      var btn=document.getElementById("goWdBtn");
-      var icon=document.getElementById("goWdIcon");
-      var txt=document.getElementById("goWdText");
-      var label=document.getElementById("dashTimerLabel");
-      var tabWd1=document.getElementById("tabWd1");
-
-      if(state.phase==="locked"){
-        if(btn){ btn.className="go-wd-btn locked"; }
-        if(icon) icon.className="fas fa-lock";
-        if(txt)  txt.textContent="Withdrawal Locked — Tap to see details";
-        if(label) label.innerHTML='<i class="fas fa-hourglass-half"></i> Withdrawal Opens In';
-        if(tabWd1){ tabWd1.className="tab tab-wd"; }
+      // Dashboard button + timer label
+      var btn   = el("goWdBtn");
+      var icon  = el("goWdIcon");
+      var txt   = el("goWdText");
+      var lbl   = el("dashTimerLbl");
+      var tab1  = el("tabWd1");
+      if(st.phase === "locked"){
+        if(btn)  btn.className  = "go-wd-btn locked";
+        if(icon) icon.className = "fas fa-lock";
+        if(txt)  txt.textContent = "Withdrawal Locked — Tap to see details";
+        if(lbl)  lbl.innerHTML  = '<i class="fas fa-hourglass-half"></i> Withdrawal Opens In';
+        if(tab1) tab1.className = "tab tab-wd";
       } else {
-        if(btn){ btn.className="go-wd-btn unlocked"; }
-        if(icon) icon.className="fas fa-unlock";
-        if(txt)  txt.textContent="🎉 Withdrawal OPEN — Claim Your MTN Data!";
-        if(label) label.innerHTML='<i class="fas fa-clock" style="color:var(--green)"></i> <span style="color:var(--green)">Withdrawal Closes In</span>';
-        if(tabWd1){ tabWd1.className="tab tab-wd open-tab"; }
+        if(btn)  btn.className  = "go-wd-btn unlocked";
+        if(icon) icon.className = "fas fa-unlock";
+        if(txt)  txt.textContent = "Withdrawal OPEN — Claim Your MTN Data Now!";
+        if(lbl)  lbl.innerHTML  = '<i class="fas fa-clock" style="color:var(--green)"></i><span style="color:var(--green)"> Withdrawal Closes In</span>';
+        if(tab1) tab1.className = "tab tab-wd open-tab";
       }
 
-      // Update withdraw page if visible
-      renderWithdrawPage(state, mb, fmt, d, h, m, s);
+      // Update withdraw page live values
+      updateWBody(st, mb, f, t);
     }
 
-    // ===== RENDER WITHDRAW PAGE =====
-    function renderWithdrawPage(state, mb, fmt, d, h, m, s){
-      var body = document.getElementById("withdrawBody");
+    function updateWBody(st, mb, f, t){
+      var body = el("wBody");
       if(!body) return;
-      if(!body._rendered || body._phase !== state.phase) {
-        body._phase = state.phase;
-        body._rendered = true;
-        body.innerHTML = state.phase === "locked" ? lockedHTML() : openHTML();
+      if(body._phase !== st.phase){
+        body._phase = st.phase;
+        body.innerHTML = st.phase === "locked" ? renderLocked() : renderOpen();
       }
-
-      if(state.phase === "locked"){
-        set("wBal", fmt.val);
-        set("wBalUnit", fmt.unit);
-        set("wDay",d); set("wHr",h); set("wMin",m); set("wSec",s);
+      if(st.phase === "locked"){
+        setText("wBal", f.val); setText("wUnit", f.unit);
+        setText("wDay", t.d); setText("wHr", t.h); setText("wMin", t.m); setText("wSec", t.s);
       } else {
-        set("woBal", fmt.val);
-        set("woBalUnit", fmt.unit);
-        var closeTime = state.timeLeft;
-        set("cDay",pad(closeTime/86400000));
-        set("cHr", pad((closeTime/3600000)%24));
-        set("cMin",pad((closeTime/60000)%60));
-        set("cSec",pad((closeTime/1000)%60));
+        setText("oBal", f.val); setText("oUnit", f.unit);
+        var c = fmtTime(st.left);
+        setText("cDay", c.d); setText("cHr", c.h); setText("cMin", c.m); setText("cSec", c.s);
       }
     }
 
-    function lockedHTML(){
-      return `
-      <div class="lock-card">
-        <div class="lock-icon"><i class="fas fa-lock"></i></div>
-        <div class="lock-title">Withdrawal Locked</div>
-        <div class="lock-sub">Keep mining! Your MTN Data builds up every week.<br>Withdrawal opens when the countdown reaches zero.</div>
-        <div class="bal-box">
-          <div class="bb-lbl"><i class="fas fa-wifi" style="color:var(--gold);margin-right:5px"></i> Your Current MTN Data Balance</div>
-          <div><span class="bb-val" id="wBal">0</span><span class="bb-unit" id="wBalUnit">MB</span></div>
-          <div class="bb-note">This data will be yours to claim when withdrawal opens</div>
-        </div>
-        <div class="card-lbl" style="justify-content:center;margin-bottom:8px"><i class="fas fa-hourglass-half"></i> Opens In</div>
-        <div class="w-timer-row">
-          <div class="wt-box"><div class="wt-num" id="wDay">00</div><div class="wt-lbl">Days</div></div>
-          <div class="wt-box"><div class="wt-num" id="wHr">00</div><div class="wt-lbl">Hours</div></div>
-          <div class="wt-box"><div class="wt-num" id="wMin">00</div><div class="wt-lbl">Mins</div></div>
-          <div class="wt-box"><div class="wt-num" id="wSec">00</div><div class="wt-lbl">Secs</div></div>
-        </div>
-        <div class="feat-list">
-          <div class="feat-item"><i class="fas fa-check-circle"></i> Withdraw MTN Data directly to your phone</div>
-          <div class="feat-item"><i class="fas fa-check-circle"></i> Minimum withdrawal: 100 MB</div>
-          <div class="feat-item"><i class="fas fa-check-circle"></i> Delivered within 24 hours of claim</div>
-          <div class="feat-item"><i class="fas fa-check-circle"></i> Zero fees — 100% free</div>
-        </div>
-      </div>`;
+    function renderLocked(){
+      return '<div class="lock-card">'
+        +'<div class="lock-icon"><i class="fas fa-lock"></i></div>'
+        +'<div class="lock-title">Withdrawal Locked</div>'
+        +'<div class="lock-sub">Mine for 7 days and your MTN Data withdrawal opens automatically for 24 hours.</div>'
+        +'<div class="bal-box">'
+          +'<div class="bb-lbl"><i class="fas fa-wifi" style="color:var(--gold);margin-right:5px"></i> Your Balance This Week</div>'
+          +'<div><span class="bb-val" id="wBal">0</span><span class="bb-unit" id="wUnit">MB</span></div>'
+          +'<div class="bb-note">This data will be yours when withdrawal opens</div>'
+        +'</div>'
+        +'<div class="card-lbl" style="justify-content:center;margin-bottom:8px"><i class="fas fa-hourglass-half"></i> Opens In</div>'
+        +'<div class="w-timer-row">'
+          +'<div class="wt-box"><div class="wt-num" id="wDay">00</div><div class="wt-lbl">Days</div></div>'
+          +'<div class="wt-box"><div class="wt-num" id="wHr">00</div><div class="wt-lbl">Hours</div></div>'
+          +'<div class="wt-box"><div class="wt-num" id="wMin">00</div><div class="wt-lbl">Mins</div></div>'
+          +'<div class="wt-box"><div class="wt-num" id="wSec">00</div><div class="wt-lbl">Secs</div></div>'
+        +'</div>'
+        +'<div class="feat-list">'
+          +'<div class="feat-item"><i class="fas fa-check-circle"></i> Receive MTN Data directly on your number</div>'
+          +'<div class="feat-item"><i class="fas fa-check-circle"></i> Minimum withdrawal: 100 MB</div>'
+          +'<div class="feat-item"><i class="fas fa-check-circle"></i> Sent within 24 hours of your claim</div>'
+          +'<div class="feat-item"><i class="fas fa-check-circle"></i> 100% free — zero fees</div>'
+        +'</div>'
+      +'</div>';
     }
 
-    function openHTML(){
-      var hasClaimed = localStorage.getItem("sm_claimed_"+currentUser);
-      if(hasClaimed){
-        return `
-        <div class="success-card">
-          <div class="success-icon"><i class="fas fa-check-circle"></i></div>
-          <div class="success-title">Request Submitted!</div>
-          <div class="success-sub">Your MTN Data withdrawal request has been received.<br><br>
-          We will send your data to your phone number within 24 hours.<br><br>
-          <strong style="color:var(--gold)">The next withdrawal window opens in 7 days. Keep mining!</strong></div>
-        </div>`;
+    function renderOpen(){
+      var claimed = localStorage.getItem("sm_c_"+user);
+      // check if claim is from this cycle
+      var st = getState();
+      var cycleOpenedAt = Date.now() - (Date.now()-BASE)%TOTAL_MS + LOCK_MS;
+      if(claimed && parseInt(claimed) < (cycleOpenedAt - OPEN_MS)){
+        localStorage.removeItem("sm_c_"+user); claimed = null;
       }
-      return `
-      <div class="open-card">
-        <div class="open-header">
-          <div class="open-icon"><i class="fas fa-unlock"></i></div>
-          <div class="open-title">🎉 Withdrawal Open!</div>
-          <div class="open-sub">Enter your details below to receive your MTN Data. This window closes in:</div>
-        </div>
-        <div class="close-timer">
-          <i class="fas fa-clock"></i>
-          Closes in: <strong id="cDay">00</strong>d <strong id="cHr">00</strong>h <strong id="cMin">00</strong>m <strong id="cSec">00</strong>s
-        </div>
-        <div class="balance-display">
-          <div class="bd-lbl"><i class="fas fa-wifi" style="color:var(--gold);margin-right:5px"></i> Your MTN Data to Receive</div>
-          <div><span class="bd-val" id="woBal">0</span><span class="bd-unit" id="woBalUnit">MB</span></div>
-          <div class="bd-note">This is your full accumulated balance for this cycle</div>
-        </div>
-        <div class="form-title"><i class="fas fa-paper-plane"></i> Enter Your Details</div>
-        <div class="input-group">
-          <label>MTN Phone Number</label>
-          <input type="tel" id="phoneInput" placeholder="e.g. 08012345678" maxlength="15">
-        </div>
-        <div class="input-group">
-          <label>Email Address</label>
-          <input type="email" id="emailInput" placeholder="your@email.com">
-        </div>
-        <div id="wdErr" class="err" style="margin-bottom:10px"></div>
-        <button class="btn-submit" id="submitBtn" onclick="submitWithdraw()">
-          <i class="fas fa-paper-plane"></i> Submit Withdrawal Request
-        </button>
-        <div class="form-note"><i class="fas fa-lock" style="color:var(--gold)"></i> Your details are sent securely. MTN Data will be sent to your number within 24 hours.</div>
-      </div>`;
+      if(claimed){
+        return '<div class="success-card">'
+          +'<div class="success-icon"><i class="fas fa-check-circle"></i></div>'
+          +'<div class="success-title">Request Submitted!</div>'
+          +'<div class="success-sub">Your MTN Data withdrawal request has been received.<br><br>'
+          +'We will send your data to your phone within 24 hours.<br><br>'
+          +'<strong style="color:var(--gold)">The next withdrawal window opens again in 7 days.</strong></div>'
+        +'</div>';
+      }
+      return '<div class="open-card">'
+        +'<div class="open-header">'
+          +'<div class="open-icon"><i class="fas fa-unlock"></i></div>'
+          +'<div class="open-title">Withdrawal Open!</div>'
+          +'<div class="open-sub">Enter your details to receive your MTN Data. This window closes in:</div>'
+        +'</div>'
+        +'<div class="close-timer"><i class="fas fa-clock"></i>&nbsp; Closes in: '
+          +'<strong id="cDay">00</strong>d &nbsp;<strong id="cHr">00</strong>h &nbsp;<strong id="cMin">00</strong>m &nbsp;<strong id="cSec">00</strong>s'
+        +'</div>'
+        +'<div class="balance-display">'
+          +'<div class="bd-lbl"><i class="fas fa-wifi" style="color:var(--gold);margin-right:5px"></i> MTN Data to Receive</div>'
+          +'<div><span class="bd-val" id="oBal">0</span><span class="bd-unit" id="oUnit">MB</span></div>'
+          +'<div class="bd-note">Your full accumulated balance this week</div>'
+        +'</div>'
+        +'<div class="form-title"><i class="fas fa-paper-plane"></i> Enter Your Details</div>'
+        +'<div class="input-group"><label>MTN Phone Number</label>'
+          +'<input type="tel" id="phoneIn" placeholder="e.g. 08012345678" maxlength="15"></div>'
+        +'<div class="input-group"><label>Email Address</label>'
+          +'<input type="email" id="emailIn" placeholder="your@email.com"></div>'
+        +'<div id="wdErr" class="err" style="margin-bottom:10px"></div>'
+        +'<button class="btn-submit" id="subBtn" onclick="submitWd()">'
+          +'<i class="fas fa-paper-plane"></i> Submit Withdrawal Request'
+        +'</button>'
+        +'<div class="form-note"><i class="fas fa-lock" style="color:var(--gold)"></i> Sent securely. MTN Data arrives on your number within 24 hours.</div>'
+      +'</div>';
     }
 
-    // ===== SUBMIT WITHDRAWAL =====
-    window.submitWithdraw = async function(){
-      var phone = (document.getElementById("phoneInput")||{}).value||"";
-      var email = (document.getElementById("emailInput")||{}).value||"";
-      var errEl = document.getElementById("wdErr");
-      var btn   = document.getElementById("submitBtn");
+    window.submitWd = async function(){
+      var phone = (el("phoneIn")||{}).value||"";
+      var email = (el("emailIn")||{}).value||"";
+      var errEl = el("wdErr");
+      var btn   = el("subBtn");
       phone = phone.trim(); email = email.trim();
-      if(!phone || phone.length < 7){ errEl.style.display="block"; errEl.textContent="Please enter a valid MTN phone number."; return; }
-      if(!email || !email.includes("@")){ errEl.style.display="block"; errEl.textContent="Please enter a valid email address."; return; }
+      if(!phone||phone.length<7){ errEl.style.display="block"; errEl.textContent="Please enter a valid MTN phone number."; return; }
+      if(!email||!email.includes("@")){ errEl.style.display="block"; errEl.textContent="Please enter a valid email address."; return; }
       errEl.style.display="none";
       if(btn){ btn.disabled=true; btn.innerHTML='<i class="fas fa-spinner fa-spin"></i> Sending...'; }
-
-      var state = getState();
-      var mb    = getBalanceMB(state.cycleStart);
-      var fmt   = formatData(mb);
-
+      var st = getState();
+      var mb = balanceMB(st.cycleStart);
+      var f  = fmt(mb);
       try {
-        var formData = new FormData();
-        formData.append("_replyto",   email);
-        formData.append("_subject",   "StartMiner MTN Data Withdrawal Request");
-        formData.append("Username",   currentUser);
-        formData.append("Phone",      phone);
-        formData.append("Email",      email);
-        formData.append("Balance",    fmt.val + " " + fmt.unit + " MTN Data");
-        formData.append("Submitted",  new Date().toLocaleString());
-
-        var res = await fetch("https://formsubmit.co/ezehdivinelove@gmail.com", {
-          method: "POST",
-          body: formData
-        });
-
-        // Mark as claimed for this cycle
-        localStorage.setItem("sm_claimed_"+currentUser, Date.now().toString());
-        // Re-render success
-        var body = document.getElementById("withdrawBody");
-        if(body){ body._rendered=false; }
-        toast("Request sent! Data coming within 24hrs.");
+        var fd = new FormData();
+        fd.append("_replyto",  email);
+        fd.append("_subject",  "StartMiner MTN Data Withdrawal Request");
+        fd.append("Username",  user);
+        fd.append("Phone",     phone);
+        fd.append("Email",     email);
+        fd.append("Balance",   f.val+" "+f.unit+" MTN Data");
+        fd.append("Time",      new Date().toLocaleString());
+        await fetch("https://formsubmit.co/ezehdivinelove@gmail.com", { method:"POST", body:fd });
+        localStorage.setItem("sm_c_"+user, Date.now().toString());
+        var body = el("wBody"); if(body) body._phase = null;
+        showToast("Request sent! Data coming within 24 hrs.");
       } catch(e){
         if(btn){ btn.disabled=false; btn.innerHTML='<i class="fas fa-paper-plane"></i> Submit Withdrawal Request'; }
-        if(errEl){ errEl.style.display="block"; errEl.textContent="Network error. Please check your connection and try again."; }
+        if(errEl){ errEl.style.display="block"; errEl.textContent="Network error. Please try again."; }
       }
     };
 
-    // ===== AUTH =====
     function applyUser(name){
-      currentUser = name;
-      set("navUser",name); set("wNavUser",name); set("wName",name);
+      user = name;
+      setText("navUser",name); setText("wNavUser",name); setText("wName",name);
     }
 
     window.doLogin = function(){
-      var val=(document.getElementById("uInput").value||"").trim();
-      var err=document.getElementById("loginErr");
+      var val = (el("uInput").value||"").trim();
+      var err = el("loginErr");
       if(!val||val.length<3){ err.style.display="block"; err.textContent="Username must be at least 3 characters."; return; }
       if(!/^[a-zA-Z0-9_]+$/.test(val)){ err.style.display="block"; err.textContent="Only letters, numbers and underscore allowed."; return; }
       err.style.display="none";
       localStorage.setItem("sm_user",val);
       applyUser(val);
       showPage("dash");
-      toast("Welcome, "+val+"! Mining is now active.");
+      showToast("Welcome, "+val+"! Mining is now active.");
     };
 
     window.doLogout = function(){
       localStorage.removeItem("sm_user");
-      document.getElementById("uInput").value="";
+      el("uInput").value="";
       showPage("login");
     };
 
-    // ===== NAVIGATION =====
     window.showPage = function(page){
       ["loginPage","dashPage","withdrawPage"].forEach(function(id){
-        document.getElementById(id).classList.remove("active");
+        el(id).classList.remove("active");
       });
-      if(page==="dash") document.getElementById("dashPage").classList.add("active");
+      if(page==="dash")     el("dashPage").classList.add("active");
       else if(page==="withdraw"){
-        var body=document.getElementById("withdrawBody");
-        if(body) body._rendered=false; // force re-render on visit
-        document.getElementById("withdrawPage").classList.add("active");
-      }
-      else document.getElementById("loginPage").classList.add("active");
+        var b=el("wBody"); if(b) b._phase=null;
+        el("withdrawPage").classList.add("active");
+      } else               el("loginPage").classList.add("active");
       window.scrollTo(0,0);
       tick();
     };
 
-    // ===== TOAST =====
-    window.toast = function(msg){
-      set("toastMsg",msg||"Done!");
-      var t=document.getElementById("toast");
-      t.classList.add("show");
+    window.showToast = function(msg){
+      setText("toastMsg", msg||"Done!");
+      var t=el("toast"); t.classList.add("show");
       clearTimeout(window._tt);
       window._tt=setTimeout(function(){ t.classList.remove("show"); },4000);
     };
 
-    // ===== CLAIMED RESET =====
-    // Clear claimed flag when a new withdrawal cycle opens
-    function checkClaimReset(){
-      var saved = localStorage.getItem("sm_claimed_"+currentUser);
-      if(!saved) return;
-      var state = getState();
-      // If the claim was made before the current cycle opened, clear it
-      var cycleOpenedAt = Date.now() - (Date.now() - BASE) % CYCLE_TOTAL - (Date.now() - BASE) % CYCLE_TOTAL % CYCLE_TOTAL;
-      // Simpler: if claim timestamp < current cycle start, reset
-      var elapsed = Date.now() - BASE;
-      var cycleStart = Date.now() - (elapsed % CYCLE_TOTAL);
-      if(parseInt(saved) < cycleStart){
-        localStorage.removeItem("sm_claimed_"+currentUser);
-      }
-    }
+    el("uInput").addEventListener("keydown",function(e){ if(e.key==="Enter") doLogin(); });
 
-    document.getElementById("uInput").addEventListener("keydown",function(e){ if(e.key==="Enter") doLogin(); });
-
-    // Auto-login
     var saved=localStorage.getItem("sm_user");
     if(saved){ applyUser(saved); showPage("dash"); }
 
     setInterval(tick,1000);
-    setInterval(checkClaimReset, 60000);
     tick();
   })();
   </script>
