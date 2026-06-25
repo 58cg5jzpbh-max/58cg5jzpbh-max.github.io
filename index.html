@@ -4,155 +4,163 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>StartMiner — Free MTN Data Weekly</title>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+  <!-- Fonts load async — page shows immediately without waiting -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap" onload="this.rel='stylesheet'">
+  <noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap"></noscript>
   <style>
   *{margin:0;padding:0;box-sizing:border-box}
   :root{
     --gold:#f7a600;--gold2:#d48f00;
-    --bg:#09090f;--card:#10101a;--border:#1e1e2e;
-    --text:#f1f5f9;--muted:#64748b;
+    --bg:#0d0d16;--card:#181826;--border:#252536;
+    --text:#f1f5f9;--muted:#94a3b8;
     --green:#22c55e;--red:#ef4444;
   }
-  body{font-family:'Inter',sans-serif;background:var(--bg);color:var(--text);min-height:100vh}
+  body{font-family:'Inter',Arial,sans-serif;background:var(--bg);color:var(--text);min-height:100vh}
   .page{display:none;min-height:100vh;flex-direction:column}
   .page.active{display:flex}
 
+  /* LOGO */
   .logo{display:flex;align-items:center;gap:10px}
-  .logo-icon{width:36px;height:36px;background:linear-gradient(135deg,#ffcc00,#f7a600);border-radius:10px;display:flex;align-items:center;justify-content:center;color:#000;font-size:16px;flex-shrink:0}
-  .logo-name{font-size:19px;font-weight:800;color:#fff}
+  .logo-icon{width:38px;height:38px;background:linear-gradient(135deg,#ffcc00,#f7a600);border-radius:11px;display:flex;align-items:center;justify-content:center;color:#000;font-size:18px;flex-shrink:0;font-weight:900}
+  .logo-name{font-size:20px;font-weight:800;color:#fff}
   .logo-name em{color:var(--gold);font-style:normal}
 
-  .topbar{background:#0a0a14;border-bottom:1px solid var(--border);padding:0 18px;position:sticky;top:0;z-index:100}
-  .topbar-inner{max-width:860px;margin:0 auto;height:56px;display:flex;align-items:center;justify-content:space-between}
-  .user-chip{display:flex;align-items:center;gap:7px;background:rgba(247,166,0,0.08);border:1px solid rgba(247,166,0,0.2);padding:5px 13px;border-radius:100px;font-size:13px;font-weight:600;color:var(--gold)}
-  .logout-btn{background:none;border:none;color:var(--muted);cursor:pointer;font-size:13px;display:flex;align-items:center;gap:5px;font-family:'Inter',sans-serif;padding:5px 8px;border-radius:8px;transition:color 0.2s}
-  .logout-btn:hover{color:var(--red)}
+  /* TOP BAR */
+  .topbar{background:#0a0a12;border-bottom:1px solid var(--border);padding:0 18px;position:sticky;top:0;z-index:100}
+  .topbar-inner{max-width:860px;margin:0 auto;height:58px;display:flex;align-items:center;justify-content:space-between}
+  .user-chip{display:flex;align-items:center;gap:7px;background:rgba(247,166,0,0.1);border:1px solid rgba(247,166,0,0.25);padding:6px 14px;border-radius:100px;font-size:13px;font-weight:700;color:var(--gold)}
+  .logout-btn{background:rgba(239,68,68,0.08);border:1px solid rgba(239,68,68,0.2);color:var(--red);cursor:pointer;font-size:13px;font-family:inherit;padding:6px 14px;border-radius:100px;font-weight:600;transition:background 0.2s}
+  .logout-btn:hover{background:rgba(239,68,68,0.18)}
 
-  .tab-bar{position:fixed;bottom:0;left:0;right:0;background:#0a0a14;border-top:1px solid var(--border);display:grid;grid-template-columns:1fr 1fr;z-index:200;padding-bottom:env(safe-area-inset-bottom,0px)}
-  .tab{display:flex;flex-direction:column;align-items:center;justify-content:center;padding:10px 8px;cursor:pointer;border:none;background:none;font-family:'Inter',sans-serif;gap:4px;transition:background 0.2s}
-  .tab i{font-size:20px;color:var(--muted);transition:color 0.2s}
-  .tab span{font-size:11px;color:var(--muted);font-weight:600;transition:color 0.2s}
-  .tab.on i,.tab.on span{color:var(--gold)}
-  .tab.on{background:rgba(247,166,0,0.04)}
-  .tab-wd i{color:#94a3b8}
-  .tab-wd span{color:#94a3b8}
-  .tab-wd.open-tab i{color:var(--green) !important}
-  .tab-wd.open-tab span{color:var(--green) !important}
+  /* BOTTOM TABS */
+  .tab-bar{position:fixed;bottom:0;left:0;right:0;background:#0a0a12;border-top:2px solid var(--border);display:grid;grid-template-columns:1fr 1fr;z-index:200}
+  .tab{display:flex;flex-direction:column;align-items:center;justify-content:center;padding:11px 8px 9px;cursor:pointer;border:none;background:none;font-family:inherit;gap:3px;transition:background 0.2s}
+  .tab-icon{font-size:22px}
+  .tab-label{font-size:11px;color:var(--muted);font-weight:700;letter-spacing:0.3px}
+  .tab.on{background:rgba(247,166,0,0.05)}
+  .tab.on .tab-label{color:var(--gold)}
+  .tab-wd .tab-label{color:var(--muted)}
+  .tab-wd.open-tab .tab-label{color:var(--green)}
 
-  .page-body{flex:1;max-width:860px;margin:0 auto;width:100%;padding:22px 16px 90px}
+  /* BODY */
+  .page-body{flex:1;max-width:860px;margin:0 auto;width:100%;padding:22px 16px 92px}
 
-  /* LOGIN */
-  #loginPage{background:radial-gradient(ellipse at 50% 0%,rgba(247,166,0,0.09) 0%,transparent 55%),var(--bg);align-items:center;justify-content:center;padding:24px}
-  .login-box{width:100%;max-width:400px;background:var(--card);border:1px solid var(--border);border-radius:24px;padding:36px 26px}
-  .login-box .logo{justify-content:center;margin-bottom:28px}
-  .login-title{text-align:center;font-size:21px;font-weight:800;color:#fff;margin-bottom:6px}
-  .login-sub{text-align:center;font-size:14px;color:var(--muted);line-height:1.65;margin-bottom:24px}
-  .field{position:relative;margin-bottom:14px}
-  .field i.fi{position:absolute;left:14px;top:50%;transform:translateY(-50%);color:var(--muted);font-size:14px;pointer-events:none}
-  .field input{width:100%;background:#080810;border:1.5px solid var(--border);border-radius:12px;padding:13px 13px 13px 40px;font-size:15px;color:#fff;font-family:'Inter',sans-serif;outline:none;transition:border-color 0.2s}
-  .field input:focus{border-color:var(--gold)}
-  .field input::placeholder{color:var(--muted)}
-  .err{color:var(--red);font-size:13px;margin-bottom:12px;display:none;text-align:center;padding:8px;background:rgba(239,68,68,0.07);border-radius:8px}
-  .btn-gold{width:100%;background:linear-gradient(135deg,var(--gold),var(--gold2));color:#000;border:none;padding:14px;border-radius:12px;font-size:16px;font-weight:700;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:8px;font-family:'Inter',sans-serif;transition:all 0.2s}
-  .btn-gold:hover{box-shadow:0 8px 28px rgba(247,166,0,0.3);transform:translateY(-1px)}
-  .login-footer{display:flex;justify-content:center;gap:16px;margin-top:20px;flex-wrap:wrap}
-  .login-footer span{font-size:12px;color:var(--muted);display:flex;align-items:center;gap:5px}
-  .login-footer i{font-size:11px;color:var(--gold)}
+  /* ===== LOGIN ===== */
+  #loginPage{
+    background:var(--bg);
+    align-items:center;justify-content:center;padding:24px;
+  }
+  .login-box{
+    width:100%;max-width:420px;
+    background:var(--card);
+    border:1px solid var(--border);
+    border-radius:24px;padding:40px 28px;
+  }
+  .login-box .logo{justify-content:center;margin-bottom:6px}
+  .mtn-badge{text-align:center;margin:14px 0 24px}
+  .mtn-badge span{display:inline-block;background:#ffcc00;color:#000;padding:5px 16px;border-radius:100px;font-size:13px;font-weight:800;letter-spacing:0.5px}
+  .login-title{text-align:center;font-size:22px;font-weight:800;color:#fff;margin-bottom:6px}
+  .login-sub{text-align:center;font-size:14px;color:var(--muted);line-height:1.7;margin-bottom:26px}
+  .inp-wrap{position:relative;margin-bottom:14px}
+  .inp-wrap .ico{position:absolute;left:14px;top:50%;transform:translateY(-50%);font-size:16px;pointer-events:none}
+  .inp-wrap input{width:100%;background:#0e0e1a;border:2px solid var(--border);border-radius:12px;padding:14px 14px 14px 42px;font-size:15px;color:#fff;font-family:inherit;outline:none;transition:border-color 0.2s}
+  .inp-wrap input:focus{border-color:var(--gold)}
+  .inp-wrap input::placeholder{color:var(--muted)}
+  .err-box{background:rgba(239,68,68,0.08);border:1px solid rgba(239,68,68,0.2);color:#fca5a5;font-size:13px;padding:10px 14px;border-radius:10px;margin-bottom:14px;display:none}
+  .btn-gold{width:100%;background:linear-gradient(135deg,var(--gold),var(--gold2));color:#000;border:none;padding:15px;border-radius:12px;font-size:16px;font-weight:800;cursor:pointer;font-family:inherit;transition:all 0.2s}
+  .btn-gold:hover{box-shadow:0 6px 24px rgba(247,166,0,0.35);transform:translateY(-1px)}
+  .login-trust{display:flex;justify-content:center;gap:18px;margin-top:22px;flex-wrap:wrap}
+  .login-trust span{font-size:12px;color:var(--muted)}
 
-  /* DASHBOARD */
-  .welcome-bar{background:rgba(247,166,0,0.05);border:1px solid rgba(247,166,0,0.12);border-radius:14px;padding:15px 18px;margin-bottom:16px;display:flex;align-items:center;justify-content:space-between;gap:10px;flex-wrap:wrap}
-  .welcome-bar h3{font-size:16px;font-weight:700;color:#fff}
-  .welcome-bar p{font-size:13px;color:var(--muted);margin-top:2px}
-  .live-pill{display:inline-flex;align-items:center;gap:6px;background:rgba(34,197,94,0.08);border:1px solid rgba(34,197,94,0.18);color:var(--green);padding:5px 13px;border-radius:100px;font-size:12px;font-weight:600;white-space:nowrap}
-  .dot{width:7px;height:7px;background:var(--green);border-radius:50%;animation:blink 1.5s ease-in-out infinite}
-  @keyframes blink{0%,100%{opacity:0.4;transform:scale(0.8)}50%{opacity:1;transform:scale(1.2)}}
+  /* ===== DASHBOARD ===== */
+  .welcome-bar{background:rgba(247,166,0,0.05);border:1px solid rgba(247,166,0,0.15);border-radius:14px;padding:16px 18px;margin-bottom:16px;display:flex;align-items:center;justify-content:space-between;gap:10px;flex-wrap:wrap}
+  .welcome-bar h3{font-size:16px;font-weight:800;color:#fff}
+  .welcome-bar p{font-size:13px;color:var(--muted);margin-top:3px}
+  .live-pill{display:inline-flex;align-items:center;gap:8px;background:rgba(34,197,94,0.09);border:1px solid rgba(34,197,94,0.2);color:var(--green);padding:6px 14px;border-radius:100px;font-size:12px;font-weight:700;white-space:nowrap}
+  .dot{width:8px;height:8px;background:var(--green);border-radius:50%;animation:blink 1.5s ease-in-out infinite;flex-shrink:0}
+  @keyframes blink{0%,100%{opacity:0.3;transform:scale(0.7)}50%{opacity:1;transform:scale(1.2)}}
 
-  .balance-card{background:var(--card);border:1px solid rgba(255,204,0,0.2);border-radius:20px;padding:24px;margin-bottom:16px;text-align:center}
-  .bal-label{font-size:11px;color:var(--muted);text-transform:uppercase;letter-spacing:1px;margin-bottom:8px}
-  .bal-data{font-size:48px;font-weight:800;color:#fff;font-variant-numeric:tabular-nums;line-height:1}
-  .bal-unit{font-size:20px;color:var(--gold);font-weight:700;margin-left:4px}
-  .bal-note{font-size:13px;color:var(--muted);margin:8px 0 16px}
-  .rate-pill{display:inline-flex;align-items:center;gap:6px;background:rgba(34,197,94,0.07);border:1px solid rgba(34,197,94,0.15);color:var(--green);padding:5px 14px;border-radius:100px;font-size:13px;font-weight:600;margin-bottom:16px}
-  .prog-bar{width:100%;height:6px;background:rgba(255,255,255,0.05);border-radius:100px;overflow:hidden}
-  .prog-fill{height:100%;width:0%;background:linear-gradient(90deg,var(--gold),#ffcc00);border-radius:100px;transition:width 1s ease}
-  .prog-row{display:flex;justify-content:space-between;margin-top:7px;font-size:12px;color:var(--muted)}
-  .prog-row .pct{color:var(--gold);font-weight:700}
+  /* BALANCE CARD */
+  .balance-card{background:var(--card);border:2px solid rgba(247,166,0,0.2);border-radius:20px;padding:26px 22px;margin-bottom:16px;text-align:center}
+  .bal-lbl{font-size:11px;color:var(--muted);text-transform:uppercase;letter-spacing:1.5px;margin-bottom:10px;font-weight:600}
+  .bal-val{font-size:52px;font-weight:800;color:#fff;font-variant-numeric:tabular-nums;line-height:1}
+  .bal-unit{font-size:22px;color:var(--gold);font-weight:800;margin-left:5px}
+  .bal-note{font-size:13px;color:var(--muted);margin:10px 0 16px}
+  .rate-tag{display:inline-flex;align-items:center;gap:6px;background:rgba(34,197,94,0.08);border:1px solid rgba(34,197,94,0.18);color:var(--green);padding:5px 14px;border-radius:100px;font-size:13px;font-weight:700;margin-bottom:18px}
+  .pbar{width:100%;height:7px;background:rgba(255,255,255,0.06);border-radius:100px;overflow:hidden}
+  .pfill{height:100%;width:0%;background:linear-gradient(90deg,var(--gold),#ffdd66);border-radius:100px;transition:width 1s ease}
+  .prow{display:flex;justify-content:space-between;margin-top:8px;font-size:12px;color:var(--muted)}
+  .prow strong{color:var(--gold)}
 
+  /* GRID */
   .grid2{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:16px}
-  .mini-card{background:var(--card);border:1px solid var(--border);border-radius:16px;padding:18px}
-  .mc-icon{width:38px;height:38px;background:rgba(247,166,0,0.08);border-radius:11px;display:flex;align-items:center;justify-content:center;color:var(--gold);font-size:16px;margin-bottom:10px}
-  .mc-num{font-size:22px;font-weight:800;color:#fff}
-  .mc-lbl{font-size:12px;color:var(--muted);margin-top:3px}
+  .mc{background:var(--card);border:1px solid var(--border);border-radius:16px;padding:18px}
+  .mc-num{font-size:24px;font-weight:800;color:#fff;margin-bottom:3px}
+  .mc-lbl{font-size:12px;color:var(--muted)}
 
-  .timer-card{background:var(--card);border:1px solid var(--border);border-radius:16px;padding:20px;margin-bottom:16px}
-  .card-lbl{font-size:12px;color:var(--muted);text-transform:uppercase;letter-spacing:0.8px;margin-bottom:14px;display:flex;align-items:center;gap:7px}
-  .card-lbl i{color:var(--gold)}
-  .timer-row{display:grid;grid-template-columns:repeat(4,1fr);gap:8px}
-  .t-box{background:rgba(255,255,255,0.03);border:1px solid var(--border);border-radius:12px;padding:12px 6px;text-align:center}
-  .t-num{font-size:26px;font-weight:800;color:#fff;font-variant-numeric:tabular-nums}
-  .t-lbl{font-size:10px;color:var(--muted);text-transform:uppercase;letter-spacing:1px;margin-top:2px}
+  /* TIMER CARD */
+  .tmr-card{background:var(--card);border:1px solid var(--border);border-radius:16px;padding:20px;margin-bottom:16px}
+  .card-lbl{font-size:12px;color:var(--muted);text-transform:uppercase;letter-spacing:0.8px;margin-bottom:14px;font-weight:600}
+  .tmr-row{display:grid;grid-template-columns:repeat(4,1fr);gap:8px}
+  .tbox{background:rgba(255,255,255,0.04);border:1px solid var(--border);border-radius:12px;padding:12px 6px;text-align:center}
+  .tnum{font-size:28px;font-weight:800;color:#fff;font-variant-numeric:tabular-nums}
+  .tlbl{font-size:10px;color:var(--muted);text-transform:uppercase;letter-spacing:1px;margin-top:2px;font-weight:600}
 
-  .go-wd-btn{width:100%;padding:16px;border-radius:14px;font-size:15px;font-weight:700;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:10px;font-family:'Inter',sans-serif;transition:all 0.2s;border:1.5px solid;margin-bottom:16px}
-  .go-wd-btn.locked{background:rgba(239,68,68,0.06);border-color:rgba(239,68,68,0.22);color:var(--red)}
-  .go-wd-btn.unlocked{background:rgba(34,197,94,0.08);border-color:rgba(34,197,94,0.3);color:var(--green);animation:glow-g 2s ease-in-out infinite}
-  @keyframes glow-g{0%,100%{box-shadow:0 0 0 0 rgba(34,197,94,0.15)}50%{box-shadow:0 0 16px 0 rgba(34,197,94,0.25)}}
-  .go-wd-btn .arr{margin-left:auto}
+  /* GO BUTTON */
+  .go-btn{width:100%;padding:16px 20px;border-radius:14px;font-size:15px;font-weight:800;cursor:pointer;display:flex;align-items:center;justify-content:space-between;font-family:inherit;transition:all 0.2s;border:2px solid;margin-bottom:16px}
+  .go-btn.locked{background:rgba(239,68,68,0.06);border-color:rgba(239,68,68,0.25);color:var(--red)}
+  .go-btn.unlocked{background:rgba(34,197,94,0.08);border-color:rgba(34,197,94,0.3);color:var(--green);animation:glow-g 2s ease-in-out infinite}
+  @keyframes glow-g{0%,100%{box-shadow:0 0 0 0 rgba(34,197,94,0.1)}50%{box-shadow:0 0 18px rgba(34,197,94,0.2)}}
 
   /* WITHDRAW LOCKED */
-  .lock-card{background:var(--card);border:1px solid var(--border);border-radius:20px;padding:30px 22px;text-align:center;margin-bottom:16px}
-  .lock-icon{width:84px;height:84px;background:rgba(239,68,68,0.07);border:2px solid rgba(239,68,68,0.2);border-radius:50%;display:flex;align-items:center;justify-content:center;margin:0 auto 18px;font-size:32px;color:var(--red);animation:pulse-r 2.5s ease-in-out infinite}
+  .lk-card{background:var(--card);border:1px solid var(--border);border-radius:20px;padding:32px 22px;text-align:center;margin-bottom:16px}
+  .lk-icon{width:88px;height:88px;background:rgba(239,68,68,0.07);border:2px solid rgba(239,68,68,0.2);border-radius:50%;display:flex;align-items:center;justify-content:center;margin:0 auto 20px;font-size:36px;animation:pulse-r 2.5s ease-in-out infinite}
   @keyframes pulse-r{0%,100%{box-shadow:0 0 0 0 rgba(239,68,68,0.18)}50%{box-shadow:0 0 0 14px rgba(239,68,68,0)}}
-  .lock-title{font-size:22px;font-weight:800;color:#fff;margin-bottom:8px}
-  .lock-sub{font-size:14px;color:var(--muted);line-height:1.7;margin-bottom:20px}
-  .bal-box{background:rgba(247,166,0,0.05);border:1px solid rgba(247,166,0,0.15);border-radius:14px;padding:18px;margin-bottom:20px}
-  .bal-box .bb-lbl{font-size:11px;color:var(--muted);text-transform:uppercase;letter-spacing:1px;margin-bottom:6px}
-  .bal-box .bb-val{font-size:32px;font-weight:800;color:#fff}
-  .bal-box .bb-unit{font-size:15px;color:var(--gold);font-weight:700;margin-left:3px}
-  .bal-box .bb-note{font-size:12px;color:var(--muted);margin-top:5px}
-  .w-timer-row{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin:14px 0}
-  .wt-box{background:rgba(255,255,255,0.03);border:1px solid var(--border);border-radius:10px;padding:12px 6px;text-align:center}
-  .wt-num{font-size:24px;font-weight:800;color:#fff;font-variant-numeric:tabular-nums}
-  .wt-lbl{font-size:10px;color:var(--muted);text-transform:uppercase;margin-top:2px}
-  .feat-list{text-align:left;display:flex;flex-direction:column;gap:10px;margin:18px 0}
-  .feat-item{display:flex;align-items:center;gap:10px;font-size:14px;color:#94a3b8}
-  .feat-item i{color:var(--green);font-size:13px;flex-shrink:0}
+  .lk-title{font-size:22px;font-weight:800;color:#fff;margin-bottom:8px}
+  .lk-sub{font-size:14px;color:var(--muted);line-height:1.7;margin-bottom:22px}
+  .bal-box{background:rgba(247,166,0,0.05);border:1px solid rgba(247,166,0,0.18);border-radius:14px;padding:20px;margin-bottom:20px}
+  .bb-lbl{font-size:11px;color:var(--muted);text-transform:uppercase;letter-spacing:1px;margin-bottom:8px;font-weight:600}
+  .bb-val{font-size:34px;font-weight:800;color:#fff}
+  .bb-u{font-size:16px;color:var(--gold);font-weight:700;margin-left:3px}
+  .bb-note{font-size:12px;color:var(--muted);margin-top:5px}
+  .feat-list{text-align:left;display:flex;flex-direction:column;gap:10px;margin-top:18px}
+  .feat{display:flex;align-items:center;gap:10px;font-size:14px;color:#94a3b8}
+  .feat .ck{color:var(--green);font-size:15px;flex-shrink:0}
 
   /* WITHDRAW OPEN */
-  .open-card{background:var(--card);border:1px solid rgba(34,197,94,0.25);border-radius:20px;padding:28px 22px;margin-bottom:16px}
-  .open-header{text-align:center;margin-bottom:22px}
-  .open-icon{width:80px;height:80px;background:rgba(34,197,94,0.08);border:2px solid rgba(34,197,94,0.25);border-radius:50%;display:flex;align-items:center;justify-content:center;margin:0 auto 16px;font-size:30px;color:var(--green);animation:pulse-g2 2s ease-in-out infinite}
-  @keyframes pulse-g2{0%,100%{box-shadow:0 0 0 0 rgba(34,197,94,0.18)}50%{box-shadow:0 0 0 14px rgba(34,197,94,0)}}
-  .open-title{font-size:22px;font-weight:800;color:#fff;margin-bottom:6px}
-  .open-sub{font-size:14px;color:var(--muted);line-height:1.6}
-  .close-timer{background:rgba(239,68,68,0.06);border:1px solid rgba(239,68,68,0.15);border-radius:12px;padding:14px 16px;margin-bottom:20px;display:flex;align-items:center;gap:10px;font-size:14px;color:#f87171;font-weight:600}
-  .balance-display{background:rgba(247,166,0,0.06);border:1px solid rgba(247,166,0,0.18);border-radius:14px;padding:16px;margin-bottom:20px;text-align:center}
-  .bd-lbl{font-size:11px;color:var(--muted);text-transform:uppercase;letter-spacing:1px;margin-bottom:6px}
-  .bd-val{font-size:34px;font-weight:800;color:#fff}
-  .bd-unit{font-size:16px;color:var(--gold);font-weight:700;margin-left:3px}
-  .bd-note{font-size:12px;color:var(--muted);margin-top:4px}
-  .form-title{font-size:15px;font-weight:700;color:#fff;margin-bottom:14px;display:flex;align-items:center;gap:8px}
-  .form-title i{color:var(--gold)}
-  .input-group{margin-bottom:14px}
-  .input-group label{font-size:13px;color:var(--muted);font-weight:500;display:block;margin-bottom:6px}
-  .input-group input{width:100%;background:#080810;border:1.5px solid var(--border);border-radius:12px;padding:13px 16px;font-size:15px;color:#fff;font-family:'Inter',sans-serif;outline:none;transition:border-color 0.2s}
-  .input-group input:focus{border-color:var(--gold)}
-  .input-group input::placeholder{color:var(--muted)}
-  .btn-submit{width:100%;background:linear-gradient(135deg,var(--green),#16a34a);color:#fff;border:none;padding:15px;border-radius:12px;font-size:16px;font-weight:700;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:9px;font-family:'Inter',sans-serif;transition:all 0.2s;margin-top:6px}
-  .btn-submit:hover{box-shadow:0 8px 28px rgba(34,197,94,0.25);transform:translateY(-1px)}
+  .op-card{background:var(--card);border:2px solid rgba(34,197,94,0.25);border-radius:20px;padding:28px 22px;margin-bottom:16px}
+  .op-icon{width:80px;height:80px;background:rgba(34,197,94,0.08);border:2px solid rgba(34,197,94,0.25);border-radius:50%;display:flex;align-items:center;justify-content:center;margin:0 auto 16px;font-size:32px;animation:pulse-g 2s ease-in-out infinite}
+  @keyframes pulse-g{0%,100%{box-shadow:0 0 0 0 rgba(34,197,94,0.15)}50%{box-shadow:0 0 0 14px rgba(34,197,94,0)}}
+  .op-title{text-align:center;font-size:22px;font-weight:800;color:#fff;margin-bottom:6px}
+  .op-sub{text-align:center;font-size:14px;color:var(--muted);margin-bottom:20px}
+  .close-bar{background:rgba(239,68,68,0.07);border:1px solid rgba(239,68,68,0.18);border-radius:12px;padding:13px 16px;margin-bottom:20px;font-size:14px;color:#f87171;font-weight:700}
+  .bal-disp{background:rgba(247,166,0,0.06);border:1px solid rgba(247,166,0,0.2);border-radius:14px;padding:18px;margin-bottom:22px;text-align:center}
+  .bd-lbl{font-size:11px;color:var(--muted);text-transform:uppercase;letter-spacing:1px;margin-bottom:8px;font-weight:600}
+  .bd-val{font-size:36px;font-weight:800;color:#fff}
+  .bd-u{font-size:17px;color:var(--gold);font-weight:800;margin-left:3px}
+  .bd-note{font-size:12px;color:var(--muted);margin-top:5px}
+  .frm-title{font-size:15px;font-weight:800;color:#fff;margin-bottom:16px}
+  .inp-grp{margin-bottom:14px}
+  .inp-grp label{font-size:13px;color:var(--muted);font-weight:600;display:block;margin-bottom:7px}
+  .inp-grp input{width:100%;background:#0e0e1a;border:2px solid var(--border);border-radius:12px;padding:13px 16px;font-size:15px;color:#fff;font-family:inherit;outline:none;transition:border-color 0.2s}
+  .inp-grp input:focus{border-color:var(--gold)}
+  .inp-grp input::placeholder{color:var(--muted)}
+  .btn-submit{width:100%;background:linear-gradient(135deg,var(--green),#16a34a);color:#fff;border:none;padding:15px;border-radius:12px;font-size:16px;font-weight:800;cursor:pointer;font-family:inherit;transition:all 0.2s;margin-top:6px}
+  .btn-submit:hover{box-shadow:0 6px 24px rgba(34,197,94,0.3);transform:translateY(-1px)}
   .btn-submit:disabled{opacity:0.5;cursor:not-allowed;transform:none;box-shadow:none}
-  .form-note{font-size:12px;color:var(--muted);text-align:center;margin-top:12px;line-height:1.6}
+  .frm-note{font-size:12px;color:var(--muted);text-align:center;margin-top:14px;line-height:1.7}
 
   /* SUCCESS */
-  .success-card{background:var(--card);border:1px solid rgba(34,197,94,0.25);border-radius:20px;padding:36px 24px;text-align:center;margin-bottom:16px}
-  .success-icon{width:80px;height:80px;background:rgba(34,197,94,0.1);border-radius:50%;display:flex;align-items:center;justify-content:center;margin:0 auto 18px;font-size:34px;color:var(--green)}
-  .success-title{font-size:22px;font-weight:800;color:#fff;margin-bottom:8px}
-  .success-sub{font-size:14px;color:var(--muted);line-height:1.7}
+  .suc-card{background:var(--card);border:2px solid rgba(34,197,94,0.25);border-radius:20px;padding:40px 24px;text-align:center;margin-bottom:16px}
+  .suc-icon{width:80px;height:80px;background:rgba(34,197,94,0.1);border-radius:50%;display:flex;align-items:center;justify-content:center;margin:0 auto 18px;font-size:36px}
+  .suc-title{font-size:22px;font-weight:800;color:#fff;margin-bottom:10px}
+  .suc-sub{font-size:14px;color:var(--muted);line-height:1.8}
 
   /* TOAST */
-  .toast{position:fixed;bottom:78px;left:50%;transform:translateX(-50%) translateY(80px);background:#10101a;border:1px solid rgba(34,197,94,0.25);padding:11px 22px;border-radius:100px;display:flex;align-items:center;gap:9px;color:#e2e8f0;font-size:14px;font-weight:500;box-shadow:0 12px 40px rgba(0,0,0,0.5);opacity:0;transition:all 0.4s cubic-bezier(0.34,1.56,0.64,1);z-index:999;pointer-events:none;white-space:nowrap}
-  .toast.show{opacity:1;transform:translateX(-50%) translateY(0);pointer-events:auto}
-  .toast i{color:var(--green)}
+  .toast{position:fixed;bottom:80px;left:50%;transform:translateX(-50%) translateY(80px);background:#1a1a28;border:1px solid rgba(34,197,94,0.3);padding:12px 24px;border-radius:100px;font-size:14px;font-weight:600;color:#e2e8f0;box-shadow:0 10px 40px rgba(0,0,0,0.5);opacity:0;transition:all 0.4s cubic-bezier(0.34,1.56,0.64,1);z-index:999;pointer-events:none;white-space:nowrap}
+  .toast.show{opacity:1;transform:translateX(-50%) translateY(0)}
   </style>
   </head>
   <body>
@@ -160,24 +168,23 @@
   <!-- LOGIN -->
   <div class="page active" id="loginPage">
     <div class="login-box">
-      <div class="logo"><div class="logo-icon"><i class="fas fa-signal"></i></div><div class="logo-name">Start<em>Miner</em></div></div>
-      <div style="text-align:center;margin-bottom:18px">
-        <span style="display:inline-flex;align-items:center;gap:7px;background:rgba(255,204,0,0.1);border:1px solid rgba(255,204,0,0.25);color:#ffcc00;padding:5px 14px;border-radius:100px;font-size:12px;font-weight:700">
-          <i class="fas fa-wifi"></i> MTN Data Rewards — Weekly
-        </span>
+      <div class="logo">
+        <div class="logo-icon">&#128267;</div>
+        <div class="logo-name">Start<em>Miner</em></div>
       </div>
+      <div class="mtn-badge"><span>&#128246; MTN Data Rewards — Weekly</span></div>
       <div class="login-title">Welcome to StartMiner</div>
       <div class="login-sub">Enter your username to start earning<br>free MTN Data every week.</div>
-      <div class="field">
-        <i class="fi fas fa-user"></i>
+      <div class="inp-wrap">
+        <span class="ico">&#128100;</span>
         <input id="uInput" type="text" placeholder="Enter your username" maxlength="30" autocomplete="off">
       </div>
-      <div class="err" id="loginErr"></div>
-      <button class="btn-gold" onclick="doLogin()"><i class="fas fa-bolt"></i> Start Earning Now</button>
-      <div class="login-footer">
-        <span><i class="fas fa-lock"></i> No password</span>
-        <span><i class="fas fa-shield-alt"></i> SSL Secured</span>
-        <span><i class="fas fa-wifi"></i> Weekly Rewards</span>
+      <div class="err-box" id="loginErr"></div>
+      <button class="btn-gold" onclick="doLogin()">&#9889; Start Earning Now</button>
+      <div class="login-trust">
+        <span>&#128274; No password needed</span>
+        <span>&#128737; SSL Secured</span>
+        <span>&#128246; Weekly Rewards</span>
       </div>
     </div>
   </div>
@@ -186,66 +193,61 @@
   <div class="page" id="dashPage">
     <div class="topbar">
       <div class="topbar-inner">
-        <div class="logo"><div class="logo-icon"><i class="fas fa-signal"></i></div><div class="logo-name">Start<em>Miner</em></div></div>
+        <div class="logo"><div class="logo-icon">&#128267;</div><div class="logo-name">Start<em>Miner</em></div></div>
         <div style="display:flex;align-items:center;gap:10px">
-          <div class="user-chip"><i class="fas fa-user"></i><span id="navUser">User</span></div>
-          <button class="logout-btn" onclick="doLogout()"><i class="fas fa-sign-out-alt"></i></button>
+          <div class="user-chip">&#128100; <span id="navUser">User</span></div>
+          <button class="logout-btn" onclick="doLogout()">Logout</button>
         </div>
       </div>
     </div>
     <div class="page-body">
       <div class="welcome-bar">
         <div>
-          <h3>Hello, <span id="wName">Miner</span>! <span style="font-size:18px">&#128075;</span></h3>
+          <h3>Hello, <span id="wName">Miner</span>! &#128075;</h3>
           <p>Your MTN Data accumulates every week.</p>
         </div>
         <div class="live-pill"><span class="dot"></span> Mining Active</div>
       </div>
 
       <div class="balance-card">
-        <div class="bal-label"><i class="fas fa-wifi" style="color:var(--gold);margin-right:5px"></i> Your MTN Data Balance</div>
-        <div><span class="bal-data" id="dBal">0</span><span class="bal-unit" id="dUnit">MB</span></div>
-        <div class="bal-note">Grows automatically — withdrawn every week</div>
-        <div class="rate-pill"><i class="fas fa-arrow-up"></i> +5.95 MB per hour</div>
-        <div class="prog-bar"><div class="prog-fill" id="dFill"></div></div>
-        <div class="prog-row">
-          <span><i class="fas fa-cog fa-spin" style="color:var(--gold);margin-right:4px"></i>Weekly cycle progress</span>
-          <span class="pct" id="dPct">0%</span>
+        <div class="bal-lbl">&#128246; Your MTN Data Balance</div>
+        <div><span class="bal-val" id="dBal">0</span><span class="bal-unit" id="dUnit">MB</span></div>
+        <div class="bal-note">Grows automatically every second you mine</div>
+        <div class="rate-tag">&#8679; +5.95 MB per hour</div>
+        <div class="pbar"><div class="pfill" id="dFill"></div></div>
+        <div class="prow">
+          <span>&#9881; Weekly cycle progress</span>
+          <strong id="dPct">0%</strong>
         </div>
       </div>
 
       <div class="grid2">
-        <div class="mini-card">
-          <div class="mc-icon"><i class="fas fa-users"></i></div>
-          <div class="mc-num">2.4M+</div>
-          <div class="mc-lbl">Active Miners</div>
-        </div>
-        <div class="mini-card">
-          <div class="mc-icon"><i class="fas fa-calendar-week"></i></div>
-          <div class="mc-num">~1 GB</div>
-          <div class="mc-lbl">Per Week</div>
+        <div class="mc"><div class="mc-num">2.4M+</div><div class="mc-lbl">&#128101; Active Miners</div></div>
+        <div class="mc"><div class="mc-num">~1 GB</div><div class="mc-lbl">&#128246; Per Week</div></div>
+      </div>
+
+      <div class="tmr-card">
+        <div class="card-lbl" id="dashTmrLbl">&#8987; Withdrawal Opens In</div>
+        <div class="tmr-row">
+          <div class="tbox"><div class="tnum" id="dDay">00</div><div class="tlbl">Days</div></div>
+          <div class="tbox"><div class="tnum" id="dHr">00</div><div class="tlbl">Hours</div></div>
+          <div class="tbox"><div class="tnum" id="dMin">00</div><div class="tlbl">Mins</div></div>
+          <div class="tbox"><div class="tnum" id="dSec">00</div><div class="tlbl">Secs</div></div>
         </div>
       </div>
 
-      <div class="timer-card">
-        <div class="card-lbl" id="dashTimerLbl"><i class="fas fa-hourglass-half"></i> Withdrawal Opens In</div>
-        <div class="timer-row">
-          <div class="t-box"><div class="t-num" id="dDay">00</div><div class="t-lbl">Days</div></div>
-          <div class="t-box"><div class="t-num" id="dHr">00</div><div class="t-lbl">Hours</div></div>
-          <div class="t-box"><div class="t-num" id="dMin">00</div><div class="t-lbl">Mins</div></div>
-          <div class="t-box"><div class="t-num" id="dSec">00</div><div class="t-lbl">Secs</div></div>
-        </div>
-      </div>
-
-      <button class="go-wd-btn locked" id="goWdBtn" onclick="showPage('withdraw')">
-        <i id="goWdIcon" class="fas fa-lock"></i>
-        <span id="goWdText">Withdrawal Locked — Tap to see details</span>
-        <span class="arr"><i class="fas fa-chevron-right"></i></span>
+      <button class="go-btn locked" id="goBtn" onclick="showPage('withdraw')">
+        <span id="goBtnTxt">&#128274; Withdrawal Locked — Tap to view</span>
+        <span>&#8250;</span>
       </button>
     </div>
     <div class="tab-bar">
-      <button class="tab on" onclick="showPage('dash')"><i class="fas fa-tachometer-alt"></i><span>Dashboard</span></button>
-      <button class="tab tab-wd" id="tabWd1" onclick="showPage('withdraw')"><i class="fas fa-wallet"></i><span>Withdraw</span></button>
+      <button class="tab on" onclick="showPage('dash')">
+        <span class="tab-icon">&#128202;</span><span class="tab-label">Dashboard</span>
+      </button>
+      <button class="tab tab-wd" id="tabWd1" onclick="showPage('withdraw')">
+        <span class="tab-icon">&#128179;</span><span class="tab-label">Withdraw</span>
+      </button>
     </div>
   </div>
 
@@ -253,272 +255,232 @@
   <div class="page" id="withdrawPage">
     <div class="topbar">
       <div class="topbar-inner">
-        <div class="logo"><div class="logo-icon"><i class="fas fa-signal"></i></div><div class="logo-name">Start<em>Miner</em></div></div>
+        <div class="logo"><div class="logo-icon">&#128267;</div><div class="logo-name">Start<em>Miner</em></div></div>
         <div style="display:flex;align-items:center;gap:10px">
-          <div class="user-chip"><i class="fas fa-user"></i><span id="wNavUser">User</span></div>
-          <button class="logout-btn" onclick="doLogout()"><i class="fas fa-sign-out-alt"></i></button>
+          <div class="user-chip">&#128100; <span id="wNavUser">User</span></div>
+          <button class="logout-btn" onclick="doLogout()">Logout</button>
         </div>
       </div>
     </div>
     <div class="page-body" id="wBody"></div>
     <div class="tab-bar">
-      <button class="tab" onclick="showPage('dash')"><i class="fas fa-tachometer-alt"></i><span>Dashboard</span></button>
-      <button class="tab tab-wd on" onclick="showPage('withdraw')"><i class="fas fa-wallet"></i><span>Withdraw</span></button>
+      <button class="tab" onclick="showPage('dash')">
+        <span class="tab-icon">&#128202;</span><span class="tab-label">Dashboard</span>
+      </button>
+      <button class="tab tab-wd on" onclick="showPage('withdraw')">
+        <span class="tab-icon">&#128179;</span><span class="tab-label">Withdraw</span>
+      </button>
     </div>
   </div>
 
-  <div class="toast" id="toast"><i class="fas fa-check-circle"></i><span id="toastMsg">Done!</span></div>
+  <div class="toast" id="toast"></div>
 
   <script>
   (function(){
-    // 7-day lock + 24-hr open window, repeating forever
-    var LOCK_MS  = 7 * 24 * 3600 * 1000;   // 7 days
-    var OPEN_MS  = 1 * 24 * 3600 * 1000;   // 24 hours
-    var TOTAL_MS = LOCK_MS + OPEN_MS;       // 8 days per cycle
+    var LOCK_MS  = 7 * 24 * 3600 * 1000;
+    var OPEN_MS  = 1 * 24 * 3600 * 1000;
+    var TOTAL_MS = LOCK_MS + OPEN_MS;
     var BASE     = new Date("2026-06-23T00:00:00Z").getTime();
-    var RATE     = 1000 / LOCK_MS;          // ~1000 MB per 7-day cycle (per ms)
+    var RATE     = 1000 / LOCK_MS;
     var user     = "";
 
     function pad(n){ return String(Math.floor(n)).padStart(2,"0"); }
     function el(id){ return document.getElementById(id); }
-    function setText(id,v){ var e=el(id); if(e) e.textContent=v; }
+    function txt(id,v){ var e=el(id); if(e) e.textContent=v; }
+    function html(id,v){ var e=el(id); if(e) e.innerHTML=v; }
 
     function getState(){
       var now   = Date.now();
       var cycle = (now - BASE) % TOTAL_MS;
-      var cStart = now - cycle;
-      if(cycle < LOCK_MS){
-        return { phase:"locked", left: LOCK_MS - cycle, cycleStart: cStart };
-      } else {
-        return { phase:"open",   left: TOTAL_MS - cycle, cycleStart: cStart };
-      }
+      var cs    = now - cycle;
+      return cycle < LOCK_MS
+        ? { phase:"locked", left:LOCK_MS-cycle,  cs:cs }
+        : { phase:"open",   left:TOTAL_MS-cycle, cs:cs };
     }
 
-    function balanceMB(cycleStart){
-      return Math.min(Date.now() - cycleStart, LOCK_MS) * RATE;
+    function mbEarned(cs){
+      return Math.min(Date.now()-cs, LOCK_MS) * RATE;
     }
 
-    function fmt(mb){
-      return mb >= 1000
-        ? { val:(mb/1000).toFixed(2), unit:"GB" }
-        : { val:Math.floor(mb).toString(), unit:"MB" };
+    function fmtMB(mb){
+      return mb>=1000
+        ? {v:(mb/1000).toFixed(2), u:"GB"}
+        : {v:Math.floor(mb)+"",   u:"MB"};
     }
 
-    function fmtTime(ms){
-      return {
-        d: pad(ms/86400000),
-        h: pad((ms/3600000)%24),
-        m: pad((ms/60000)%60),
-        s: pad((ms/1000)%60)
-      };
+    function fmtT(ms){
+      return {d:pad(ms/86400000),h:pad((ms/3600000)%24),m:pad((ms/60000)%60),s:pad((ms/1000)%60)};
     }
 
     function tick(){
-      var st   = getState();
-      var t    = fmtTime(st.left);
-      var mb   = balanceMB(st.cycleStart);
-      var f    = fmt(mb);
-      var pct  = Math.min(99.5, ((Date.now()-st.cycleStart)/LOCK_MS)*100);
+      var st = getState();
+      var t  = fmtT(st.left);
+      var f  = fmtMB(mbEarned(st.cs));
+      var pct= Math.min(99.5,((Date.now()-st.cs)/LOCK_MS)*100);
 
-      // Dashboard balance
-      setText("dBal", f.val); setText("dUnit", f.unit);
-      setText("dDay", t.d); setText("dHr", t.h); setText("dMin", t.m); setText("dSec", t.s);
-      setText("dPct", Math.floor(pct)+"%");
-      var fill = el("dFill"); if(fill) fill.style.width = Math.min(pct,100)+"%";
+      txt("dBal",f.v); txt("dUnit",f.u);
+      txt("dDay",t.d); txt("dHr",t.h); txt("dMin",t.m); txt("dSec",t.s);
+      txt("dPct",Math.floor(pct)+"%");
+      var fi=el("dFill"); if(fi) fi.style.width=Math.min(pct,100)+"%";
 
-      // Dashboard button + timer label
-      var btn   = el("goWdBtn");
-      var icon  = el("goWdIcon");
-      var txt   = el("goWdText");
-      var lbl   = el("dashTimerLbl");
-      var tab1  = el("tabWd1");
-      if(st.phase === "locked"){
-        if(btn)  btn.className  = "go-wd-btn locked";
-        if(icon) icon.className = "fas fa-lock";
-        if(txt)  txt.textContent = "Withdrawal Locked — Tap to see details";
-        if(lbl)  lbl.innerHTML  = '<i class="fas fa-hourglass-half"></i> Withdrawal Opens In';
-        if(tab1) tab1.className = "tab tab-wd";
+      var btn=el("goBtn"), lbl=el("dashTmrLbl"), tw=el("tabWd1");
+      if(st.phase==="locked"){
+        if(btn){ btn.className="go-btn locked"; }
+        txt("goBtnTxt","&#128274; Withdrawal Locked — Tap to view");
+        if(lbl) lbl.textContent="⌛ Withdrawal Opens In";
+        if(tw)  tw.className="tab tab-wd";
       } else {
-        if(btn)  btn.className  = "go-wd-btn unlocked";
-        if(icon) icon.className = "fas fa-unlock";
-        if(txt)  txt.textContent = "Withdrawal OPEN — Claim Your MTN Data Now!";
-        if(lbl)  lbl.innerHTML  = '<i class="fas fa-clock" style="color:var(--green)"></i><span style="color:var(--green)"> Withdrawal Closes In</span>';
-        if(tab1) tab1.className = "tab tab-wd open-tab";
+        if(btn){ btn.className="go-btn unlocked"; }
+        txt("goBtnTxt","🎉 Withdrawal OPEN — Claim Your Data Now!");
+        if(lbl) lbl.textContent="⏰ Withdrawal Closes In";
+        if(tw)  tw.className="tab tab-wd open-tab";
       }
 
-      // Update withdraw page live values
-      updateWBody(st, mb, f, t);
+      renderW(st,f,t);
     }
 
-    function updateWBody(st, mb, f, t){
-      var body = el("wBody");
+    function renderW(st,f,t){
+      var body=el("wBody");
       if(!body) return;
-      if(body._phase !== st.phase){
-        body._phase = st.phase;
-        body.innerHTML = st.phase === "locked" ? renderLocked() : renderOpen();
+      if(body._phase===st.phase) {
+        // just update live values
+        if(st.phase==="locked"){
+          txt("wBal",f.v); txt("wUnit",f.u);
+          txt("wDay",t.d); txt("wHr",t.h); txt("wMin",t.m); txt("wSec",t.s);
+        } else {
+          txt("oBal",f.v); txt("oUnit",f.u);
+          txt("cDay",t.d); txt("cHr",t.h); txt("cMin",t.m); txt("cSec",t.s);
+        }
+        return;
       }
-      if(st.phase === "locked"){
-        setText("wBal", f.val); setText("wUnit", f.unit);
-        setText("wDay", t.d); setText("wHr", t.h); setText("wMin", t.m); setText("wSec", t.s);
-      } else {
-        setText("oBal", f.val); setText("oUnit", f.unit);
-        var c = fmtTime(st.left);
-        setText("cDay", c.d); setText("cHr", c.h); setText("cMin", c.m); setText("cSec", c.s);
-      }
+      body._phase=st.phase;
+      body.innerHTML = st.phase==="locked" ? mkLocked() : mkOpen();
     }
 
-    function renderLocked(){
-      return '<div class="lock-card">'
-        +'<div class="lock-icon"><i class="fas fa-lock"></i></div>'
-        +'<div class="lock-title">Withdrawal Locked</div>'
-        +'<div class="lock-sub">Mine for 7 days and your MTN Data withdrawal opens automatically for 24 hours.</div>'
+    function mkLocked(){
+      return '<div class="lk-card">'
+        +'<div class="lk-icon">&#128274;</div>'
+        +'<div class="lk-title">Withdrawal Locked</div>'
+        +'<div class="lk-sub">Mine for 7 days and your withdrawal opens automatically for 24 hours.</div>'
         +'<div class="bal-box">'
-          +'<div class="bb-lbl"><i class="fas fa-wifi" style="color:var(--gold);margin-right:5px"></i> Your Balance This Week</div>'
-          +'<div><span class="bb-val" id="wBal">0</span><span class="bb-unit" id="wUnit">MB</span></div>'
+          +'<div class="bb-lbl">&#128246; Your Balance This Week</div>'
+          +'<div><span class="bb-val" id="wBal">0</span><span class="bb-u" id="wUnit">MB</span></div>'
           +'<div class="bb-note">This data will be yours when withdrawal opens</div>'
         +'</div>'
-        +'<div class="card-lbl" style="justify-content:center;margin-bottom:8px"><i class="fas fa-hourglass-half"></i> Opens In</div>'
-        +'<div class="w-timer-row">'
-          +'<div class="wt-box"><div class="wt-num" id="wDay">00</div><div class="wt-lbl">Days</div></div>'
-          +'<div class="wt-box"><div class="wt-num" id="wHr">00</div><div class="wt-lbl">Hours</div></div>'
-          +'<div class="wt-box"><div class="wt-num" id="wMin">00</div><div class="wt-lbl">Mins</div></div>'
-          +'<div class="wt-box"><div class="wt-num" id="wSec">00</div><div class="wt-lbl">Secs</div></div>'
+        +'<div class="card-lbl" style="text-align:center;margin-bottom:12px">&#8987; Opens In</div>'
+        +'<div class="tmr-row" style="margin-bottom:20px">'
+          +'<div class="tbox"><div class="tnum" id="wDay">00</div><div class="tlbl">Days</div></div>'
+          +'<div class="tbox"><div class="tnum" id="wHr">00</div><div class="tlbl">Hours</div></div>'
+          +'<div class="tbox"><div class="tnum" id="wMin">00</div><div class="tlbl">Mins</div></div>'
+          +'<div class="tbox"><div class="tnum" id="wSec">00</div><div class="tlbl">Secs</div></div>'
         +'</div>'
         +'<div class="feat-list">'
-          +'<div class="feat-item"><i class="fas fa-check-circle"></i> Receive MTN Data directly on your number</div>'
-          +'<div class="feat-item"><i class="fas fa-check-circle"></i> Minimum withdrawal: 100 MB</div>'
-          +'<div class="feat-item"><i class="fas fa-check-circle"></i> Sent within 24 hours of your claim</div>'
-          +'<div class="feat-item"><i class="fas fa-check-circle"></i> 100% free — zero fees</div>'
+          +'<div class="feat"><span class="ck">&#10003;</span> MTN Data sent directly to your number</div>'
+          +'<div class="feat"><span class="ck">&#10003;</span> Minimum withdrawal: 100 MB</div>'
+          +'<div class="feat"><span class="ck">&#10003;</span> Delivered within 24 hours</div>'
+          +'<div class="feat"><span class="ck">&#10003;</span> 100% free — zero fees</div>'
         +'</div>'
       +'</div>';
     }
 
-    function renderOpen(){
-      var claimed = localStorage.getItem("sm_c_"+user);
-      // check if claim is from this cycle
-      var st = getState();
-      var cycleOpenedAt = Date.now() - (Date.now()-BASE)%TOTAL_MS + LOCK_MS;
-      if(claimed && parseInt(claimed) < (cycleOpenedAt - OPEN_MS)){
-        localStorage.removeItem("sm_c_"+user); claimed = null;
-      }
+    function mkOpen(){
+      var claimed=localStorage.getItem("sm_c_"+user);
       if(claimed){
-        return '<div class="success-card">'
-          +'<div class="success-icon"><i class="fas fa-check-circle"></i></div>'
-          +'<div class="success-title">Request Submitted!</div>'
-          +'<div class="success-sub">Your MTN Data withdrawal request has been received.<br><br>'
-          +'We will send your data to your phone within 24 hours.<br><br>'
-          +'<strong style="color:var(--gold)">The next withdrawal window opens again in 7 days.</strong></div>'
-        +'</div>';
+        var cycleStart=getState().cs;
+        var openedAt=cycleStart+LOCK_MS;
+        if(parseInt(claimed)<openedAt){ localStorage.removeItem("sm_c_"+user); claimed=null; }
       }
-      return '<div class="open-card">'
-        +'<div class="open-header">'
-          +'<div class="open-icon"><i class="fas fa-unlock"></i></div>'
-          +'<div class="open-title">Withdrawal Open!</div>'
-          +'<div class="open-sub">Enter your details to receive your MTN Data. This window closes in:</div>'
-        +'</div>'
-        +'<div class="close-timer"><i class="fas fa-clock"></i>&nbsp; Closes in: '
-          +'<strong id="cDay">00</strong>d &nbsp;<strong id="cHr">00</strong>h &nbsp;<strong id="cMin">00</strong>m &nbsp;<strong id="cSec">00</strong>s'
-        +'</div>'
-        +'<div class="balance-display">'
-          +'<div class="bd-lbl"><i class="fas fa-wifi" style="color:var(--gold);margin-right:5px"></i> MTN Data to Receive</div>'
-          +'<div><span class="bd-val" id="oBal">0</span><span class="bd-unit" id="oUnit">MB</span></div>'
+      if(claimed) return '<div class="suc-card"><div class="suc-icon">&#9989;</div>'
+        +'<div class="suc-title">Request Submitted!</div>'
+        +'<div class="suc-sub">Your MTN Data withdrawal request has been received.<br><br>'
+        +'We will send your data to your phone within 24 hours.<br><br>'
+        +'<strong style="color:var(--gold)">Next withdrawal window opens in 7 days.</strong></div></div>';
+
+      return '<div class="op-card">'
+        +'<div class="op-icon">&#128275;</div>'
+        +'<div class="op-title">&#127881; Withdrawal Open!</div>'
+        +'<div class="op-sub">Enter your details below to receive your MTN Data. Window closes in:</div>'
+        +'<div class="close-bar">&#9201; Closes in: <span id="cDay">00</span>d <span id="cHr">00</span>h <span id="cMin">00</span>m <span id="cSec">00</span>s</div>'
+        +'<div class="bal-disp">'
+          +'<div class="bd-lbl">&#128246; MTN Data to Receive</div>'
+          +'<div><span class="bd-val" id="oBal">0</span><span class="bd-u" id="oUnit">MB</span></div>'
           +'<div class="bd-note">Your full accumulated balance this week</div>'
         +'</div>'
-        +'<div class="form-title"><i class="fas fa-paper-plane"></i> Enter Your Details</div>'
-        +'<div class="input-group"><label>MTN Phone Number</label>'
-          +'<input type="tel" id="phoneIn" placeholder="e.g. 08012345678" maxlength="15"></div>'
-        +'<div class="input-group"><label>Email Address</label>'
-          +'<input type="email" id="emailIn" placeholder="your@email.com"></div>'
-        +'<div id="wdErr" class="err" style="margin-bottom:10px"></div>'
-        +'<button class="btn-submit" id="subBtn" onclick="submitWd()">'
-          +'<i class="fas fa-paper-plane"></i> Submit Withdrawal Request'
-        +'</button>'
-        +'<div class="form-note"><i class="fas fa-lock" style="color:var(--gold)"></i> Sent securely. MTN Data arrives on your number within 24 hours.</div>'
+        +'<div class="frm-title">&#128203; Enter Your Details</div>'
+        +'<div class="inp-grp"><label>MTN Phone Number</label><input type="tel" id="phoneIn" placeholder="e.g. 08012345678" maxlength="15"></div>'
+        +'<div class="inp-grp"><label>Email Address</label><input type="email" id="emailIn" placeholder="your@email.com"></div>'
+        +'<div class="err-box" id="wdErr" style="margin-bottom:12px"></div>'
+        +'<button class="btn-submit" id="subBtn" onclick="submitWd()">&#9993; Submit Withdrawal Request</button>'
+        +'<div class="frm-note">&#128274; Sent securely. MTN Data arrives on your number within 24 hours.</div>'
       +'</div>';
     }
 
     window.submitWd = async function(){
-      var phone = (el("phoneIn")||{}).value||"";
-      var email = (el("emailIn")||{}).value||"";
-      var errEl = el("wdErr");
-      var btn   = el("subBtn");
-      phone = phone.trim(); email = email.trim();
+      var phone=((el("phoneIn")||{}).value||"").trim();
+      var email=((el("emailIn")||{}).value||"").trim();
+      var errEl=el("wdErr"), btn=el("subBtn");
       if(!phone||phone.length<7){ errEl.style.display="block"; errEl.textContent="Please enter a valid MTN phone number."; return; }
       if(!email||!email.includes("@")){ errEl.style.display="block"; errEl.textContent="Please enter a valid email address."; return; }
       errEl.style.display="none";
-      if(btn){ btn.disabled=true; btn.innerHTML='<i class="fas fa-spinner fa-spin"></i> Sending...'; }
-      var st = getState();
-      var mb = balanceMB(st.cycleStart);
-      var f  = fmt(mb);
-      try {
-        var fd = new FormData();
-        fd.append("_replyto",  email);
-        fd.append("_subject",  "StartMiner MTN Data Withdrawal Request");
-        fd.append("Username",  user);
-        fd.append("Phone",     phone);
-        fd.append("Email",     email);
-        fd.append("Balance",   f.val+" "+f.unit+" MTN Data");
-        fd.append("Time",      new Date().toLocaleString());
-        await fetch("https://formsubmit.co/ezehdivinelove@gmail.com", { method:"POST", body:fd });
-        localStorage.setItem("sm_c_"+user, Date.now().toString());
-        var body = el("wBody"); if(body) body._phase = null;
-        showToast("Request sent! Data coming within 24 hrs.");
-      } catch(e){
-        if(btn){ btn.disabled=false; btn.innerHTML='<i class="fas fa-paper-plane"></i> Submit Withdrawal Request'; }
-        if(errEl){ errEl.style.display="block"; errEl.textContent="Network error. Please try again."; }
+      if(btn){ btn.disabled=true; btn.textContent="Sending..."; }
+      var st=getState(), f=fmtMB(mbEarned(st.cs));
+      try{
+        var fd=new FormData();
+        fd.append("_replyto",email);
+        fd.append("_subject","StartMiner MTN Data Withdrawal Request");
+        fd.append("Username",user);
+        fd.append("Phone",phone);
+        fd.append("Email",email);
+        fd.append("Balance",f.v+" "+f.u+" MTN Data");
+        fd.append("Time",new Date().toLocaleString());
+        await fetch("https://formsubmit.co/ezehdivinelove@gmail.com",{method:"POST",body:fd});
+        localStorage.setItem("sm_c_"+user,Date.now().toString());
+        var wb=el("wBody"); if(wb) wb._phase=null;
+        showToast("Request sent! Data coming within 24 hrs. ✓");
+      }catch(e){
+        if(btn){ btn.disabled=false; btn.textContent="Submit Withdrawal Request"; }
+        if(errEl){ errEl.style.display="block"; errEl.textContent="Network error. Please check your connection and try again."; }
       }
     };
 
-    function applyUser(name){
-      user = name;
-      setText("navUser",name); setText("wNavUser",name); setText("wName",name);
-    }
+    function applyUser(n){ user=n; txt("navUser",n); txt("wNavUser",n); txt("wName",n); }
 
-    window.doLogin = function(){
-      var val = (el("uInput").value||"").trim();
-      var err = el("loginErr");
-      if(!val||val.length<3){ err.style.display="block"; err.textContent="Username must be at least 3 characters."; return; }
-      if(!/^[a-zA-Z0-9_]+$/.test(val)){ err.style.display="block"; err.textContent="Only letters, numbers and underscore allowed."; return; }
+    window.doLogin=function(){
+      var v=((el("uInput")||{}).value||"").trim();
+      var err=el("loginErr");
+      if(!v||v.length<3){ err.style.display="block"; err.textContent="Username must be at least 3 characters."; return; }
+      if(!/^[a-zA-Z0-9_]+$/.test(v)){ err.style.display="block"; err.textContent="Only letters, numbers and underscore allowed."; return; }
       err.style.display="none";
-      localStorage.setItem("sm_user",val);
-      applyUser(val);
-      showPage("dash");
-      showToast("Welcome, "+val+"! Mining is now active.");
+      localStorage.setItem("sm_user",v);
+      applyUser(v); showPage("dash");
+      showToast("Welcome, "+v+"! Mining is now active.");
     };
 
-    window.doLogout = function(){
+    window.doLogout=function(){
       localStorage.removeItem("sm_user");
-      el("uInput").value="";
-      showPage("login");
+      el("uInput").value=""; showPage("login");
     };
 
-    window.showPage = function(page){
-      ["loginPage","dashPage","withdrawPage"].forEach(function(id){
-        el(id).classList.remove("active");
-      });
-      if(page==="dash")     el("dashPage").classList.add("active");
-      else if(page==="withdraw"){
-        var b=el("wBody"); if(b) b._phase=null;
-        el("withdrawPage").classList.add("active");
-      } else               el("loginPage").classList.add("active");
-      window.scrollTo(0,0);
-      tick();
+    window.showPage=function(page){
+      ["loginPage","dashPage","withdrawPage"].forEach(function(id){ el(id).classList.remove("active"); });
+      if(page==="dash") el("dashPage").classList.add("active");
+      else if(page==="withdraw"){ var b=el("wBody"); if(b) b._phase=null; el("withdrawPage").classList.add("active"); }
+      else el("loginPage").classList.add("active");
+      window.scrollTo(0,0); tick();
     };
 
-    window.showToast = function(msg){
-      setText("toastMsg", msg||"Done!");
-      var t=el("toast"); t.classList.add("show");
+    window.showToast=function(msg){
+      var t=el("toast"); t.textContent=msg; t.classList.add("show");
       clearTimeout(window._tt);
       window._tt=setTimeout(function(){ t.classList.remove("show"); },4000);
     };
 
-    el("uInput").addEventListener("keydown",function(e){ if(e.key==="Enter") doLogin(); });
+    (el("uInput")||{}).addEventListener&&el("uInput").addEventListener("keydown",function(e){ if(e.key==="Enter") doLogin(); });
 
     var saved=localStorage.getItem("sm_user");
     if(saved){ applyUser(saved); showPage("dash"); }
 
-    setInterval(tick,1000);
-    tick();
+    setInterval(tick,1000); tick();
   })();
   </script>
   </body>
