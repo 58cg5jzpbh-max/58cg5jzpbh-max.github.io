@@ -298,13 +298,13 @@
   (function(){
     // ===== CYCLE CONFIG =====
     // Every 30 days = mining phase. Then 24hrs open. Then repeats.
-    var CYCLE_LOCK_MS = 30 * 24 * 3600 * 1000;  // 30 days locked
+    var CYCLE_LOCK_MS =  7 * 24 * 3600 * 1000;  //  7 days locked
     var CYCLE_OPEN_MS =  1 * 24 * 3600 * 1000;  // 24 hrs open
     var CYCLE_TOTAL   = CYCLE_LOCK_MS + CYCLE_OPEN_MS;
     var BASE          = new Date("2026-06-23T00:00:00Z").getTime();
 
     // MTN Data rate: ~1000 MB over 30 days = 1.389 MB/hr
-    var RATE_MB_PER_MS = 1000 / CYCLE_LOCK_MS; // MB per ms during lock phase
+    var RATE_MB_PER_MS = 1000 / CYCLE_LOCK_MS; // MB per ms during 7-day lock phase
 
     var currentUser = "";
 
@@ -419,7 +419,7 @@
       <div class="lock-card">
         <div class="lock-icon"><i class="fas fa-lock"></i></div>
         <div class="lock-title">Withdrawal Locked</div>
-        <div class="lock-sub">Keep mining! Your MTN Data is building up.<br>Withdrawal opens when the countdown reaches zero.</div>
+        <div class="lock-sub">Keep mining! Your MTN Data builds up every week.<br>Withdrawal opens when the countdown reaches zero.</div>
         <div class="bal-box">
           <div class="bb-lbl"><i class="fas fa-wifi" style="color:var(--gold);margin-right:5px"></i> Your Current MTN Data Balance</div>
           <div><span class="bb-val" id="wBal">0</span><span class="bb-unit" id="wBalUnit">MB</span></div>
@@ -450,7 +450,7 @@
           <div class="success-title">Request Submitted!</div>
           <div class="success-sub">Your MTN Data withdrawal request has been received.<br><br>
           We will send your data to your phone number within 24 hours.<br><br>
-          <strong style="color:var(--gold)">The next withdrawal window opens in 30 days.</strong></div>
+          <strong style="color:var(--gold)">The next withdrawal window opens in 7 days. Keep mining!</strong></div>
         </div>`;
       }
       return `
